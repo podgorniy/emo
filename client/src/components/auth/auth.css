@@ -5,14 +5,17 @@
    (fx.css), recessed into the card. */
 
 .auth-screen {
+  position: relative;
   width: 100%;
   min-height: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 1.5rem;
-  /* Clear of the notch and the offline band (App.svelte) */
-  padding-top: calc(1.5rem + var(--safe-top, 0px));
+  /* Clear of the notch, the offline band (App.svelte) and the language
+     buttons above the card (LangSwitch) */
+  padding-top: calc(3.75rem + var(--safe-top, 0px));
 }
 
 .auth-card {
@@ -126,13 +129,31 @@
   cursor: pointer;
 }
 
+/* Two links in a row: one after the other, no gap */
+.auth-form > .auth-link + .auth-link {
+  margin-top: -1.125rem;
+}
+
 /* A phone (ui.md §4.5, §12; owner decision 2026-10-10): the
    card sits at the bottom of the screen like a sheet, its fields and its
    button under the thumb, the free space above it; its text links end at
    the right edge */
 @media (max-width: 899px) {
+  /* Tighter under the card: the language switch below it stays in reach,
+     and the card's controls stay in the band above it */
   .auth-screen {
-    align-items: flex-end;
+    justify-content: flex-end;
+    padding-top: calc(1.5rem + var(--safe-top, 0px));
+    padding-bottom: 0.5rem;
+  }
+
+  .auth-card {
+    padding-bottom: 1rem;
+  }
+
+  /* A text link under a button: its 44 px already holds the gap */
+  .auth-form > .auth-link {
+    margin-top: -0.5rem;
   }
 
   .auth-link {

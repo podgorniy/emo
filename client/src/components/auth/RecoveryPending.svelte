@@ -13,14 +13,17 @@
   import { userError } from "../../lib/errors.ts";
   import { t } from "../../lib/i18n.svelte.ts";
   import Button from "../common/Button.svelte";
+  import LangSwitch from "../common/LangSwitch.svelte";
   import RecoveryKeyDisplay from "./RecoveryKeyDisplay.svelte";
 
   interface Props {
     accountId: string;
     onDone: () => void;
+    /** "Use a different account": the device's clear-or-keep screen */
+    onSwitchAccount: () => void;
   }
 
-  let { accountId, onDone }: Props = $props();
+  let { accountId, onDone, onSwitchAccount }: Props = $props();
 
   let passphrase = $state("");
   let busy = $state(false);
@@ -51,7 +54,7 @@
 </script>
 
 {#if newKey}
-  <RecoveryKeyDisplay recoveryKey={newKey} step={null} onConfirmed={saved} />
+  <RecoveryKeyDisplay recoveryKey={newKey} step={null} onConfirmed={saved} onLeave={onSwitchAccount} />
 {:else}
   <main class="auth-screen">
     <div class="auth-card">
@@ -72,7 +75,11 @@
         <Button type="submit" variant="primary" size="large" loading={busy} disabled={!passphrase}>
           {busy ? t("auth.passphrase.deriving") : t("common.next")}
         </Button>
+        <button type="button" class="auth-link" disabled={busy} onclick={onSwitchAccount}>
+          {t("auth.signin.again.switch")}
+        </button>
       </form>
     </div>
+    <LangSwitch />
   </main>
 {/if}

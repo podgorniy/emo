@@ -17,6 +17,7 @@
   import { requestPersistence } from "../../lib/storage.ts";
   import { getLocale, t, tn } from "../../lib/i18n.svelte.ts";
   import Button from "../common/Button.svelte";
+  import LangSwitch from "../common/LangSwitch.svelte";
 
   interface Props {
     onDone: () => void;
@@ -153,6 +154,7 @@
       </Button>
     </div>
   </div>
+  <LangSwitch />
 </main>
 
 <style>

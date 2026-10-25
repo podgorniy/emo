@@ -107,6 +107,10 @@ export const uiEn: Record<MessageKey, string> = {
   "auth.recovery.file.body":
     "Emo recovery key\n{key}\nAccount: {email}\nInstance: {url}\nKeep this file in a password manager. It restores access if the passphrase is forgotten.",
   "auth.recovery.key.aria": "Recovery key, 8 groups of 4 characters",
+  "auth.recovery.leave.body":
+    "This key won't be shown again. After you sign in, you can make a new one in Settings.",
+  "auth.recovery.leave.confirm": "Leave",
+  "auth.recovery.leave.title": "Leave without the key?",
   "auth.recovery.pending.title": "Your recovery key wasn't saved",
   "auth.recovery.pending.body":
     "The last recovery key shown on this device was not saved. Enter your passphrase to get a new one; the unsaved key stops working.",

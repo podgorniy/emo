@@ -108,6 +108,10 @@ export const uiRu: Record<MessageKey, string> = {
   "auth.recovery.file.body":
     "Ключ восстановления Emo\n{key}\nАккаунт: {email}\nСервер: {url}\nХраните файл в менеджере паролей. Он восстанавливает доступ, если passphrase забыта.",
   "auth.recovery.key.aria": "Ключ восстановления, 8 групп по 4 символа",
+  "auth.recovery.leave.body":
+    "Этот ключ больше не будет показан. После входа новый можно создать в настройках.",
+  "auth.recovery.leave.confirm": "Уйти",
+  "auth.recovery.leave.title": "Уйти без ключа?",
   "auth.recovery.pending.title": "Ключ восстановления не сохранён",
   "auth.recovery.pending.body":
     "Последний показанный на этом устройстве ключ восстановления не был сохранён. Введите passphrase, чтобы получить новый; несохранённый ключ перестанет действовать.",

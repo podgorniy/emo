@@ -717,8 +717,8 @@ group per area:
 
 - **Meets the contract:** the sync sheet; the check-in's help sheets; step 1 at
   390×844; steps 2–5 and 8 in landscape; Saved; the `/now` other-window screen;
-  every confirmation sheet; onboarding's reminders step; unlock at rest at
-  390×844 and in landscape; the sheet keyboard on portrait phones.
+  every confirmation sheet; onboarding's reminders step; the account switch;
+  recovery pending in landscape; the sheet keyboard on portrait phones.
 - **Still on the reach room** (listed in `PENDING`): **Home and the chrome:**
   every Home state. **System screens:** storage damaged and account gone on
   portrait phones. **Check-in:** step 1 everywhere but 390×844; steps 2–9 on
@@ -726,8 +726,9 @@ group per area:
   **History:** all five rest states. **Settings:** at rest, Reminders offline,
   the export and change-passphrase sheets, the sheet keyboard in landscape.
   **Auth, onboarding and unlock:** every screen with a field; the About sheet on
-  portrait phones; account switch and recovery pending in landscape; unlock on
-  the short portrait sizes.
+  portrait phones; recovery pending on the short portrait sizes; unlock
+  everywhere (the language switch and "Use a different account" under its field
+  since 2026-10-25).
 
 **Moving a screen onto the contract:** lay it out with `restLow` and the `.rl-*`
 classes (or a sheet `band`), drop its `keepReach` / page reach room, delete its
@@ -1890,9 +1891,18 @@ reliability.md §1.3.
 - **Phone**: the card sits at the bottom of the screen like a sheet, the free
   space above it. Its text links end at the right edge ("I have an invite code",
   "Change", "Resend", "Methodology", "About and privacy", "Use recovery key",
-  Cancel, Back, Copy, "Suggest a passphrase"); Allow notifications is in the
-  corner with "Not now" beside it; the language choice is under the sign-in
-  card, at the right.
+  Cancel, Back, Copy, "Suggest a passphrase", "Use a different account"); Allow
+  notifications is in the corner with "Not now" beside it; the language choice
+  is under the card, at the right.
+- **Every screen before the app has the language choice and a way out** (owner
+  decision 2026-10-25). The language choice (`LangSwitch.svelte`, the shared
+  `.seg`) is on sign-in, the account switch, every onboarding step, unlock,
+  recovery-key entry, and the account-gone and storage-damaged screens: top
+  right on a desktop, under the card on a phone. It works locked and signed out.
+  Inside the app, Settings holds it (§11.4). The way out is each screen's own
+  Back, Cancel or Done, and, where there is none (passphrase setup, the recovery
+  key, recovery pending, unlock), "Use a different account": the account switch
+  (§12.4) over the screen.
 - **Phone, resting at the end**: the auth and unlock screens rest at the page's
   end. A card taller than the screen (375×667, or 390×664 under Safari's bars)
   never cuts off its primary button or its links. While at its end the page
@@ -1956,8 +1966,10 @@ On the same card, not a screen of its own.
 
 ### 12.4 One account per browser
 
-`AccountSwitch.svelte` (reliability.md §1.3) replaces the sign-in card; focus
-goes to the title.
+`AccountSwitch.svelte` (reliability.md §1.3) replaces the sign-in card, or
+covers the screen it was opened from (passphrase setup, the recovery key,
+recovery pending, unlock, recovery-key entry), which stays as it was under it;
+focus goes to the title.
 
 - After a sign-in as another account: "Another account is set up on this
   browser" / "You signed in as p•••••son@example.com.". From "Use a different
@@ -1969,8 +1981,10 @@ goes to the title.
 - Primary **"Clear this browser and continue"**; with unsynced check-ins a sheet
   confirms "Discard 3 unsynced check-ins" first. Text link "Back".
 - Clearing continues as the new account (passphrase or unlock) or to a plain
-  sign-in. "Back" after a sign-in ends that session and returns to the device's
-  own account.
+  sign-in; without a new sign-in it also ends this browser's session, so the
+  next start does not take it up again. "Back" after a sign-in ends that session
+  and returns to the device's own account; otherwise it returns to the screen it
+  was opened from.
 
 ### 12.5 Passphrase (Step 1 of 3)
 
@@ -2042,6 +2056,10 @@ Setup, unlock, recovery and every Settings sheet
     (architecture.md §5.6).
   - **I'll write it down**: "8 groups of 4 characters".
 - Next stays disabled until at least one is done.
+- During onboarding, "Use a different account" under Next first warns in a sheet
+  ("Leave without the key?": it won't be shown again; a new one can be made in
+  Settings after signing in), then opens the account switch (§12.4). The new-key
+  overlay in Settings keeps no way out (§2.5).
 - **Shown but never saved** (a reload, a crash, a closed tab): while
   `meta.recovery_pending` is set, the app opens "Your recovery key wasn't saved"
   and asks for the passphrase to issue a new key; the unsaved one stops working
@@ -2066,8 +2084,9 @@ Setup, unlock, recovery and every Settings sheet
 
 ### 12.9 Unlock, new device, recovery-key entry
 
-- **Unlock** (after a lock or a restart): the passphrase field and "Use recovery
-  key"; body "Enter your passphrase to open your entries."
+- **Unlock** (after a lock or a restart): the passphrase field, "Use recovery
+  key" and "Use a different account" (§12.4); body "Enter your passphrase to
+  open your entries."
 - **New device** (right after a sign-in on a browser without the account): "New
   device" / "Enter your passphrase to decrypt your entries here.", then
   "Downloading entries… {n}" during the first pull.

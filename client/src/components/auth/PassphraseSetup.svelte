@@ -16,14 +16,17 @@
   import { t } from "../../lib/i18n.svelte.ts";
   import { sessionEmail } from "../../lib/sessionEmail.ts";
   import Button from "../common/Button.svelte";
+  import LangSwitch from "../common/LangSwitch.svelte";
   import NewPassphrase from "./NewPassphrase.svelte";
 
   interface Props {
     accountId: string;
     onCompleted: (recoveryKeyFormatted: string) => void;
+    /** "Use a different account": the device's clear-or-keep screen */
+    onSwitchAccount: () => void;
   }
 
-  let { accountId, onCompleted }: Props = $props();
+  let { accountId, onCompleted, onSwitchAccount }: Props = $props();
 
   let passphrase = $state("");
   let repeat = $state("");
@@ -89,6 +92,10 @@
       <Button type="submit" variant="primary" size="large" loading={loading} disabled={!canSubmit}>
         {loading ? t("auth.passphrase.deriving") : t("common.next")}
       </Button>
+      <button type="button" class="auth-link" disabled={loading} onclick={onSwitchAccount}>
+        {t("auth.signin.again.switch")}
+      </button>
     </form>
   </div>
+  <LangSwitch />
 </main>

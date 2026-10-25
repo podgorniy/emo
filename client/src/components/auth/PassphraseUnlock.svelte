@@ -1,7 +1,8 @@
 <script lang="ts">
   // SPDX-License-Identifier: AGPL-3.0-or-later
   /**
-   * Unlock on a known device: the passphrase field and "Use recovery key".
+   * Unlock on a known device: the passphrase field, "Use recovery key", and
+   * "Use a different account" (the device's clear-or-keep screen).
    * The keyring kept on the device works offline; the server's revisions are
    * read only when it does not open (`lib/unlock.ts`: a damaged keyring, the
    * revision fallback, the 30 s wait after 5 wrong tries).
@@ -16,6 +17,7 @@
   import { sessionEmail } from "../../lib/sessionEmail.ts";
   import Button from "../common/Button.svelte";
   import PassphraseInput from "../common/PassphraseInput.svelte";
+  import LangSwitch from "../common/LangSwitch.svelte";
 
   interface Props {
     accountId: string;
@@ -23,9 +25,11 @@
     newDevice?: boolean;
     onUnlocked: () => void;
     onNeedRecovery: () => void;
+    onSwitchAccount: () => void;
   }
 
-  let { accountId, newDevice = false, onUnlocked, onNeedRecovery }: Props = $props();
+  let { accountId, newDevice = false, onUnlocked, onNeedRecovery, onSwitchAccount }: Props =
+    $props();
 
   let passphrase = $state("");
   let loading = $state(false);
@@ -137,6 +141,10 @@
       <button type="button" class="auth-link" onclick={onNeedRecovery}>
         {t("auth.unlock.useRecovery")}
       </button>
+      <button type="button" class="auth-link" disabled={loading} onclick={onSwitchAccount}>
+        {t("auth.signin.again.switch")}
+      </button>
     </form>
   </div>
+  <LangSwitch />
 </main>

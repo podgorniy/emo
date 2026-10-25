@@ -23,6 +23,7 @@
   import { onMount } from "svelte";
   import { sessionEmail } from "../../lib/sessionEmail.ts";
   import Button from "../common/Button.svelte";
+  import LangSwitch from "../common/LangSwitch.svelte";
   import NewPassphrase from "./NewPassphrase.svelte";
   import RecoveryKeyDisplay from "./RecoveryKeyDisplay.svelte";
 
@@ -32,9 +33,11 @@
     /** Called after the server stored the new keyring and the user saw the new key. */
     onRecovered: () => void;
     onCancel: () => void;
+    /** "Use a different account" from the new key's screen */
+    onSwitchAccount?: () => void;
   }
 
-  let { accountId, currentKeyring, onRecovered, onCancel }: Props = $props();
+  let { accountId, currentKeyring, onRecovered, onCancel, onSwitchAccount }: Props = $props();
 
   let keyInput = $state("");
   let newPassphrase = $state("");
@@ -105,6 +108,7 @@
   <RecoveryKeyDisplay
     recoveryKey={newKey}
     step={null}
+    onLeave={onSwitchAccount}
     onConfirmed={async () => {
       await setRecoveryPending(false);
       onRecovered();
@@ -157,6 +161,7 @@
         </button>
       </form>
     </div>
+    <LangSwitch />
   </main>
 {/if}
 

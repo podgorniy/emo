@@ -6,6 +6,9 @@
    * done is "chosen" in the check-in's cool language: a highlight edge and a
    * soft halo. "Copied" rises into the button and the key's well brightens
    * once, so what was copied answers it (ui.md §5.1).
+   * Before the app (`landmark`): the language switch, and, when `onLeave` is
+   * given, "Use a different account" behind a warning that the key will
+   * not be shown again.
    * Specification: ui.md §12.7, architecture.md §4.1,
    * §5.6.
    */
@@ -17,6 +20,8 @@
   import { t } from "../../lib/i18n.svelte.ts";
   import { arrive, EASE, play } from "../../lib/motion.ts";
   import Button from "../common/Button.svelte";
+  import ConfirmSheet from "../common/ConfirmSheet.svelte";
+  import LangSwitch from "../common/LangSwitch.svelte";
 
   interface Props {
     recoveryKey: string;
@@ -27,9 +32,20 @@
     /** false inside a page that already has its `<main>` (Settings). */
     landmark?: boolean;
     onConfirmed: () => void;
+    /** "Use a different account", after the warning; none in Settings */
+    onLeave?: () => void;
   }
 
-  let { recoveryKey, email = null, step = 2, landmark = true, onConfirmed }: Props = $props();
+  let {
+    recoveryKey,
+    email = null,
+    step = 2,
+    landmark = true,
+    onConfirmed,
+    onLeave,
+  }: Props = $props();
+
+  let leaving = $state(false);
 
   const groups = $derived(recoveryKey.split("-"));
   let saved = $state(false);
@@ -191,14 +207,35 @@
       <Button variant="primary" size="large" disabled={!done} onclick={onConfirmed}>
         {t("common.next")}
       </Button>
+      {#if onLeave}
+        <button type="button" class="auth-link" onclick={() => (leaving = true)}>
+          {t("auth.signin.again.switch")}
+        </button>
+      {/if}
     </div>
   </div>
+  {#if landmark}<LangSwitch />{/if}
 </svelte:element>
+
+{#if leaving && onLeave}
+  <ConfirmSheet
+    title={t("auth.recovery.leave.title")}
+    confirmLabel={t("auth.recovery.leave.confirm")}
+    onconfirm={() => {
+      leaving = false;
+      onLeave?.();
+    }}
+    oncancel={() => (leaving = false)}
+  >
+    <p>{t("auth.recovery.leave.body")}</p>
+  </ConfirmSheet>
+{/if}
 
 <style>
   .next {
     display: flex;
     flex-direction: column;
+    gap: 0.5rem;
   }
 
   .key {

@@ -2,66 +2,55 @@
 
 # Emo
 
-Emo is a journal for 60-second check-ins on what your body feels: where, what it
-is like, how strong, and a word for it if there is one. It reminds you at three
-random moments a day. Your entries are end-to-end encrypted: the server stores
-them but cannot read them. It runs in the browser and installs to the home
-screen like an app (a PWA), in English, Ukrainian and Russian.
+A minute-long check-in on what your body feels: where, what it is like, how
+strong, and a word for it if one comes. Emo reminds you three times a day, at
+random moments. In English, Ukrainian and Russian.
 
-**Use it at [emo.podgorniy.net](https://emo.podgorniy.net)**: anyone can sign up
-with an email address, no invite. Or
-[run your own instance](#running-your-own-instance).
+<img src="docs/checkin-body.png" width="300" alt="Step 1 of a check-in: a body map with the throat and chest marked">
 
-**Supported browsers:** iOS/Safari ≥ 16.4, Chrome/Edge ≥ 111, Firefox ≥ 115.
-There are no polyfills below these. Push reminders on iOS need the app installed
-to the home screen.
+**Try it at [emo.podgorniy.net](https://emo.podgorniy.net)**: free, sign up with
+your email. Or [run your own](#running-your-own-instance).
+
+## An app without the app store
+
+Open the site on your phone and add it to the home screen (iPhone: Share → Add
+to Home Screen; Android: Install app). From then on it opens like any other app,
+full screen, with its own icon, and sends the reminders. On iPhone, reminders
+only work once it is on the home screen.
+
+Works in Safari 16.4+, Chrome and Edge 111+, Firefox 115+.
+
+## Works without a connection
+
+Emo keeps the app and your entries on your device. No signal on a plane or in
+the metro? Check in anyway: entries are saved on the phone and sync once you are
+back online, to your other devices too. A thin "Offline" strip at the top tells
+you when it can't reach the server.
+
+## Privacy and security
+
+- **Only you can read your entries.** They are encrypted on your device; the
+  server stores them but cannot read them, and neither can whoever runs it.
+- **Keep your passphrase or recovery key.** Lose both and the entries are gone:
+  nobody can recover them.
+- **No ads, analytics or trackers.** No third-party scripts; one cookie keeps
+  you signed in.
+- **Export or delete any time** in Settings → Data and keys.
+- **Free software (AGPL).** Settings → About → Source code downloads the exact
+  version the server runs.
+
+What the server does see (your email, reminder settings, when entries arrive) is
+listed in the [privacy notice](https://emo.podgorniy.net/privacy.html).
+emo.podgorniy.net is run by the author on one server, free and best effort:
+export now and then.
 
 **Why it asks what it asks:** the
 [methodology](https://emo.podgorniy.net/methodology) gives the research behind
-each question, how firm each source is, what was left out on purpose, and how to
-read your export.
+each question.
 
-**Not a medical device.** Emo does not diagnose, treat or monitor any condition,
-and it does not replace a therapist. If you are in crisis or thinking about
-harming yourself, contact local emergency services or
+**Not a medical device.** Emo does not diagnose or treat anything and does not
+replace a therapist. In crisis, contact local emergency services or
 [a helpline](https://findahelpline.com).
-
-## Privacy
-
-The full notice is at
-[emo.podgorniy.net/privacy.html](https://emo.podgorniy.net/privacy.html). In
-short:
-
-- **Your entries are end-to-end encrypted.** They are encrypted on your device
-  with a key that only your passphrase or recovery key unlocks. The server
-  stores them but cannot read them, and neither can its operator. Every entry is
-  padded to the same size, so its length tells nothing.
-- **Lose both the passphrase and the recovery key and your entries are gone.**
-  Nobody can recover them, the operator included.
-- **The server can read:** your email address; your reminder settings (time
-  zone, language, waking hours, reminders a day, the shortest gap between them,
-  a pause); when entries arrive and how many, not what is in them; each
-  signed-in browser's description and last use, and each device's push-service
-  address; when reminders were planned and sent; invite codes and who joined
-  with whose; when it mailed you.
-- **Others involved:** the operator's email provider sees your address and the
-  sign-in mail. Your browser's push service (Apple, Google or Mozilla) sees that
-  a reminder was sent and when; its content is encrypted for your device.
-- **Not collected:** no ads, analytics, tracking, third-party scripts or fonts.
-  IP addresses are used only in memory against abuse and never written down;
-  logs never hold your email, IP or anything you record. The one cookie keeps
-  you signed in.
-- **Emailing yourself the recovery key is optional and weakens it:** sign-in is
-  by email, so anyone who can read your mailbox could then open your entries.
-  Save it as a file or write it down instead.
-- **Export or delete any time** in Settings → Data and keys. Deletion is
-  immediate; encrypted database backups rotate out in about 30 days.
-- **Check what runs:** Emo is free software (AGPL). Settings → About → Source
-  code downloads the exact version the server is running; this repository is the
-  project's home.
-
-emo.podgorniy.net is run by the author on a single server, free and best effort:
-export now and then.
 
 ## Running your own instance
 

@@ -108,6 +108,10 @@ export const uiUk: Record<MessageKey, string> = {
   "auth.recovery.file.body":
     "Ключ відновлення Emo\n{key}\nАкаунт: {email}\nСервер: {url}\nЗберігайте файл у менеджері паролів. Він відновлює доступ, якщо passphrase забуто.",
   "auth.recovery.key.aria": "Ключ відновлення, 8 груп по 4 символи",
+  "auth.recovery.leave.body":
+    "Цей ключ більше не буде показано. Після входу новий можна створити в налаштуваннях.",
+  "auth.recovery.leave.confirm": "Піти",
+  "auth.recovery.leave.title": "Піти без ключа?",
   "auth.recovery.pending.title": "Ключ відновлення не збережено",
   "auth.recovery.pending.body":
     "Останній показаний на цьому пристрої ключ відновлення не було збережено. Введіть passphrase, щоб отримати новий; незбережений ключ перестане діяти.",

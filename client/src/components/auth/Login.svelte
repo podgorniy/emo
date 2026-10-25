@@ -18,13 +18,14 @@
    */
   import { onDestroy, onMount, tick } from "svelte";
   import { apiRequestCode, apiVerifyCode } from "../../lib/api.ts";
-  import { getLocale, LOCALES, setLocale, t } from "../../lib/i18n.svelte.ts";
+  import { getLocale, t } from "../../lib/i18n.svelte.ts";
   import { maskEmail, type UserError, userError } from "../../lib/errors.ts";
   import { swapCard } from "../../lib/motion.ts";
-  import type { InstanceRes, Locale } from "../../../../shared/protocol.ts";
+  import type { InstanceRes } from "../../../../shared/protocol.ts";
   import { cachedInstance, loadInstance } from "../../lib/instance.ts";
   import Button from "../common/Button.svelte";
   import ConfirmSheet from "../common/ConfirmSheet.svelte";
+  import LangSwitch from "../common/LangSwitch.svelte";
   import Mark from "../common/Mark.svelte";
   import AboutContent from "../settings/AboutContent.svelte";
 
@@ -196,32 +197,10 @@
     inviteInput?.focus();
   }
 
-  async function changeLanguage(loc: Locale) {
-    await setLocale(loc);
-  }
 </script>
 
 <main class="login-container">
-  <div class="lang-selector seg" role="group" aria-label={t("settings.language.header")}>
-    <span
-      class="seg-puck"
-      style:--n={LOCALES.length}
-      style:--i={Math.max(0, LOCALES.findIndex((l) => l.id === getLocale()))}
-      aria-hidden="true"
-    ></span>
-    {#each LOCALES as loc (loc.id)}
-      <button
-        type="button"
-        class="lang-btn"
-        class:on={getLocale() === loc.id}
-        aria-pressed={getLocale() === loc.id}
-        lang={loc.id}
-        onclick={() => changeLanguage(loc.id)}
-      >
-        {loc.native}
-      </button>
-    {/each}
-  </div>
+  <LangSwitch />
 
   <div class="login-card">
     {#if !deviceAccount}
@@ -416,20 +395,6 @@
     position: relative;
   }
 
-  .lang-selector {
-    position: absolute;
-    top: calc(var(--safe-top, 0px) + 0.5rem);
-    right: 1rem;
-  }
-
-  /* The shared segmented control (fx.css): the chosen language is the
-     raised surface, which slides; chrome, so no highlight */
-  .lang-btn {
-    min-width: 44px;
-    padding: 0 0.625rem;
-    font-size: 0.875rem;
-  }
-
   .link-btn:focus-visible {
     outline: 3px solid var(--c-focus, #4f46e5);
     outline-offset: 2px;
@@ -608,15 +573,6 @@
     .login-container {
       justify-content: flex-end;
       padding-top: calc(1.5rem + var(--safe-top, 0px));
-    }
-
-    .lang-selector {
-      position: relative;
-      top: auto;
-      right: auto;
-      order: 1;
-      align-self: flex-end;
-      margin-top: 0.75rem;
     }
 
     .link-btn {

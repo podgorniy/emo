@@ -13,6 +13,7 @@
   import { maskEmail } from "../../lib/errors.ts";
   import { t, tn } from "../../lib/i18n.svelte.ts";
   import Button from "../common/Button.svelte";
+  import LangSwitch from "../common/LangSwitch.svelte";
   import ConfirmSheet from "../common/ConfirmSheet.svelte";
 
   interface Props {
@@ -73,6 +74,7 @@
       </button>
     </div>
   </div>
+  <LangSwitch />
 </main>
 
 {#if confirming}

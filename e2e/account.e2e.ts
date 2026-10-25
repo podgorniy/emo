@@ -400,3 +400,76 @@ Deno.test({
     }
   },
 });
+
+Deno.test({
+  name:
+    "e2e - screens before the app: a language switch, and a way out of Unlock and of the recovery key",
+  sanitizeResources: false,
+  sanitizeOps: false,
+  fn: async () => {
+    const server = await startServer();
+    const browser = await launchBrowser();
+    try {
+      const page = await (await browser.newContext({ locale: "en-GB" }))
+        .newPage();
+      const button = (name: string | RegExp) =>
+        page.getByRole("button", { name, exact: typeof name === "string" });
+      const differentAccount = button("Use a different account");
+
+      // The recovery key: leaving warns first; "Back" finds the same key
+      await page.goto(server.url);
+      await button("I have an invite code").click();
+      await page.getByLabel("Email").fill(EMAIL);
+      await page.getByLabel("Invite code").fill(await server.invite());
+      await button("Send code").click();
+      await page.getByLabel("Six-digit code").fill(
+        await server.mailCode(EMAIL),
+      );
+      await page.getByLabel(/^Passphrase/).fill(PASSPHRASE);
+      await page.getByLabel("Repeat").fill(PASSPHRASE);
+      await button("Next").click();
+      await button(/I'll write it down/).waitFor({ timeout: 30_000 });
+      const key = await page.locator(".key").textContent();
+      await differentAccount.click();
+      await page.getByText("This key won't be shown again.", { exact: false })
+        .waitFor();
+      await button("Cancel").click();
+      await differentAccount.click();
+      await button("Leave").click();
+      await button("Clear this browser and continue").waitFor();
+      await button("Back").click();
+      assertEquals(await page.locator(".key").textContent(), key);
+      await button(/I'll write it down/).click();
+      await button("Next").click();
+      await button("Done").click();
+      await button(NOW).waitFor();
+
+      // Unlock: the language switch works while locked
+      await button("Settings").first().click();
+      await button(/^Lock on this device/).click();
+      await page.getByLabel("Passphrase", { exact: true }).waitFor();
+      await button("Русский").click();
+      await page.getByRole("heading", { name: "Разблокировать" }).waitFor();
+      await button("English").click();
+      await page.getByRole("heading", { name: "Unlock" }).waitFor();
+
+      // "Use a different account": Back keeps the device; Clear ends the
+      // session too, so a reload stays on the sign-in screen
+      await differentAccount.click();
+      await button("Back").click();
+      await page.getByLabel("Passphrase", { exact: true }).waitFor();
+      await differentAccount.click();
+      await button("Clear this browser and continue").click();
+      await page.getByLabel("Email").waitFor();
+      await page.reload();
+      await page.getByLabel("Email").waitFor();
+      assertEquals(
+        await page.getByLabel("Passphrase", { exact: true }).count(),
+        0,
+      );
+    } finally {
+      await browser.close();
+      await server.stop();
+    }
+  },
+});

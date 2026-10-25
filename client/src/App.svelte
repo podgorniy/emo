@@ -60,6 +60,7 @@
   import PaneBar from "./components/common/PaneBar.svelte";
   import UpdateCard from "./components/common/UpdateCard.svelte";
   import ConfirmSheet from "./components/common/ConfirmSheet.svelte";
+  import LangSwitch from "./components/common/LangSwitch.svelte";
   import type Settings from "./components/settings/Settings.svelte";
   import type History from "./components/history/History.svelte";
   import type Aura from "./components/common/Aura.svelte";
@@ -735,6 +736,12 @@
    */
   async function clearDeviceAndContinue() {
     const verified = accountSwitch?.verified ?? null;
+    stopSyncTriggers?.();
+    stopSyncTriggers = null;
+    // From Unlock or onboarding the session still works: ended here, or the
+    // next start would take it up again. After a sign-in as another account
+    // that new session is the one to keep
+    if (!verified) await apiLogout().catch(() => {});
     forgetDraftInMemory();
     await wipeThisDevice();
     setAppearance(null);
@@ -743,6 +750,8 @@
     lastSaved = null;
     signedOut = false;
     accountSwitch = null;
+    newRecoveryKey = null;
+    newDevice = false;
     if (verified) await continueAs(verified);
     else currentView = "login";
   }
@@ -968,6 +977,7 @@
     <p class="app-notice" role="status">{t("common.reloading")}</p>
   {:else if accountGone}
     <main class="damaged">
+      <LangSwitch />
       <p role="alert">{t("errors.accountGone")}</p>
       <button type="button" class="damaged-reset" onclick={acknowledgeAccountGone}>
         {t("common.ok")}
@@ -979,6 +989,7 @@
     </div>
   {:else if currentView === "storage_damaged"}
     <main class="damaged">
+      <LangSwitch />
       <p role="alert">{t("errors.storageDamaged")}</p>
       <div class="damaged-actions">
         <button type="button" class="damaged-reset" onclick={() => location.reload()}>
@@ -1024,38 +1035,62 @@
         onBack={backToDeviceAccount}
       />
     {/if}
-  {:else if currentView === "setup_passphrase" && account && Auth}
-    <Auth.PassphraseSetup
-      accountId={account.id}
-      onCompleted={handlePassphraseSetupCompleted}
-    />
-  {:else if currentView === "recovery_key_display" && newRecoveryKey && Auth}
-    <Auth.RecoveryKeyDisplay
-      recoveryKey={newRecoveryKey}
-      email={signInEmail}
-      onConfirmed={handleRecoveryKeyAcknowledged}
-    />
-  {:else if currentView === "recovery_pending" && account && Auth}
-    <Auth.RecoveryPending accountId={account.id} onDone={enterHome} />
-  {:else if currentView === "onboarding_finish" && account && Auth}
-    <Auth.OnboardingFinish onDone={enterHome} />
-  {:else if currentView === "unlock" && account && Auth}
-    <Auth.PassphraseUnlock
-      accountId={account.id}
-      {newDevice}
-      onUnlocked={() => {
-        newDevice = false;
-        handleUnlocked();
-      }}
-      onNeedRecovery={handleNeedRecovery}
-    />
-  {:else if currentView === "recover" && account && currentKeyring && Auth}
-    <Auth.RecoveryUnlock
-      accountId={account.id}
-      {currentKeyring}
-      onRecovered={handleRecovered}
-      onCancel={() => setView("unlock")}
-    />
+  {:else if AUTH_VIEWS.has(currentView) && Auth}
+    <!-- "Use a different account" from any other screen before the app: the
+         clear-or-keep screen over it; the screen stays mounted under it, so
+         "Back" finds it as it was (a recovery key on screen included) -->
+    {#if accountSwitch}
+      <Auth.AccountSwitch
+        email={accountSwitch.email}
+        entries={accountSwitch.entries}
+        unsynced={accountSwitch.unsynced}
+        onClear={clearDeviceAndContinue}
+        onBack={keepDeviceAccount}
+      />
+    {/if}
+    <div class="auth-view" class:away={accountSwitch !== null}>
+      {#if currentView === "setup_passphrase" && account}
+        <Auth.PassphraseSetup
+          accountId={account.id}
+          onCompleted={handlePassphraseSetupCompleted}
+          onSwitchAccount={openAccountSwitch}
+        />
+      {:else if currentView === "recovery_key_display" && newRecoveryKey}
+        <Auth.RecoveryKeyDisplay
+          recoveryKey={newRecoveryKey}
+          email={signInEmail}
+          onConfirmed={handleRecoveryKeyAcknowledged}
+          onLeave={openAccountSwitch}
+        />
+      {:else if currentView === "recovery_pending" && account}
+        <Auth.RecoveryPending
+          accountId={account.id}
+          onDone={enterHome}
+          onSwitchAccount={openAccountSwitch}
+        />
+      {:else if currentView === "onboarding_finish" && account}
+        <Auth.OnboardingFinish onDone={enterHome} />
+      {:else if currentView === "unlock" && account}
+        <Auth.PassphraseUnlock
+          accountId={account.id}
+          {newDevice}
+          onUnlocked={() => {
+            newDevice = false;
+            handleUnlocked();
+          }}
+          onNeedRecovery={handleNeedRecovery}
+          onSwitchAccount={openAccountSwitch}
+        />
+      {:else if currentView === "recover" && account && currentKeyring}
+        <Auth.RecoveryUnlock
+          accountId={account.id}
+          {currentKeyring}
+          onRecovered={handleRecovered}
+          onCancel={() => setView("unlock")}
+          onSwitchAccount={openAccountSwitch}
+        />
+      {/if}
+    </div>
   {/if}
   <!-- One switcher for the three panes, never re-mounted between them
        (ui.md §2.2); none in the check-in or on auth screens -->
@@ -1155,18 +1190,39 @@
     color: var(--c-ink, #1c1c1a);
   }
 
+  /* The whole page, so the language switch sits at its top right (on a
+     phone, under the actions at the right edge); the text keeps its measure */
   .damaged {
+    position: relative;
     flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 1.25rem;
-    max-width: 440px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
+    padding: calc(3.75rem + var(--safe-top, 0px)) 1.5rem 1.5rem;
     text-align: center;
     color: var(--c-ink, #1c1c1a);
+  }
+
+  .damaged > p {
+    max-width: 392px;
+    margin: 0;
+  }
+
+  @media (max-width: 899px) {
+    .damaged {
+      padding-top: calc(1.5rem + var(--safe-top, 0px));
+    }
+  }
+
+  /* The screen under "Use a different account": kept, out of sight */
+  .auth-view {
+    display: contents;
+  }
+
+  .auth-view.away {
+    display: none;
   }
 
   .damaged-actions {

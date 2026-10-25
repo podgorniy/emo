@@ -100,7 +100,6 @@ export const PENDING: readonly string[] = [
   "auth-about-dialog@390x664@*",
   "auth-about-dialog@390x844+sb34@*",
   "auth-about-dialog@390x844@*",
-  "auth-account-switch@844x390@*",
   "auth-code-entry+kb@375x667@*",
   "auth-code-entry+kb@390x664@*",
   "auth-code-entry+kb@390x844+sb34@*",
@@ -114,7 +113,9 @@ export const PENDING: readonly string[] = [
   "auth-recovery-key-acknowledged@*@*",
   "auth-recovery-key@*@*",
   "auth-recovery-pending+kb@*@*",
-  "auth-recovery-pending@844x390@*",
+  // The language switch and "Use a different account" under the card
+  "auth-recovery-pending@375x667@*",
+  "auth-recovery-pending@390x664@*",
   "auth-sign-in+kb@*@*",
   "auth-sign-in-to-sync+kb@375x667@*",
   "auth-sign-in-to-sync+kb@390x664@*",
@@ -123,8 +124,8 @@ export const PENDING: readonly string[] = [
   "auth-sign-in-to-sync@*@*",
   "auth-sign-in@*@*",
   "unlock-passphrase+kb@*@*",
-  "unlock-passphrase@375x667@*",
-  "unlock-passphrase@390x664@*",
+  // The language switch and "Use a different account" under the card
+  "unlock-passphrase@*@*",
   "unlock-recovery-key+kb@*@*",
   "unlock-recovery-key@*@*",
 ];

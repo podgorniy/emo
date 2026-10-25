@@ -31,16 +31,17 @@ version of this file.
   `bin/emo` is for tests and releases: never point it at `./data` while
   `make up` runs. The container's database is operated through `make invite`,
   `make stats` and `make cli ARGS="…"`.
-- `make test`: `deno test -A` with `LOG_LEVEL=warn`: every `*_test.ts` in
-  `shared/`, `server/`, `client/src/lib/` and `tools/` (unit and integration)
+- `make test`: `deno test -A` with `LOG_LEVEL=warn` (building `client/dist`
+  first when it is missing): every `*_test.ts` in `shared/`, `server/`,
+  `client/src/lib/` and `tools/` (unit and integration)
 - `make lint`: `deno lint`; `deno check` of the server, `shared/`, `perf/`,
   `tools/`, `e2e/` and `client/src/lib`; `svelte-check`
   (`deno task check:client`); `tools/check_repo.ts` (SPDX headers, no inline
   styles, §8); the tests in `shared/i18n/` (completeness, forbidden words)
 - `make fmt` / `make fmt-check`: `deno fmt` / `deno fmt --check` over the
   repository
-- `make ci`: `fmt-check` → `lint` → `test` → `build`: exactly what CI runs on
-  every push
+- `make ci`: `fmt-check` → `lint` → `build` → `test`: exactly what CI runs on
+  every push to `main` and every pull request
 - `make e2e`: `build`, `e2e-browser`, then `deno test -A e2e/*.e2e.ts` against
   `bin/emo` (§5.3)
 - `make capture [ARGS="…"]`: `build`, `e2e-browser`, then
@@ -49,8 +50,10 @@ version of this file.
 - `make perf`: `build`, `e2e-browser`, then `perf/run.ts`: Lighthouse, sizes and
   benches into `perf/report/` (§5.5)
 - `make e2e-browser [E2E_BROWSER_FLAGS=--with-deps]`: Installs Chromium's
-  headless shell for `playwright-core`; a no-op once installed. `--with-deps`
-  adds the system libraries on a fresh Linux (CI)
+  headless shell for `playwright-core`; a no-op once installed. Through `npx`
+  when Node is installed (under Deno the installer stalls unpacking the download
+  on Linux), else Deno. `--with-deps` adds the system libraries on a fresh Linux
+  (CI)
 - `make seed [ENTRIES=1000]`: A test account with N random ciphertext entries in
   the `make dev` database (`perf/seed.ts`) for perf runs; refuses unless
   `BASE_URL` is `localhost` or `127.0.0.1`
@@ -292,14 +295,16 @@ informational). Device timings on the reference phones are manual
 One GitHub Actions workflow, `.github/workflows/ci.yml`; no matrix (one Deno
 version from `.tool-versions`, `ubuntu-24.04`). Deno's cache is keyed on
 `deno.lock`, Playwright's browser cache on `deno.lock` too. Secrets: only the
-`GITHUB_TOKEN` GitHub provides; never instance secrets.
+`GITHUB_TOKEN` GitHub provides; never instance secrets. Every job has a time
+limit (`timeout-minutes`: `ci` 20, `e2e` 45, `release` and `perf` 30), so a hang
+fails instead of running for GitHub's six hours.
 
-| Trigger                     | Job                                                                                                                                                                                                                                                                               |
-| :-------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| push (any branch, `v*` tag) | `ci`: `make ci` (fmt-check, lint incl. SPDX, inline-style and forbidden-word checks, unit + integration tests incl. the crypto vectors, build incl. the size budget)                                                                                                              |
-| pull_request                | `ci`, and `e2e`: `make e2e E2E_BROWSER_FLAGS=--with-deps` (CSP, axe, flows, crypto vectors, the reach audit's default matrix: only failures not listed as pending fail); `e2e/report/` uploaded on failure                                                                        |
-| tag `v*`                    | `release` after `ci`: `make release-check`; the tag must equal `v` + `VERSION`; `make docker-build`, push `ghcr.io/<owner>/emo:X.Y.Z` and `:latest`; `make release-binaries` attached to the GitHub release as `emo-linux-x86_64` and `emo-linux-arm64` (release notes generated) |
-| schedule (Monday 04:00 UTC) | `perf`: `make perf` on the latest tag; `perf/report/` uploaded; fails on the Lighthouse minimums                                                                                                                                                                                  |
+| Trigger                                                                  | Job                                                                                                                                                                                                                                                                               |
+| :----------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| push to `main`, `v*` tag, pull_request                                   | `ci`: `make ci` (fmt-check, lint incl. SPDX, inline-style and forbidden-word checks, build incl. the size budget, unit + integration tests incl. the crypto vectors). Other branches run only through their pull request, once                                                    |
+| push to `main`, pull_request                                             | `e2e`: `make e2e E2E_BROWSER_FLAGS=--with-deps` (CSP, axe, flows, crypto vectors, the reach audit's default matrix: only failures not listed as pending fail); `e2e/report/` uploaded on failure                                                                                  |
+| tag `v*`                                                                 | `release` after `ci`: `make release-check`; the tag must equal `v` + `VERSION`; `make docker-build`, push `ghcr.io/<owner>/emo:X.Y.Z` and `:latest`; `make release-binaries` attached to the GitHub release as `emo-linux-x86_64` and `emo-linux-arm64` (release notes generated) |
+| tag `v*`, or by hand (Actions → ci → Run workflow, on any branch or tag) | `perf`: `make perf` on that ref; `perf/report/` uploaded; fails on the Lighthouse minimums, but gates nothing: Lighthouse on shared runners is noisy, so a failure is a prompt to rerun or measure locally. No schedule: the code only changes when something is pushed           |
 
 Once a tag has published `ghcr.io/<owner>/emo`, a server can run that image
 instead of building its own: `EMO_IMAGE=ghcr.io/<owner>/emo` in `.env` (and
@@ -320,15 +325,15 @@ private); `make update` then pulls.
 
 ### 7.2 Pinning
 
-| What               | Where                                                                                                                                                                                     |
-| :----------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Deno version       | `deno.json` → `"deno": ">=2.9.6 <2.10.0"`, plus the exact version in the `Dockerfile` (`FROM denoland/deno:2.9.6@sha256:…`) and `.tool-versions`                                          |
-| Base image         | `gcr.io/distroless/cc-debian12:nonroot` pinned by digest in the `Dockerfile`                                                                                                              |
-| Proxy image        | `caddy:2.11.7-alpine` pinned by digest in `compose.yml`                                                                                                                                   |
-| Updates            | Dependabot (`.github/dependabot.yml`): weekly PRs for the image digests (Dockerfile, compose) and the CI actions; `denoland/deno` is ignored there and moves by hand, in all three places |
-| Playwright         | `playwright-core` in `deno.json` and `PLAYWRIGHT` in the `Makefile`, the same version                                                                                                     |
-| Dependencies       | `deno.lock` committed; `deno install --frozen` in the `Dockerfile`; changes only through an explicit PR. The client runtime allowlist is performance.md §3.4                              |
-| Browsers supported | iOS/Safari ≥ 16.4, Chrome/Edge ≥ 111, Firefox ≥ 115 — declared in `README.md`; no polyfills below                                                                                         |
+| What               | Where                                                                                                                                                                                                             |
+| :----------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Deno version       | `deno.json` → `"deno": ">=2.9.6 <2.10.0"`, plus the exact version in the `Dockerfile` (`FROM denoland/deno:2.9.6@sha256:…`) and `.tool-versions`                                                                  |
+| Base image         | `gcr.io/distroless/cc-debian12:nonroot` pinned by digest in the `Dockerfile`                                                                                                                                      |
+| Proxy image        | `caddy:2.11.7-alpine` pinned by digest in `compose.yml`                                                                                                                                                           |
+| Updates            | Dependabot (`.github/dependabot.yml`): monthly PRs for the image digests (Dockerfile, compose) and the CI actions, all actions in one PR; `denoland/deno` is ignored there and moves by hand, in all three places |
+| Playwright         | `playwright-core` in `deno.json` and `PLAYWRIGHT` in the `Makefile`, the same version                                                                                                                             |
+| Dependencies       | `deno.lock` committed; `deno install --frozen` in the `Dockerfile`; changes only through an explicit PR. The client runtime allowlist is performance.md §3.4                                                      |
+| Browsers supported | iOS/Safari ≥ 16.4, Chrome/Edge ≥ 111, Firefox ≥ 115 — declared in `README.md`; no polyfills below                                                                                                                 |
 
 ### 7.3 Licence headers
 

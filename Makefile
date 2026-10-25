@@ -163,8 +163,13 @@ dev-tunnel:
 build:
 	@deno task build
 
-test:
+# The app tests serve the built client (server/app_test.ts): a fresh clone
+# builds it once first
+test: client/dist/index.html
 	@LOG_LEVEL=warn deno test -A
+
+client/dist/index.html:
+	@deno task build
 
 # deno lint and type checks (server, shared, client, Svelte), SPDX headers and
 # inline styles (tools/check_repo.ts), forbidden words and i18n completeness
@@ -181,7 +186,7 @@ fmt:
 fmt-check:
 	@deno fmt --check
 
-ci: fmt-check lint test build
+ci: fmt-check lint build test
 
 # Playwright against the compiled binary (development.md §5.3): zero CSP
 # violations on every screen, and the crypto vectors in Chromium (development.md §5.1).
@@ -203,9 +208,15 @@ capture: build e2e-browser
 perf: build e2e-browser
 	@deno run -A perf/run.ts
 
-# Chromium's headless shell for playwright-core; a no-op once installed
+# Chromium's headless shell for playwright-core; a no-op once installed.
+# Through Node when it is there: under Deno the installer stalls unpacking the
+# download on Linux and never exits (the first CI runs hung)
 e2e-browser:
-	@deno run -A $(PLAYWRIGHT) install $(E2E_BROWSER_FLAGS) --only-shell chromium
+	@if command -v npx >/dev/null 2>&1; then \
+		npx -y $(patsubst npm:%,%,$(PLAYWRIGHT)) install $(E2E_BROWSER_FLAGS) --only-shell chromium; \
+	else \
+		deno run -A $(PLAYWRIGHT) install $(E2E_BROWSER_FLAGS) --only-shell chromium; \
+	fi
 
 # Tags latest, VERSION and the commit (short SHA, "-dirty" with local
 # changes): the commit tag is what a rollback names (ops.md §3.2). REV=<7 hex>

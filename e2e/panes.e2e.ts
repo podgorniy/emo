@@ -87,10 +87,11 @@ Deno.test({
           }
           const r = rects[0];
           if (size.width >= 900) {
-            // Flush right against the 680 px column, 12 px from the top
-            if (
-              !near(r.right, (size.width + 680) / 2 - 16) || !near(r.top, 12)
-            ) {
+            // Flush right against the 680 px column, 12 px from the top. The
+            // column centres in the width left of a classic scrollbar (Linux
+            // and Windows draw one, macOS overlays it)
+            const inner = await page.evaluate(() => document.body.clientWidth);
+            if (!near(r.right, (inner + 680) / 2 - 16) || !near(r.top, 12)) {
               problems.push(`${at}: tabs at ${JSON.stringify(r)}`);
             }
             // Sticky: the same after scrolling Settings by 1000 px

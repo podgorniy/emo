@@ -1,20 +1,24 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-# Weekly pull requests for the digest-pinned images (Dockerfile, compose.yml)
-# and the CI actions (development.md §7.2). Deno is pinned in three places
-# (Dockerfile, deno.json, .tool-versions) and moves by hand, all at once.
+# Monthly pull requests for the digest-pinned images (Dockerfile, compose.yml)
+# and the CI actions, all actions in one (development.md §7.2). Deno is pinned
+# in three places (Dockerfile, deno.json, .tool-versions) and moves by hand,
+# all at once.
 version: 2
 updates:
   - package-ecosystem: docker
     directory: /
     schedule:
-      interval: weekly
+      interval: monthly
     ignore:
       - dependency-name: denoland/deno
   - package-ecosystem: docker-compose
     directory: /
     schedule:
-      interval: weekly
+      interval: monthly
   - package-ecosystem: github-actions
     directory: /
     schedule:
-      interval: weekly
+      interval: monthly
+    groups:
+      actions:
+        patterns: ["*"]

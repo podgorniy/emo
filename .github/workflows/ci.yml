@@ -3,13 +3,14 @@
 # Secrets: only the registry token GitHub provides; never instance secrets.
 name: ci
 
+# Pushes to main and v* tags; a pull request runs once, on its own event.
+# perf runs on a v* tag or by hand (Actions → ci → Run workflow, any ref).
 on:
   push:
-    branches: ["**"]
+    branches: [main]
     tags: ["v*"]
   pull_request:
-  schedule:
-    - cron: "0 4 * * 1" # weekly, Monday 04:00 UTC
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -18,8 +19,9 @@ jobs:
   # fmt-check, lint (SPDX, style=, forbidden words, i18n), tests incl. the
   # crypto vectors, build incl. the size budget
   ci:
-    if: github.event_name != 'schedule'
+    if: github.event_name != 'workflow_dispatch'
     runs-on: ubuntu-24.04
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: denoland/setup-deno@v2
@@ -29,10 +31,11 @@ jobs:
       - run: make ci
 
   # Playwright against the compiled binary: no CSP violation on any screen,
-  # the crypto vectors in Chromium
+  # the crypto vectors in Chromium. Pull requests and pushes to main
   e2e:
-    if: github.event_name == 'pull_request'
+    if: github.event_name == 'pull_request' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
     runs-on: ubuntu-24.04
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
       - uses: denoland/setup-deno@v2
@@ -52,9 +55,10 @@ jobs:
 
   # A v* tag: the image to ghcr.io and the binaries on the GitHub release
   release:
-    if: startsWith(github.ref, 'refs/tags/v')
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
     needs: ci
     runs-on: ubuntu-24.04
+    timeout-minutes: 30
     permissions:
       contents: write
       packages: write
@@ -92,19 +96,15 @@ jobs:
           gh release create "$GITHUB_REF_NAME" --verify-tag --generate-notes \
             bin/emo-linux-x86_64 bin/emo-linux-arm64
 
-  # Weekly: make perf against the latest tag; fails below the Lighthouse
-  # minimum (performance.md §1.4)
+  # make perf on a v* tag, or by hand on the chosen ref; fails below the
+  # Lighthouse minimum (performance.md §1.4). Not a release gate: shared
+  # runners make Lighthouse noisy
   perf:
-    if: github.event_name == 'schedule'
+    if: github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-24.04
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Latest tag
-        run: |
-          tag="$(git describe --tags --abbrev=0 2>/dev/null || true)"
-          if [ -n "$tag" ]; then git checkout "$tag"; fi
       - uses: denoland/setup-deno@v2
         with:
           deno-version-file: .tool-versions

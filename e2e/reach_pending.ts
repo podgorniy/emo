@@ -125,7 +125,10 @@ export const PENDING: readonly string[] = [
   "auth-sign-in@*@*",
   "unlock-passphrase+kb@*@*",
   // The language switch and "Use a different account" under the card
-  "unlock-passphrase@*@*",
+  "unlock-passphrase@375x667@*",
+  "unlock-passphrase@390x664@*",
+  "unlock-passphrase@390x844+sb34@*",
+  "unlock-passphrase@390x844@*",
   "unlock-recovery-key+kb@*@*",
   "unlock-recovery-key@*@*",
 ];

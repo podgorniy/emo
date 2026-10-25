@@ -718,7 +718,8 @@ group per area:
 - **Meets the contract:** the sync sheet; the check-in's help sheets; step 1 at
   390×844; steps 2–5 and 8 in landscape; Saved; the `/now` other-window screen;
   every confirmation sheet; onboarding's reminders step; the account switch;
-  recovery pending in landscape; the sheet keyboard on portrait phones.
+  recovery pending and unlock in landscape; the sheet keyboard on portrait
+  phones.
 - **Still on the reach room** (listed in `PENDING`): **Home and the chrome:**
   every Home state. **System screens:** storage damaged and account gone on
   portrait phones. **Check-in:** step 1 everywhere but 390×844; steps 2–9 on
@@ -726,9 +727,9 @@ group per area:
   **History:** all five rest states. **Settings:** at rest, Reminders offline,
   the export and change-passphrase sheets, the sheet keyboard in landscape.
   **Auth, onboarding and unlock:** every screen with a field; the About sheet on
-  portrait phones; recovery pending on the short portrait sizes; unlock
-  everywhere (the language switch and "Use a different account" under its field
-  since 2026-10-25).
+  portrait phones; recovery pending on the short portrait sizes; unlock on
+  portrait phones (the language switch and "Use a different account" under its
+  field since 2026-10-25).
 
 **Moving a screen onto the contract:** lay it out with `restLow` and the `.rl-*`
 classes (or a sheet `band`), drop its `keepReach` / page reach room, delete its

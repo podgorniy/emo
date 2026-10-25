@@ -1,0 +1,556 @@
+<!doctype html>
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
+<!--
+  The built-in privacy notice (ops.md §2.6), offered when PRIVACY_NOTICE_URL is
+  /privacy.html. Facts match the code: architecture.md §2–§6, §10.3;
+  reliability.md §1.8; ops.md §4.1. An operator who runs things differently
+  edits this file, and adds who they are and the law they answer to where that
+  law asks for it (GDPR Art. 13; ops.md §2.6).
+  Static and script-free (CSP). The About link adds #en, #uk or #ru.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Emo · Privacy notice</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/privacy.css">
+  </head>
+  <body>
+    <nav aria-label="Language">
+      <a href="#en" hreflang="en" lang="en">English</a>
+      <a href="#uk" hreflang="uk" lang="uk">Українська</a>
+      <a href="#ru" hreflang="ru" lang="ru">Русский</a>
+    </nav>
+    <main>
+      <article id="en" lang="en">
+        <h1>Privacy notice</h1>
+        <p>
+          Emo is a self-observation journal. This page explains what the server
+          you signed up with stores, who can see it and how long it is kept.
+          “The operator” is whoever runs this server.
+        </p>
+
+        <h2>In short</h2>
+        <ul>
+          <li>
+            What you record is encrypted on your device before it is sent. The
+            server stores it but cannot read it, and neither can the operator.
+          </li>
+          <li>
+            The server knows your email address and a few technical facts it
+            needs to sync your devices and send reminders, listed below.
+          </li>
+          <li>
+            No advertising, no analytics, no tracking, no third-party scripts or
+            fonts.
+          </li>
+          <li>
+            You can export everything or delete your account at any time:
+            Settings → Data and keys.
+          </li>
+        </ul>
+
+        <h2>What only you can read</h2>
+        <p>
+          Your entries (body areas, sensations, strength, pleasantness, energy,
+          words, urges, context and notes), your appearance settings and an
+          unfinished check-in are encrypted on your device with a key that only
+          your passphrase or your recovery key unlocks. The server keeps only
+          the encrypted form, and every entry is padded to the same size, so
+          its length tells nothing either. If you lose both your passphrase and
+          your recovery key, nobody can recover your entries, the operator
+          included.
+        </p>
+
+        <h2>What the server stores and can read</h2>
+        <ul>
+          <li>
+            <strong>Your email address</strong>, to sign you in and send you
+            mail. It is stored encrypted under a server key; the server decrypts
+            it to send mail, so the operator can see it.
+          </li>
+          <li>
+            <strong>Reminder settings</strong>: your time zone, language, the
+            hours you are awake, how many reminders a day and the shortest gap
+            between them. The server needs them to plan reminders.
+          </li>
+          <li>
+            <strong>When entries arrive and how many there are</strong>, not
+            what is in them.
+          </li>
+          <li>
+            <strong>Your devices</strong>: for each signed-in browser, its
+            description (user agent) and when it signed in and was last used;
+            for each device that gets reminders, an address at its push service.
+          </li>
+          <li>
+            <strong>Reminders</strong>: when each one was planned and sent. The
+            server does not learn whether you answered.
+          </li>
+          <li>
+            <strong>Invites</strong>: the invite codes you create, and which
+            code you joined with, so who invited whom.
+          </li>
+          <li>
+            <strong>Your key, locked</strong>: the encryption key, wrapped
+            under your passphrase and under your recovery key. Without one of
+            them it is useless.
+          </li>
+          <li>
+            <strong>When the server mailed you</strong>, to limit how often,
+            and <strong>sign-in codes</strong> as one-way hashes for
+            10 minutes.
+          </li>
+        </ul>
+        <p>
+          IP addresses are used only in memory, to slow down abuse, and are
+          never written down. Server logs record each request’s route, result
+          and timing with your account number; never your email address, IP
+          address or anything you recorded. They are rotated by size. The only
+          cookie is the one that keeps you signed in. Your device keeps your
+          entries (encrypted) and display settings in its own storage.
+        </p>
+
+        <h2>Who else is involved</h2>
+        <ul>
+          <li>
+            <strong>The operator’s email provider</strong> delivers sign-in
+            codes and other mail from this server. It sees your email address
+            and the message.
+          </li>
+          <li>
+            <strong>Your browser’s push service</strong> (Apple, Google or
+            Mozilla, for example) delivers reminders. The message is encrypted
+            for your device; the service sees only that a reminder was sent,
+            and when.
+          </li>
+        </ul>
+        <p>Nothing is shared with anyone else or sold.</p>
+
+        <h2>If you email yourself your recovery key</h2>
+        <p>
+          This is optional. The key then passes through this server, which
+          does not store it, and through the email provider, and it stays in
+          your mailbox. Sign-in also works by email, so anyone who can read
+          your mailbox could then sign in and open your entries. Saving the key
+          as a file or writing it down avoids this.
+        </p>
+
+        <h2>How long it is kept</h2>
+        <ul>
+          <li>Everything is kept for as long as your account exists.</li>
+          <li>
+            Deleting your account (Settings → Data and keys → Delete account)
+            removes your entries, keys, settings, devices, reminders and the
+            invites you created from the server at once.
+          </li>
+          <li>
+            Backups of the server’s database are kept for about 30 days with the
+            default settings, so an encrypted copy can remain until it rotates
+            out.
+          </li>
+          <li>
+            After an account is deleted, fingerprints of its sign-in sessions,
+            without the account, are kept for 90 days so that your other devices
+            learn it is gone.
+          </li>
+          <li>Expired sign-ins and sign-in codes are removed automatically.</li>
+        </ul>
+
+        <h2>Your choices and rights</h2>
+        <ul>
+          <li>
+            <strong>Get your data</strong>: Settings → Data and keys → Export,
+            in readable files.
+          </li>
+          <li>
+            <strong>Delete it</strong>: Settings → Data and keys → Delete
+            account, effective immediately.
+          </li>
+          <li>
+            For anything else, such as a copy of what the server holds about
+            you, use the contact in Settings → About if the operator has given
+            one.
+          </li>
+          <li>
+            Where the GDPR applies, account data is processed to provide the
+            service you signed up for; your entries may concern your health and
+            are stored only by your explicit choice to record them, which you
+            withdraw by deleting your account. You can also complain to the data
+            protection authority where you live.
+          </li>
+        </ul>
+
+        <h2>Check what runs</h2>
+        <p>
+          Emo is free software under the GNU AGPL. Settings → About → Source
+          code downloads the source of the exact version this server runs. A
+          server may run a changed copy, so its own source is the one that
+          counts. The project itself:
+        </p>
+        <p>
+          <a class="project"
+            href="https://github.com/podgorniy/emo">github.com/podgorniy/emo</a>
+        </p>
+
+        <p class="updated">
+          Last updated 9 October 2026. A changed notice appears at this address.
+        </p>
+      </article>
+
+      <article id="uk" lang="uk">
+        <h1>Повідомлення про приватність</h1>
+        <p>
+          Emo — щоденник самоспостереження. Тут пояснено, що зберігає сервер, на
+          якому ви зареєструвалися, хто це бачить і як довго це зберігається.
+          «Оператор» — той, хто керує цим сервером.
+        </p>
+
+        <h2>Коротко</h2>
+        <ul>
+          <li>
+            Усе, що ви записуєте, шифрується на вашому пристрої ще до
+            надсилання. Сервер зберігає записи, але не може їх прочитати, як і
+            оператор.
+          </li>
+          <li>
+            Сервер знає вашу адресу електронної пошти та кілька технічних даних,
+            потрібних для синхронізації пристроїв і нагадувань; перелік нижче.
+          </li>
+          <li>
+            Жодної реклами, аналітики, стеження, сторонніх скриптів чи шрифтів.
+          </li>
+          <li>
+            Будь-коли можна експортувати все або видалити акаунт: Налаштування →
+            Дані й ключі.
+          </li>
+        </ul>
+
+        <h2>Що можете прочитати лише ви</h2>
+        <p>
+          Ваші записи (ділянки тіла, відчуття, сила, приємність, енергія,
+          слова, спонукання, контекст і нотатки), налаштування вигляду та
+          незавершений запис шифруються на вашому пристрої ключем, який
+          відмикають лише ваша passphrase або ключ відновлення. Сервер зберігає
+          тільки зашифровану форму, а кожен запис доповнюється до однакового
+          розміру, тож і довжина нічого не видає. Якщо ви втратите і
+          passphrase, і ключ відновлення, ніхто не зможе відновити записи,
+          зокрема оператор.
+        </p>
+
+        <h2>Що сервер зберігає і може прочитати</h2>
+        <ul>
+          <li>
+            <strong>Адресу електронної пошти</strong> — для входу й листів.
+            Вона зберігається зашифрованою ключем сервера; сервер розшифровує
+            її, щоб надіслати лист, тож оператор може її бачити.
+          </li>
+          <li>
+            <strong>Налаштування нагадувань</strong>: часовий пояс, мову, години,
+            коли ви не спите, скільки нагадувань на день і найменший проміжок
+            між ними. Без них сервер не може планувати нагадування.
+          </li>
+          <li>
+            <strong>Коли надходять записи і скільки їх</strong>, але не їхній
+            вміст.
+          </li>
+          <li>
+            <strong>Ваші пристрої</strong>: для кожного браузера, де виконано
+            вхід, — його опис (user agent), час входу й останнього використання;
+            для кожного пристрою з нагадуваннями — адресу в його push-сервісі.
+          </li>
+          <li>
+            <strong>Нагадування</strong>: коли кожне було заплановане й
+            надіслане. Чи відповіли ви, сервер не дізнається.
+          </li>
+          <li>
+            <strong>Запрошення</strong>: коди, які ви створили, і код, за яким
+            ви приєдналися, тобто хто кого запросив.
+          </li>
+          <li>
+            <strong>Ваш ключ у замкненому вигляді</strong>: ключ шифрування,
+            загорнутий під passphrase і під ключ відновлення. Без одного з них
+            він марний.
+          </li>
+          <li>
+            <strong>Коли сервер надсилав вам листи</strong> — щоб обмежити їхню
+            частоту, і <strong>коди входу</strong> як односторонні хеші
+            протягом 10 хвилин.
+          </li>
+        </ul>
+        <p>
+          IP-адреси використовуються лише в пам'яті, щоб стримувати зловживання,
+          і ніде не записуються. Журнали сервера фіксують маршрут, результат і
+          тривалість кожного запиту разом із номером акаунта; ніколи — адресу
+          пошти, IP-адресу чи те, що ви записали. Вони ротуються за розміром.
+          Єдиний cookie — той, що зберігає вхід. Ваш пристрій тримає записи
+          (зашифровані) і налаштування вигляду у власному сховищі.
+        </p>
+
+        <h2>Хто ще бере участь</h2>
+        <ul>
+          <li>
+            <strong>Поштовий сервіс оператора</strong> доставляє коди входу та
+            інші листи цього сервера. Він бачить вашу адресу і лист.
+          </li>
+          <li>
+            <strong>Push-сервіс вашого браузера</strong> (наприклад, Apple,
+            Google чи Mozilla) доставляє нагадування. Повідомлення зашифроване
+            для вашого пристрою; сервіс бачить лише те, що нагадування
+            надіслано, і коли.
+          </li>
+        </ul>
+        <p>Більше ні з ким нічого не передається і не продається.</p>
+
+        <h2>Якщо ви надсилаєте собі ключ відновлення поштою</h2>
+        <p>
+          Це необов'язково. Тоді ключ проходить через цей сервер, який його не
+          зберігає, і через поштовий сервіс, а потім лишається у вашій скриньці.
+          Вхід теж відбувається через пошту, тож будь-хто з доступом до вашої
+          скриньки зможе увійти й відкрити записи. Щоб уникнути цього, збережіть
+          ключ файлом або перепишіть його.
+        </p>
+
+        <h2>Як довго зберігаються дані</h2>
+        <ul>
+          <li>Усе зберігається, доки існує ваш акаунт.</li>
+          <li>
+            Видалення акаунта (Налаштування → Дані й ключі → Видалити акаунт)
+            одразу прибирає із сервера записи, ключі, налаштування, пристрої,
+            нагадування і створені вами запрошення.
+          </li>
+          <li>
+            Резервні копії бази даних сервера за стандартних налаштувань
+            зберігаються близько 30 днів, тож зашифрована копія може лишатися,
+            доки не буде витіснена.
+          </li>
+          <li>
+            Після видалення акаунта відбитки його сесій, без прив'язки до
+            акаунта, зберігаються 90 днів, щоб інші ваші пристрої дізналися, що
+            його більше немає.
+          </li>
+          <li>Прострочені входи й коди входу видаляються автоматично.</li>
+        </ul>
+
+        <h2>Ваш вибір і права</h2>
+        <ul>
+          <li>
+            <strong>Отримати свої дані</strong>: Налаштування → Дані й ключі →
+            Експорт, у файлах, які можна прочитати.
+          </li>
+          <li>
+            <strong>Видалити їх</strong>: Налаштування → Дані й ключі → Видалити
+            акаунт, діє одразу.
+          </li>
+          <li>
+            З будь-чим іншим, наприклад щоб отримати копію того, що сервер
+            зберігає про вас, звертайтеся за контактом у Налаштування → Про
+            застосунок, якщо оператор його вказав.
+          </li>
+          <li>
+            Там, де діє GDPR, дані акаунта обробляються, щоб надавати сервіс, на
+            який ви зареєструвалися; ваші записи можуть стосуватися здоров'я і
+            зберігаються лише з вашого явного вибору їх робити, який ви
+            відкликаєте, видаливши акаунт. Ви також можете поскаржитися до органу
+            із захисту даних там, де живете.
+          </li>
+        </ul>
+
+        <h2>Перевірте, що тут працює</h2>
+        <p>
+          Emo — вільне програмне забезпечення за ліцензією GNU AGPL. Налаштування
+          → Про застосунок → Вихідний код завантажує вихідний код саме тієї
+          версії, що працює на цьому сервері. Сервер може працювати на зміненій копії, і важить саме його власний вихідний код. Сам проєкт:
+        </p>
+        <p>
+          <a class="project"
+            href="https://github.com/podgorniy/emo">github.com/podgorniy/emo</a>
+        </p>
+
+        <p class="updated">
+          Оновлено 9 жовтня 2026 року. Змінене повідомлення з'явиться за цією
+          адресою.
+        </p>
+      </article>
+
+      <article id="ru" lang="ru">
+        <h1>Уведомление о приватности</h1>
+        <p>
+          Emo — дневник самонаблюдения. Здесь объясняется, что хранит сервер, на
+          котором вы зарегистрировались, кто это видит и как долго это хранится.
+          «Оператор» — тот, кто управляет этим сервером.
+        </p>
+
+        <h2>Коротко</h2>
+        <ul>
+          <li>
+            Всё, что вы записываете, шифруется на вашем устройстве ещё до
+            отправки. Сервер хранит записи, но не может их прочитать, как и
+            оператор.
+          </li>
+          <li>
+            Сервер знает ваш адрес электронной почты и несколько технических
+            данных, нужных для синхронизации устройств и напоминаний; список
+            ниже.
+          </li>
+          <li>
+            Никакой рекламы, аналитики, слежки, сторонних скриптов или шрифтов.
+          </li>
+          <li>
+            В любой момент можно экспортировать всё или удалить аккаунт:
+            Настройки → Данные и ключи.
+          </li>
+        </ul>
+
+        <h2>Что можете прочитать только вы</h2>
+        <p>
+          Ваши записи (области тела, ощущения, сила, приятность, энергия, слова,
+          побуждения, контекст и заметки), настройки внешнего вида и
+          незавершённая запись шифруются на вашем устройстве ключом, который
+          открывают только ваша passphrase или ключ восстановления. Сервер
+          хранит лишь зашифрованную форму, а каждая запись дополняется до
+          одинакового размера, так что и длина ничего не выдаёт. Если вы
+          потеряете и passphrase, и ключ восстановления, никто не сможет
+          восстановить записи, в том числе оператор.
+        </p>
+
+        <h2>Что сервер хранит и может прочитать</h2>
+        <ul>
+          <li>
+            <strong>Адрес электронной почты</strong> — для входа и писем. Он
+            хранится зашифрованным ключом сервера; сервер расшифровывает его,
+            чтобы отправить письмо, поэтому оператор может его видеть.
+          </li>
+          <li>
+            <strong>Настройки напоминаний</strong>: часовой пояс, язык, часы
+            бодрствования, сколько напоминаний в день и наименьший промежуток
+            между ними. Без них сервер не может планировать напоминания.
+          </li>
+          <li>
+            <strong>Когда приходят записи и сколько их</strong>, но не их
+            содержимое.
+          </li>
+          <li>
+            <strong>Ваши устройства</strong>: для каждого браузера, где выполнен
+            вход, — его описание (user agent), время входа и последнего
+            использования; для каждого устройства с напоминаниями — адрес в его
+            push-сервисе.
+          </li>
+          <li>
+            <strong>Напоминания</strong>: когда каждое было запланировано и
+            отправлено. Ответили ли вы, сервер не узнаёт.
+          </li>
+          <li>
+            <strong>Приглашения</strong>: созданные вами коды и код, по которому
+            вы присоединились, то есть кто кого пригласил.
+          </li>
+          <li>
+            <strong>Ваш ключ в запертом виде</strong>: ключ шифрования,
+            завёрнутый под passphrase и под ключ восстановления. Без одного из
+            них он бесполезен.
+          </li>
+          <li>
+            <strong>Когда сервер отправлял вам письма</strong> — чтобы
+            ограничить их частоту, и <strong>коды входа</strong> в виде
+            односторонних хешей в течение 10 минут.
+          </li>
+        </ul>
+        <p>
+          IP-адреса используются только в памяти, чтобы сдерживать
+          злоупотребления, и нигде не записываются. Журналы сервера фиксируют
+          маршрут, результат и длительность каждого запроса вместе с номером
+          аккаунта; никогда — адрес почты, IP-адрес или то, что вы записали. Они
+          ротируются по размеру. Единственный cookie — тот, что сохраняет вход.
+          Ваше устройство держит записи (зашифрованными) и настройки вида в
+          собственном хранилище.
+        </p>
+
+        <h2>Кто ещё участвует</h2>
+        <ul>
+          <li>
+            <strong>Почтовый сервис оператора</strong> доставляет коды входа и
+            другие письма этого сервера. Он видит ваш адрес и письмо.
+          </li>
+          <li>
+            <strong>Push-сервис вашего браузера</strong> (например, Apple, Google
+            или Mozilla) доставляет напоминания. Сообщение зашифровано для
+            вашего устройства; сервис видит только то, что напоминание
+            отправлено, и когда.
+          </li>
+        </ul>
+        <p>Больше ни с кем ничего не передаётся и не продаётся.</p>
+
+        <h2>Если вы отправляете себе ключ восстановления почтой</h2>
+        <p>
+          Это необязательно. Тогда ключ проходит через этот сервер, который его
+          не хранит, и через почтовый сервис, а затем остаётся в вашем ящике.
+          Вход тоже происходит через почту, поэтому любой, у кого есть доступ к
+          вашему ящику, сможет войти и открыть записи. Чтобы этого избежать,
+          сохраните ключ файлом или перепишите его.
+        </p>
+
+        <h2>Как долго хранятся данные</h2>
+        <ul>
+          <li>Всё хранится, пока существует ваш аккаунт.</li>
+          <li>
+            Удаление аккаунта (Настройки → Данные и ключи → Удалить аккаунт)
+            сразу убирает с сервера записи, ключи, настройки, устройства,
+            напоминания и созданные вами приглашения.
+          </li>
+          <li>
+            Резервные копии базы данных сервера при стандартных настройках
+            хранятся около 30 дней, так что зашифрованная копия может оставаться,
+            пока не будет вытеснена.
+          </li>
+          <li>
+            После удаления аккаунта отпечатки его сессий, без привязки к
+            аккаунту, хранятся 90 дней, чтобы другие ваши устройства узнали, что
+            его больше нет.
+          </li>
+          <li>Истёкшие входы и коды входа удаляются автоматически.</li>
+        </ul>
+
+        <h2>Ваш выбор и права</h2>
+        <ul>
+          <li>
+            <strong>Получить свои данные</strong>: Настройки → Данные и ключи →
+            Экспорт, в читаемых файлах.
+          </li>
+          <li>
+            <strong>Удалить их</strong>: Настройки → Данные и ключи → Удалить
+            аккаунт, действует сразу.
+          </li>
+          <li>
+            По любым другим вопросам, например чтобы получить копию того, что
+            сервер хранит о вас, обращайтесь по контакту в Настройки → О
+            приложении, если оператор его указал.
+          </li>
+          <li>
+            Там, где действует GDPR, данные аккаунта обрабатываются, чтобы
+            предоставлять сервис, на который вы зарегистрировались; ваши записи
+            могут касаться здоровья и хранятся только по вашему явному выбору их
+            делать, который вы отзываете, удалив аккаунт. Вы также можете подать
+            жалобу в орган по защите данных там, где живёте.
+          </li>
+        </ul>
+
+        <h2>Проверьте, что здесь работает</h2>
+        <p>
+          Emo — свободное программное обеспечение по лицензии GNU AGPL.
+          Настройки → О приложении → Исходный код скачивает исходный код именно
+          той версии, что работает на этом сервере. Сервер может работать на изменённой копии, и значение имеет именно его собственный исходный код. Сам проект:
+        </p>
+        <p>
+          <a class="project"
+            href="https://github.com/podgorniy/emo">github.com/podgorniy/emo</a>
+        </p>
+
+        <p class="updated">
+          Обновлено 9 октября 2026 года. Изменённое уведомление появится по
+          этому адресу.
+        </p>
+      </article>
+    </main>
+  </body>
+</html>

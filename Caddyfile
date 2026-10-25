@@ -1,0 +1,26 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# The built-in HTTPS proxy (compose.yml, profile "https"). EMO_SITE is
+# BASE_URL, so the certificate is for its host; EMO_PORT is PORT. The app sets
+# its own security headers and compresses its answers; Caddy forwards Host,
+# X-Forwarded-For and X-Forwarded-Proto by default (ops.md §2.3)
+{
+	# No access log (Caddy's default). Error lines, e.g. a 502 while the app
+	# restarts, would carry the client's address: drop it, so no IP is ever
+	# written down, as the privacy notice says (ops.md §2.3)
+	log default {
+		format filter {
+			fields {
+				request>remote_ip delete
+				request>remote_port delete
+				request>client_ip delete
+				request>headers>X-Forwarded-For delete
+				request>headers>Cookie delete
+			}
+		}
+	}
+}
+
+{$EMO_SITE} {
+	reverse_proxy emo:{$EMO_PORT}
+	header -Server
+}

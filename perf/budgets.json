@@ -1,0 +1,10 @@
+{
+  "$comment": "performance.md §1.1; checked by perf/check_budget.ts in make build",
+  "shell_js_gzip_kb": 120,
+  "lazy_chunk_gzip_kb": 60,
+  "history_chunk_gzip_kb": 8,
+  "historyrecord_chunk_gzip_kb": 4,
+  "css_gzip_kb": 20,
+  "icons_kb": 60,
+  "precache_kb": 1200
+}

@@ -1,0 +1,104 @@
+/* SPDX-License-Identifier: AGPL-3.0-or-later */
+/* The privacy notice (privacy.html): a plain reading page in the Calm
+   palette, light or dark with the system. With #en, #uk or #ru in the address
+   only that language shows; without, all three follow each other. */
+
+:root {
+  color-scheme: light dark;
+  --ground: #e4edf1;
+  --surface: #ffffff;
+  --ink: #1e2a26;
+  --muted: #5c6670;
+  --line: #d5dbe0;
+  --accent: #3f38c9;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ground: #12181b;
+    --surface: #1b2327;
+    --ink: #e6ecef;
+    --muted: #a3adb4;
+    --line: #2d383d;
+    --accent: #a9b6ff;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 16px;
+  background: var(--ground);
+  color: var(--ink);
+  font: 1rem/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+nav,
+main {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  padding: 0.5rem 0 1rem;
+}
+
+nav a,
+.project {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+a {
+  color: var(--accent);
+}
+
+article {
+  padding: 1.5rem 1.25rem;
+  margin-bottom: 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+
+/* One language when the address names it */
+main:has(article:target) article:not(:target) {
+  display: none;
+}
+
+h1 {
+  margin: 0 0 1rem;
+  font-size: 1.75rem;
+  line-height: 1.2;
+}
+
+h2 {
+  margin: 1.75rem 0 0.5rem;
+  font-size: 1.125rem;
+}
+
+p,
+ul {
+  margin: 0 0 0.75rem;
+}
+
+ul {
+  padding-left: 1.25rem;
+}
+
+li {
+  margin-bottom: 0.4rem;
+}
+
+.updated {
+  margin-top: 1.75rem;
+  color: var(--muted);
+  font-size: 0.875rem;
+}

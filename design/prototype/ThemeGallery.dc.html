@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Emo — theme presets</title>
+    <script src="./support.js"></script>
+  </head>
+  <body>
+    <x-dc>
+      <helmet>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600&amp;family=Hanken+Grotesk:wght@400;500;700&amp;family=Plus+Jakarta+Sans:wght@500;700;800&amp;family=Newsreader:ital,wght@0,400;0,500;1,400;1,500&amp;family=Sora:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=Manrope:wght@500;700;800&amp;family=Literata:ital,wght@0,400;0,500;1,400;1,500&amp;family=Golos+Text:wght@400;500;600&amp;family=Unbounded:wght@500;600&amp;family=Rubik:wght@400;500;600&amp;display=swap"
+          rel="stylesheet">
+        <style>
+        body {
+          margin: 0;
+        }
+        </style>
+      </helmet>
+      <div
+        style="width: 3456px; display: grid; grid-template-columns: repeat(2, 1680px); column-gap: 96px; row-gap: 80px; align-items: start; font-family: 'Onest', system-ui, sans-serif; color: #1E2A26">
+        <sc-for list="{{themes}}" as="t" hint-placeholder-count="5">
+          <section style="display: flex; flex-direction: column; gap: 18px">
+            <div
+              style="display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; min-height: 52px">
+              <h2
+                style="margin: 0; font-size: 30px; font-weight: 600; letter-spacing: -0.01em">{{ t.name }}</h2>
+              <span style="font-size: 16px; color: #4E5853">{{ t.desc }}</span>
+              <span style="flex: 1"></span>
+              <sc-for list="{{t.checks}}" as="k" hint-placeholder-count="2">
+                <span style="{{k.st}}">{{ k.text }}</span>
+              </sc-for>
+            </div>
+            <div
+              style="display: grid; grid-template-columns: repeat(4, 390px); gap: 40px">
+              <sc-for list="{{t.steps}}" as="sp" hint-placeholder-count="4">
+                <div
+                  style="width: 390px; height: 844px; border-radius: 28px; overflow: hidden; box-shadow: 0 0 0 1px rgba(0,0,0,.08), 0 20px 40px -24px rgba(0,0,0,.35)">
+                  <dc-import name="Screen" theme="{{t.theme}}"
+                    step="{{sp.step}}" uid="{{sp.uid}}" intensity="{{sp.iv}}"
+                    hint-size="390px,844px"></dc-import>
+                </div>
+              </sc-for>
+            </div>
+          </section>
+        </sc-for>
+        <section style="display: flex; flex-direction: column; gap: 18px">
+          <div
+            style="display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; min-height: 52px">
+            <h2
+              style="margin: 0; font-size: 30px; font-weight: 600; letter-spacing: -0.01em">Base colour &amp; gradient</h2>
+            <span
+              style="font-size: 16px; color: #4E5853">Available for Calm, Lavender, Sea glass, Archive, Sand, Dusk and Night — chosen in Settings → Appearance</span>
+          </div>
+          <div
+            style="display: grid; grid-template-columns: repeat(4, 390px); gap: 40px">
+            <sc-for list="{{seedRow}}" as="sp" hint-placeholder-count="4">
+              <div style="display: flex; flex-direction: column; gap: 10px">
+                <div
+                  style="width: 390px; height: 844px; border-radius: 28px; overflow: hidden; box-shadow: 0 0 0 1px rgba(0,0,0,.08), 0 20px 40px -24px rgba(0,0,0,.35)">
+                  <dc-import name="Screen" theme="{{sp.theme}}"
+                    step="{{sp.step}}" uid="{{sp.uid}}" intensity="{{sp.iv}}"
+                    hint-size="390px,844px"></dc-import>
+                </div>
+                <span
+                  style="font-size: 15px; color: #4E5853">{{ sp.label }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </section>
+      </div>
+    </x-dc>
+    <script type="text/x-dc" data-dc-script
+      data-props='{"$preview":{"width":3456,"height":5900}}'>
+const TINT = (() => {
+  const hx = (h) => { const n = parseInt(h.slice(1), 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; };
+  const toHsl = (h) => { const [r, g, b] = hx(h).map((x) => x / 255); const mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (mx + mn) / 2; if (mx === mn) return [0, 0, l * 100];
+    const d = mx - mn; const s = l > 0.5 ? d / (2 - mx - mn) : d / (mx + mn); const H = (mx === r ? (g - b) / d + (g < b ? 6 : 0) : mx === g ? (b - r) / d + 2 : (r - g) / d + 4) * 60; return [H, s * 100, l * 100]; };
+  const hsl = (h, s, l) => { h = ((h % 360) + 360) % 360; s = Math.max(0, Math.min(100, s)) / 100; l = Math.max(0, Math.min(100, l)) / 100; const k = (n) => (n + h / 30) % 12; const a = s * Math.min(l, 1 - l);
+    const f = (n) => Math.round(255 * (l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1))))); return '#' + [f(0), f(8), f(4)].map((x) => x.toString(16).padStart(2, '0')).join('').toUpperCase(); };
+  const lum = (h) => { const a = hx(h).map((x) => { x /= 255; return x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4); }); return 0.2126 * a[0] + 0.7152 * a[1] + 0.0722 * a[2]; };
+  const cr = (a, b) => { const l1 = lum(a), l2 = lum(b); return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05); };
+  const fit = (h, s, l, against, dir) => { let x = hsl(h, s, l), i = 0; while (cr(x, against) < 4.6 && i < 80) { l += dir; x = hsl(h, s, l); i++; } return x; };
+  const warm = (h) => { const [H, S] = toHsl(h); return (H < 55 || H > 340) && S > 35; };
+  const light = (seed, p) => {
+    const [H, S0] = toHsl(seed); const S = Math.max(25, Math.min(75, S0)); const gs = (p && p.gs) || 0.5;
+    const ground = hsl(H, S * gs, 92), surface = hsl(H, S * gs * 1.1, 98), ink = hsl(H, S * 0.6, 13);
+    const accent = fit(H, S, 42, '#FFFFFF', -1);
+    return { ground: ground, surface: surface, ink: ink, muted: fit(H, S * 0.28, 36, ground, -1), line: hsl(H, S * 0.4, 77), track: hsl(H, S * 0.45, 85),
+      accent: accent, choice: p && p.choice === 'accent' ? accent : ink, onChoice: '#FFFFFF', figure: surface, figureLine: hsl(H, S * 0.25, 57),
+      figureSel: accent, bloom: hsl(H + 12, S, 42), primary: p && p.primary === 'accent' ? accent : ink, onPrimary: '#FFFFFF' };
+  };
+  const dark = (seed) => {
+    const [H, S0] = toHsl(seed); const S = Math.max(25, Math.min(80, S0));
+    const ground = hsl(H, S * 0.45, 9), accent = fit(H, S, 66, hsl(H, S * 0.4, 14), 1);
+    return { ground: ground, surface: hsl(H, S * 0.4, 14), ink: hsl(H, S * 0.25, 94), muted: hsl(H, S * 0.15, 68), line: hsl(H, S * 0.3, 25), track: hsl(H, S * 0.3, 19),
+      accent: accent, choice: accent, onChoice: hsl(H, S * 0.5, 9), figure: hsl(H, S * 0.35, 12), figureLine: hsl(H, S * 0.25, 30), figureSel: accent, bloom: accent,
+      primary: hsl(H, S * 0.25, 94), onPrimary: ground };
+  };
+  const apply = (preset, seed, grad, seed2) => {
+    const t = JSON.parse(JSON.stringify(preset));
+    if (preset.tint && seed) t.c = preset.tint === 'dark' ? dark(seed) : light(seed, preset.tp);
+    if (preset.tint && grad && seed2) t.c.ground2 = preset.tint === 'dark' ? dark(seed2).track : light(seed2, preset.tp).ground;
+    t.seed = seed || null; t.grad = !!(preset.tint && grad); t.seed2 = grad ? seed2 : null;
+    return t;
+  };
+  const checks = (c) => {
+    const grounds = [c.ground].concat(c.ground2 ? [c.ground2] : []);
+    const pairs = [['text', c.ink, c.ground], ['buttons', c.onPrimary, c.primary], ['selected', c.onChoice, c.choice], ['cards', c.ink, c.surface]];
+    grounds.forEach((g, i) => pairs.push(['secondary text' + (i ? ' (gradient)' : ''), c.muted, g]));
+    if (c.ground2) pairs.push(['text (gradient)', c.ink, c.ground2]);
+    const bad = pairs.filter((p) => cr(p[1], p[2]) < 4.5).map((p) => p[0]);
+    return { readable: bad.length === 0, bad: bad, warm: warm(c.figureSel) || warm(c.bloom), dark: lum(c.ground) < 0.2 };
+  };
+  return { light: light, dark: dark, apply: apply, checks: checks, cr: cr };
+})();
+const SEEDS = [['#1F7A73', 'Teal'], ['#2563A8', 'Sky'], ['#4F46E5', 'Indigo'], ['#4E7A3F', 'Sage'], ['#6A4FA8', 'Lilac'], ['#4A5A6E', 'Slate'], ['#A8456A', 'Rose'], ['#B7791F', 'Amber']];
+class Component extends DCLogic {
+  renderVals() {
+    const P = [
+      { id: 'calm', name: 'Calm', desc: 'Default · pale blue, slate, indigo highlight', ivSet: -1,
+        c: { ground: '#E4EDF1', surface: '#F7FAFB', ink: '#1E2A26', muted: '#4E5853', line: '#B3BDB7', track: '#D3E0E6', accent: '#4F46E5', choice: '#1E2A26', onChoice: '#FFFFFF', figure: '#F7FAFB', figureLine: '#8E9892', figureSel: '#4F46E5', bloom: '#4F46E5', primary: '#1E2A26', onPrimary: '#FFFFFF' },
+        f: { ui: 'Onest', display: 'Onest', displayWeight: 500, mono: 'JetBrains Mono', labels: 'normal' }, r: { control: 16, chip: 12 }, shadow: false,
+        v: { progress: 'segments', heading: 'plain', stepLabel: false, tabs: 'segmented', options: 'grid', l2: 'chips', intensity: 'slider', figure: 'solid', figureLabels: false, confidence: 'buttons', summary: 'plain' } },
+      { id: 'mono', name: 'Mono', desc: 'Neutral greys · grouped choices', ivSet: -1,
+        c: { ground: '#F7F7F8', surface: '#FFFFFF', ink: '#0B0B0C', muted: '#5E5E66', line: '#DCDCE0', track: '#EBEBEE', accent: '#0B0B0C', choice: '#0B0B0C', onChoice: '#FFFFFF', figure: '#FFFFFF', figureLine: '#8A8A92', figureSel: '#3F3F46', bloom: '#3F3F46', primary: '#0B0B0C', onPrimary: '#FFFFFF' },
+        f: { ui: 'Hanken Grotesk', display: 'Hanken Grotesk', displayWeight: 700, mono: 'JetBrains Mono', labels: 'normal' }, r: { control: 12, chip: 10 }, shadow: false,
+        v: { progress: 'segments', heading: 'plain', stepLabel: true, tabs: 'segmented', options: 'grouped', l2: 'chips', intensity: 'slider', figure: 'solid', figureLabels: false, confidence: 'buttons', summary: 'plain' } },
+      { id: 'lavender', name: 'Lavender', desc: 'Soft pills · intensity as a growing circle', ivSet: 6,
+        c: { ground: '#F1EFFA', surface: '#FFFFFF', ink: '#1F1B3D', muted: '#5D5978', line: '#E2DEF3', track: '#E4E0F5', accent: '#6C5CE7', choice: '#6C5CE7', onChoice: '#FFFFFF', figure: '#E4E0F7', figureLine: '#E4E0F7', figureSel: '#EE9A6E', bloom: '#EE9A6E', primary: '#6C5CE7', onPrimary: '#FFFFFF' },
+        f: { ui: 'Plus Jakarta Sans', display: 'Plus Jakarta Sans', displayWeight: 800, mono: 'JetBrains Mono', labels: 'normal' }, r: { control: 28, chip: 999 }, shadow: true,
+        v: { progress: 'bar', heading: 'plain', stepLabel: true, tabs: 'segmented', options: 'chips', l2: 'chips', intensity: 'bloom', figure: 'soft', figureLabels: false, confidence: 'segmented', summary: 'dot' } },
+      { id: 'paper', name: 'Paper', desc: 'Editorial serif · mono labels · ruler', ivSet: -1,
+        c: { ground: '#F1ECE3', surface: '#F8F5EF', ink: '#1E2B24', muted: '#5F625A', line: '#CFC8BB', track: '#E3DDD2', accent: '#2E5E45', choice: '#2E5E45', onChoice: '#FFFFFF', figure: '#FAF7F1', figureLine: '#1E2B24', figureSel: '#2E5E45', bloom: '#8C4A2F', primary: '#1E2B24', onPrimary: '#FFFFFF' },
+        f: { ui: 'Hanken Grotesk', display: 'Newsreader', displayWeight: 400, mono: 'JetBrains Mono', labels: 'mono' }, r: { control: 2, chip: 2 }, shadow: false,
+        v: { progress: 'counter', heading: 'editorial', stepLabel: false, tabs: 'underline', options: 'list', l2: 'inline', intensity: 'ruler', figure: 'hatch', figureLabels: true, confidence: 'buttons', summary: 'plain' } },
+      { id: 'night', name: 'Night', desc: 'Dark · warm glow (user-made example)', ivSet: -1,
+        c: { ground: '#0E0F12', surface: '#1A1B1F', ink: '#F3EFE7', muted: '#A29F98', line: '#2E3036', track: '#24262B', accent: '#E8B65A', choice: '#E8B65A', onChoice: '#1A1408', figure: '#16171A', figureLine: '#3A3C42', figureSel: '#E8B65A', bloom: '#E8B65A', primary: '#F3EFE7', onPrimary: '#0E0F12' },
+        f: { ui: 'Sora', display: 'Sora', displayWeight: 700, mono: 'JetBrains Mono', labels: 'normal' }, r: { control: 28, chip: 999 }, shadow: false,
+        v: { progress: 'dots', heading: 'eyebrow', stepLabel: false, tabs: 'segmented', options: 'chips', l2: 'chips', intensity: 'bloom', figure: 'glow', figureLabels: false, confidence: 'segmented', summary: 'plain' } },
+      { id: 'ink', name: 'Ink', desc: 'Stark black and white · blue highlight · ruler', ivSet: 7,
+        c: { ground: '#FFFFFF', surface: '#FFFFFF', ink: '#0A0A0A', muted: '#4A4A4A', line: '#0A0A0A', track: '#E6E6E6', accent: '#1F3BFF', choice: '#0A0A0A', onChoice: '#FFFFFF', figure: '#FFFFFF', figureLine: '#0A0A0A', figureSel: '#1F3BFF', bloom: '#1F3BFF', primary: '#0A0A0A', onPrimary: '#FFFFFF' },
+        f: { ui: 'IBM Plex Sans', display: 'IBM Plex Sans', displayWeight: 600, mono: 'JetBrains Mono', labels: 'mono' }, r: { control: 0, chip: 2 }, shadow: false,
+        v: { progress: 'counter', heading: 'plain', stepLabel: false, tabs: 'underline', options: 'list', l2: 'chips', intensity: 'ruler', figure: 'solid', figureLabels: true, confidence: 'buttons', summary: 'plain' } },
+      { id: 'seaglass', name: 'Sea glass', desc: 'Mint and teal · rounded · growing circle', ivSet: 4,
+        c: { ground: '#E3F1EE', surface: '#F7FCFB', ink: '#12312E', muted: '#3F5E5A', line: '#B5D3CE', track: '#CFE6E2', accent: '#1F7A73', choice: '#1F7A73', onChoice: '#FFFFFF', figure: '#F7FCFB', figureLine: '#7FA9A3', figureSel: '#1F7A73', bloom: '#2B8C99', primary: '#12312E', onPrimary: '#FFFFFF' },
+        f: { ui: 'Manrope', display: 'Manrope', displayWeight: 800, mono: 'JetBrains Mono', labels: 'normal' }, r: { control: 20, chip: 999 }, shadow: true,
+        v: { progress: 'bar', heading: 'eyebrow', stepLabel: false, tabs: 'segmented', options: 'chips', l2: 'chips', intensity: 'bloom', figure: 'soft', figureLabels: false, confidence: 'segmented', summary: 'dot' } },
+      { id: 'archive', name: 'Archive', desc: 'Cyrillic serif · dusty blue · grouped, hatched', ivSet: -1,
+        c: { ground: '#E9ECF2', surface: '#F5F7FA', ink: '#1D2433', muted: '#4F5668', line: '#C3C9D6', track: '#D8DEE8', accent: '#3B4F8F', choice: '#1D2433', onChoice: '#FFFFFF', figure: '#F5F7FA', figureLine: '#1D2433', figureSel: '#3B4F8F', bloom: '#3B4F8F', primary: '#1D2433', onPrimary: '#FFFFFF' },
+        f: { ui: 'Golos Text', display: 'Literata', displayWeight: 500, mono: 'JetBrains Mono', labels: 'mono' }, r: { control: 6, chip: 2 }, shadow: false,
+        v: { progress: 'segments', heading: 'editorial', stepLabel: false, tabs: 'underline', options: 'grouped', l2: 'inline', intensity: 'slider', figure: 'hatch', figureLabels: false, confidence: 'buttons', summary: 'plain' } },
+      { id: 'dusk', name: 'Dusk', desc: 'Dark and cool · periwinkle glow', ivSet: 5,
+        c: { ground: '#14172B', surface: '#1E2238', ink: '#ECEEF8', muted: '#A3A8C3', line: '#31365A', track: '#282C48', accent: '#8EA2FF', choice: '#8EA2FF', onChoice: '#10132A', figure: '#1A1E33', figureLine: '#3A4066', figureSel: '#8EA2FF', bloom: '#8EA2FF', primary: '#ECEEF8', onPrimary: '#14172B' },
+        f: { ui: 'Onest', display: 'Unbounded', displayWeight: 500, mono: 'JetBrains Mono', labels: 'normal' }, r: { control: 18, chip: 10 }, shadow: false,
+        v: { progress: 'dots', heading: 'eyebrow', stepLabel: false, tabs: 'segmented', options: 'grid', l2: 'chips', intensity: 'bloom', figure: 'glow', figureLabels: false, confidence: 'segmented', summary: 'plain' } },
+      { id: 'sand', name: 'Sand', desc: 'Muted sand · olive · soft figure · ruler', ivSet: -1,
+        c: { ground: '#EFEAE0', surface: '#F8F5EE', ink: '#2B2A24', muted: '#5E5B50', line: '#D2CBBD', track: '#E2DCCF', accent: '#5F6E2E', choice: '#2B2A24', onChoice: '#FFFFFF', figure: '#F8F5EE', figureLine: '#8C8574', figureSel: '#6B7A3A', bloom: '#5F6E2E', primary: '#2B2A24', onPrimary: '#FFFFFF' },
+        f: { ui: 'Rubik', display: 'Rubik', displayWeight: 600, mono: 'JetBrains Mono', labels: 'normal' }, r: { control: 14, chip: 999 }, shadow: false,
+        v: { progress: 'segments', heading: 'plain', stepLabel: true, tabs: 'segmented', options: 'grid', l2: 'chips', intensity: 'ruler', figure: 'soft', figureLabels: false, confidence: 'segmented', summary: 'dot' } }
+    ];
+    const hex = (h) => { const n = parseInt(h.slice(1), 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; };
+    const lum = (h) => { const a = hex(h).map((x) => { x /= 255; return x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4); }); return 0.2126 * a[0] + 0.7152 * a[1] + 0.0722 * a[2]; };
+    const cr = (a, b) => { const l1 = lum(a), l2 = lum(b); return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05); };
+    const hsl = (h) => { const [r, g, b] = hex(h).map((x) => x / 255); const mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (mx + mn) / 2; if (mx === mn) return [0, 0, l]; const d = mx - mn; const s = l > 0.5 ? d / (2 - mx - mn) : d / (mx + mn); let hh = mx === r ? (g - b) / d + (g < b ? 6 : 0) : mx === g ? (b - r) / d + 2 : (r - g) / d + 4; return [hh * 60, s, l]; };
+    const warm = (h) => { const x = hsl(h); return (x[0] < 55 || x[0] > 340) && x[1] > 0.35; };
+    const ok = 'font-size: 13px; font-weight: 500; padding: 6px 12px; border-radius: 999px; background: #DDE7E3; color: #1E3A2E';
+    const warn = 'font-size: 13px; font-weight: 500; padding: 6px 12px; border-radius: 999px; background: #E0E7FF; color: #312E81';
+    const checks = (t) => {
+      const c = t.c, out = [];
+      const pairs = [['text', c.ink, c.ground], ['muted text', c.muted, c.ground], ['button', c.onPrimary, c.primary], ['selected choice', c.onChoice, c.choice]];
+      const bad = pairs.filter((p) => cr(p[1], p[2]) < 4.5).map((p) => p[0]);
+      out.push(bad.length ? { text: 'Contrast too low: ' + bad.join(', '), st: warn } : { text: 'Contrast OK', st: ok });
+      const w = [c.figureSel, c.bloom].some(warm);
+      out.push(w ? { text: 'Warm body/intensity highlight — may prime arousal', st: warn } : { text: 'Neutral highlight', st: ok });
+      return out;
+    };
+    const steps = ['body', 'quality', 'intensity', 'word'];
+    const TP = { calm: ['light', { gs: 0.45, choice: 'ink', primary: 'ink' }], lavender: ['light', { gs: 0.55, choice: 'accent', primary: 'accent' }],
+      seaglass: ['light', { gs: 0.5, choice: 'accent', primary: 'ink' }], archive: ['light', { gs: 0.4, choice: 'ink', primary: 'ink' }],
+      sand: ['light', { gs: 0.3, choice: 'ink', primary: 'ink' }], dusk: ['dark', null], night: ['dark', null] };
+    const pre = (id) => { const p = JSON.parse(JSON.stringify(P.find((x) => x.id === id))); p.tint = TP[id][0]; p.tp = TP[id][1]; return p; };
+    const seedRow = [['seaglass', '#2563A8', false, null, 'body', 'Sea glass · Sky'], ['dusk', '#A8456A', true, '#6A4FA8', 'quality', 'Dusk · Rose → Lilac gradient'],
+      ['archive', '#4E7A3F', true, '#2563A8', 'intensity', 'Archive · Sage → Sky gradient'], ['calm', '#1F7A73', true, '#6A4FA8', 'word', 'Calm · Teal → Lilac gradient']].map((x, i) => {
+      const th = TINT.apply(pre(x[0]), x[1], x[2], x[3]);
+      return { theme: th, step: x[4], uid: 'tint' + i, iv: x[4] === 'intensity' ? 6 : -1, label: x[5] };
+    });
+    return {
+      seedRow: seedRow,
+      themes: P.map((t) => ({ name: t.name, desc: t.desc, theme: t, checks: checks(t),
+        steps: steps.map((s) => ({ step: s, uid: t.id + s, iv: s === 'intensity' ? t.ivSet : -1 })) }))
+    };
+  }
+}
+</script>
+  </body>
+</html>

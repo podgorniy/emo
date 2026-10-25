@@ -1,0 +1,144 @@
+/* SPDX-License-Identifier: AGPL-3.0-or-later */
+/* Shared layout of the sign-in and onboarding screens (ui.md §12): a card, a
+   step label, title, body, fields and one primary button.
+   The card floats on the page with a lit rim; fields are the shared `.fx-field`
+   (fx.css), recessed into the card. */
+
+.auth-screen {
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  /* Clear of the notch and the offline band (App.svelte) */
+  padding-top: calc(1.5rem + var(--safe-top, 0px));
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+  background-color: var(--c-surface, #ffffff);
+  border: 1px solid var(--c-line, #e2e8f0);
+  border-radius: var(--r-card, 16px);
+  box-shadow: var(--fx-rim), var(--fx-lift-2);
+  padding: 2rem 1.5rem;
+}
+
+.auth-step {
+  margin: 0 0 0.5rem;
+  font-size: 0.875rem;
+  color: var(--c-muted, #718096);
+}
+
+.auth-title {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-display, inherit);
+  font-size: 1.75rem;
+  font-weight: 500;
+  color: var(--c-ink, #1c1c1a);
+}
+
+.auth-body {
+  margin: 0 0 1.25rem;
+  font-size: 1rem;
+  line-height: 1.45;
+  color: var(--c-ink, #1c1c1a);
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.125rem;
+}
+
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.auth-field label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--c-ink, #1c1c1a);
+}
+
+/* With `.fx-field`: size and type only */
+.auth-input {
+  min-height: 48px;
+  padding: 0.625rem 0.875rem;
+  font: inherit;
+  font-size: 1rem;
+}
+
+.auth-input.mono {
+  font-family: var(--font-mono, monospace);
+  font-size: 1.125rem;
+  letter-spacing: 0.05em;
+}
+
+.auth-link:focus-visible {
+  outline: 3px solid var(--c-focus, #4f46e5);
+  outline-offset: 2px;
+}
+
+.auth-hint {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--c-ink, #1c1c1a);
+}
+
+.auth-error {
+  margin: 0 0 1rem;
+  padding: 0.75rem;
+  border: 1px solid var(--c-line, #e2e8f0);
+  border-radius: var(--r-field, 8px);
+  background: var(--c-ground, #f7f6f2);
+  font-size: 0.9375rem;
+  color: var(--c-ink, #1c1c1a);
+}
+
+/* The "cannot be recovered" box: an information colour, not an alarm; the
+   card's own tint of the highlight, readable on light and dark cards */
+.auth-info {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  border-left: 3px solid var(--c-focus, #4f46e5);
+  border-radius: 4px var(--r-field, 8px) var(--r-field, 8px) 4px;
+  background: var(--c-info, #e0e7ff);
+  color: var(--c-ink, #312e81);
+  font-size: 0.9375rem;
+  line-height: 1.4;
+}
+
+.auth-link {
+  align-self: center;
+  min-height: 44px;
+  border: none;
+  background: none;
+  padding: 0 0.5rem;
+  font: inherit;
+  font-size: 0.9375rem;
+  color: var(--c-ink, #1c1c1a);
+  text-decoration-line: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+/* A phone (ui.md §4.5, §12; owner decision 2026-10-10): the
+   card sits at the bottom of the screen like a sheet, its fields and its
+   button under the thumb, the free space above it; its text links end at
+   the right edge */
+@media (max-width: 899px) {
+  .auth-screen {
+    align-items: flex-end;
+  }
+
+  .auth-link {
+    display: block;
+    align-self: flex-end;
+    margin-left: auto;
+    text-align: right;
+  }
+}

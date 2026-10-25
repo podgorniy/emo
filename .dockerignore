@@ -1,0 +1,21 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Never sent to the Docker build: secrets, data, dependencies, build output,
+# reports and local notes. The image copies what it needs explicitly
+# (Dockerfile), and the source archive takes only its allowlist
+# (tools/pack_source.ts).
+.env
+.env.*
+!.env.example
+data/
+data-dev/
+backups/
+backup.log
+node_modules/
+bin/
+client/dist/
+**/report/
+.git/
+.codegraph/
+plan.md
+ideas.md
+**/.DS_Store

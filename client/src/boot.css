@@ -1,0 +1,229 @@
+/* SPDX-License-Identifier: AGPL-3.0-or-later */
+/* Base styles for the first paint, before the app mounts (no inline
+   styles: reliability.md §4.1) */
+:root {
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+}
+/* The visual viewport and the thumb band (ui.md §4.5, Reach v2).
+   lib/viewport.ts writes --vvh, the visible height (held while pinch-zoomed),
+   --vv-top, its top in the layout viewport, and --kb, the on-screen
+   keyboard's inset from the layout viewport's bottom, where a fixed sheet's
+   bottom goes. --band is the thumb band: the bottom third, or on a phone
+   under 500 px high (html[data-short], lib/layout.svelte.ts) the bottom
+   half, at least 300 px and never more than the screen. --dock-h is the
+   bottom dock's height, which a band's padding keeps clear */
+:root {
+  --vvh: 100dvh;
+  --vv-top: 0px;
+  --kb: 0px;
+  --band: calc(var(--vvh) / 3);
+  --dock-h: 0px;
+}
+:root[data-short] {
+  --band: min(var(--vvh), max(300px, calc(var(--vvh) / 2)));
+}
+/* While an on-screen keyboard is up (html[data-kb]): the fixed pane dots and
+   the toast would ride on it, so they wait until it goes */
+html[data-kb] nav.dots,
+html[data-kb] .toast-container {
+  display: none;
+}
+/* Motion tokens (ui.md §5.1); `lib/motion.ts` mirrors them and
+   motion_test.ts keeps the two in step. A finger going down is answered in
+   --dur-1; colours change in --dur-2; content arrives in --dur-3; surfaces in
+   --dur-4; calm screens in --dur-5. Springs only for what the finger moves
+   or releases; colours and opacity never spring */
+:root {
+  --dur-1: 90ms;
+  --dur-2: 140ms;
+  --dur-3: 180ms;
+  --dur-4: 280ms;
+  --dur-5: 400ms;
+  --dur-spring: 360ms;
+  --dur-spring-soft: 420ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-emphasized: cubic-bezier(0.05, 0.7, 0.1, 1);
+  /* Without linear() (Safari 16.4–17.1, Chrome 110–112): back-out curves */
+  --ease-spring: cubic-bezier(0.34, 1.36, 0.64, 1);
+  --ease-spring-soft: cubic-bezier(0.25, 1.1, 0.5, 1);
+}
+/* A damped spring: ζ .65, settles in 360 ms, 6.8 % overshoot; the soft one ζ
+   .82, 420 ms, 1.1 % */
+@supports (transition-timing-function: linear(0, 1)) {
+  :root {
+    --ease-spring: linear(
+      0,
+      0.075 5%,
+      0.244 10%,
+      0.445 15%,
+      0.636 20%,
+      0.796 25%,
+      0.916 30%,
+      0.996 35%,
+      1.043 40%,
+      1.064 45%,
+      1.068 50%,
+      1.06 55%,
+      1.048 60%,
+      1.034 65%,
+      1.022 70%,
+      1.011 75%,
+      1.004 80%,
+      0.999 85%,
+      0.997 90%,
+      0.998 95%,
+      1
+    );
+    --ease-spring-soft: linear(
+      0,
+      0.047 5%,
+      0.156 10%,
+      0.292 15%,
+      0.431 20%,
+      0.561 25%,
+      0.673 30%,
+      0.766 35%,
+      0.839 40%,
+      0.896 45%,
+      0.937 50%,
+      0.966 55%,
+      0.986 60%,
+      0.999 65%,
+      1.006 70%,
+      1.01 75%,
+      1.011 80%,
+      1.009 85%,
+      1.006 90%,
+      1.003 95%,
+      1
+    );
+  }
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+html,
+body {
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
+  color: var(--c-ink, #1c1c1a);
+  overflow-x: hidden;
+  /* body is the scroller: no rubber band, no Android pull-to-refresh and no
+     chaining past the page (ui.md §4) */
+  overscroll-behavior: none;
+  -webkit-font-smoothing: antialiased;
+}
+/* The ground, or the gradient when it is on (ui.md §14.3),
+   fixed to the viewport so the sticky pane bar's copy lines up with it. On
+   <html> only, which paints the whole canvas: a transparent body lets the
+   layers behind the content (z-index -1: the ambient light, the check-in's
+   ground on a desktop) show, instead of painting over them (ui.md §5.1, §13) */
+html {
+  background: var(--c-page, var(--c-ground, #e4edf1)) fixed;
+}
+/* The 680 px column and the pane bar never shift by a scrollbar's width
+   between a pane that scrolls and one that does not (ui.md §2.2) */
+body {
+  scrollbar-gutter: stable;
+}
+/* Controls: no double-tap zoom, no long-press callout and no label selection;
+   text elsewhere stays selectable. Zero specificity, so a component can
+   override it (ui.md §4) */
+:where(button) {
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+/* A text area is its own scroller: a long note stops at its edges instead
+   of carrying the scroll on to the page (ui.md §4) */
+:where(textarea) {
+  overscroll-behavior: contain;
+}
+#app {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overscroll-behavior: none;
+}
+/* A text button that acts where it stands (copy, resend, show, a sheet or a
+   confirm over the screen): a dotted underline; one that leaves the screen
+   keeps the solid one, and dashed stays "untouched" (ui.md §14.4).
+   Longhands only: the components set the line and the offset, this the rest */
+.text-action {
+  text-decoration-style: dotted;
+  text-decoration-thickness: 1.5px;
+}
+
+/* ui.md §5.1, §10: reduced motion is honoured everywhere, not
+   component by component; state changes become instant. Script-driven
+   motion (WAAPI, View Transitions) goes through `lib/motion.ts`, which
+   checks the same query; the View Transition pseudo-elements are not matched
+   by `*`, so they are named here */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-1: 0ms;
+    --dur-2: 0ms;
+    --dur-3: 0ms;
+    --dur-4: 0ms;
+    --dur-5: 0ms;
+    --dur-spring: 0ms;
+    --dur-spring-soft: 0ms;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+/* ui.md §14.3, §10: more contrast or forced colours turn every
+   light effect off. `lib/theme.ts` resolves them to nothing already; this is
+   the backstop (an author !important beats the variables set on <html>).
+   Selection still reads from fill, weight and aria-pressed */
+@media (prefers-contrast: more), (forced-colors: active) {
+  :root {
+    --fx-rim: 0 0 #0000 !important;
+    --fx-rim-fill: 0 0 #0000 !important;
+    --fx-lift-1: 0 0 #0000 !important;
+    --fx-lift-2: 0 0 #0000 !important;
+    --fx-lift-up: 0 0 #0000 !important;
+    --fx-inset: 0 0 #0000 !important;
+    --fx-press: 0 0 #0000 !important;
+    --fx-sel-aura: 0 0 #0000 !important;
+    --fx-focus-halo: 0 0 #0000 !important;
+    --fx-primary-aura: 0 0 #0000 !important;
+    --fx-primary-aura-hi: 0 0 #0000 !important;
+    --fx-primary-aura-press: 0 0 #0000 !important;
+    --fx-accent-aura-sm: 0 0 #0000 !important;
+    --fx-orb-rim: 0 0 #0000 !important;
+    --fx-thumb-aura: 0 0 #0000 !important;
+    --fx-thumb-aura-hi: 0 0 #0000 !important;
+    --fx-set-ring: 0 0 #0000 !important;
+    --fx-sheen: none !important;
+    --fx-orb-sheen: none !important;
+    --fx-thumb-sheen: none !important;
+    --fx-ring: none !important;
+  }
+}

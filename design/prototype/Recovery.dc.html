@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Emo — recovery key</title>
+    <script src="./support.js"></script>
+  </head>
+  <body>
+    <x-dc>
+      <helmet>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap"
+          rel="stylesheet">
+        <style>
+        body {
+          margin: 0;
+        }
+        </style>
+      </helmet>
+      <div
+        style="width: 390px; height: 844px; box-sizing: border-box; background: #E4EDF1; color: #1E2A26; font-family: 'Onest', 'Segoe UI', system-ui, sans-serif; padding: 56px 24px 32px; display: flex; flex-direction: column; gap: 22px">
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <span style="font-size: 14px; color: #4E5853">Step 2 of 3</span>
+          <h1
+            style="margin: 0; font-size: 28px; font-weight: 500; letter-spacing: -0.01em">Recovery key</h1>
+          <p
+            style="margin: 0; font-size: 16px; line-height: 1.45; color: #36413C">Shown once. You need it if you forget the passphrase.</p>
+        </div>
+        <div aria-label="Recovery key"
+          style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; padding: 16px; border-radius: 16px; background: #F7FAFB; border: 1.5px solid #B3BDB7; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 18px; letter-spacing: .06em; text-align: center">
+<span>7K2M</span><span>QX9P</span><span>4TNE</span><span>H8RV</span>
+<span>B3WD</span><span>Z6CF</span><span>1JYA</span><span>S5GK</span>
+        </div>
+        <div role="group" aria-label="How to keep it"
+          style="display: flex; flex-direction: column; gap: 10px">
+          <sc-for list="{{ways}}" as="w" hint-placeholder-count="3">
+            <button onClick="{{w.pick}}" aria-pressed="{{w.on}}"
+              style="display: flex; align-items: center; gap: 14px; min-height: 64px; padding: 12px 16px; border-radius: 16px; border: 1.5px solid {{w.bc}}; background: #F7FAFB; font: inherit; color: #1E2A26; text-align: left; cursor: pointer; transition: border-color .15s">
+              <span aria-hidden="true"
+                style="flex: none; width: 24px; height: 24px; border-radius: 50%; border: 2px solid #4F46E5; background: {{w.fill}}; display: flex; align-items: center; justify-content: center">
+                <sc-if value="{{w.on}}" hint-placeholder-val="{{ false }}">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                    <path d="M3 7.5l2.5 2.5L11 4.5" stroke="#FFFFFF"
+                      stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round"></path>
+                  </svg>
+                </sc-if>
+              </span>
+              <span style="display: flex; flex-direction: column; gap: 2px">
+                <span
+                  style="font-size: 16px; font-weight: 500">{{ w.title }}</span>
+                <span
+                  style="font-size: 14px; line-height: 1.35; color: {{w.subColor}}">{{ w.sub }}</span>
+              </span>
+            </button>
+          </sc-for>
+        </div>
+        <button disabled="{{contOff}}"
+          style="margin-top: auto; height: 56px; border-radius: 16px; border: none; background: {{contBg}}; color: #FFFFFF; font: inherit; font-size: 17px; font-weight: 500; cursor: pointer">Next</button>
+      </div>
+    </x-dc>
+    <script type="text/x-dc" data-dc-script
+      data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { done: {} }; }
+  renderVals() {
+    const s = this.state, me = this;
+    const W = [
+      ['file', 'Save or share', 'A file with the key — to Files, notes or a password manager', '#4E5853'],
+      ['mail', 'Email it to me', 'Anyone who can read your email can read this journal', '#312E81'],
+      ['hand', 'I’ll write it down', '8 groups of 4 characters', '#4E5853']
+    ];
+    const any = Object.keys(s.done).some((k) => s.done[k]);
+    return {
+      ways: W.map((w) => {
+        const on = !!s.done[w[0]];
+        return { title: w[1], sub: on && w[0] === 'mail' ? 'Sent. The email has no links.' : w[2], subColor: on ? '#4E5853' : w[3], on: on,
+          bc: on ? '#4F46E5' : '#B3BDB7', fill: on ? '#4F46E5' : 'transparent',
+          pick: () => { const d = Object.assign({}, s.done); d[w[0]] = !on; me.setState({ done: d }); } };
+      }),
+      contOff: !any, contBg: any ? '#1E2A26' : '#A9B4AE'
+    };
+  }
+}
+</script>
+  </body>
+</html>

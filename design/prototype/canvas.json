@@ -1,0 +1,135 @@
+{
+  "v": 3,
+  "attachments": {},
+  "boards": {
+    "Desktop.dc.html": {
+      "expand": "fill",
+      "h": 800,
+      "title": "Desktop — form screen",
+      "w": 1280,
+      "x": 0,
+      "y": 3436
+    },
+    "Flow.dc.html": {
+      "h": 1832,
+      "title": "Check-in flow: every step",
+      "w": 3456,
+      "x": 0,
+      "y": 1224
+    },
+    "Login.dc.html": {
+      "h": 844,
+      "radius": 28,
+      "title": "Sign in: email + code",
+      "w": 390,
+      "x": 470,
+      "y": 0
+    },
+    "Main.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "radius": 28,
+      "title": "Check-in — interactive prototype (Play)",
+      "w": 390,
+      "x": 0,
+      "y": 0
+    },
+    "Passphrase.dc.html": {
+      "h": 844,
+      "radius": 28,
+      "title": "Passphrase",
+      "w": 390,
+      "x": 940,
+      "y": 0
+    },
+    "Recovery.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "radius": 28,
+      "title": "Recovery key",
+      "w": 390,
+      "x": 1410,
+      "y": 0
+    },
+    "Screen.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "radius": 28,
+      "title": "Themed screen component",
+      "w": 390,
+      "x": 4046,
+      "y": 4520
+    },
+    "Settings.dc.html": {
+      "h": 2900,
+      "is_interactive": true,
+      "radius": 28,
+      "title": "Settings — full page (Appearance: themes, base colour, gradient)",
+      "w": 390,
+      "x": 3576,
+      "y": 4520
+    },
+    "ThemeGallery.dc.html": {
+      "h": 5900,
+      "title": "Theme presets (10) × 4 steps + base colour & gradient",
+      "w": 3456,
+      "x": 0,
+      "y": 4520
+    }
+  },
+  "createdOnFiles": {
+    "at": "2026-10-07T12:00:00Z",
+    "v": 1
+  },
+  "designSystems": [],
+  "launch": {
+    "view": "canvas"
+  },
+  "notes": {
+    "rowDesktop": {
+      "kind": "title1",
+      "maxW": 1280,
+      "text": "Desktop",
+      "w": 240,
+      "x": 0,
+      "y": 3176
+    },
+    "rowFlow": {
+      "kind": "title1",
+      "maxW": 3456,
+      "text": "Check-in: body → affect → word → context",
+      "w": 240,
+      "x": 0,
+      "y": 964
+    },
+    "rowMobile": {
+      "kind": "title1",
+      "maxW": 1800,
+      "text": "Phone: home, sign-in",
+      "w": 240,
+      "x": 0,
+      "y": -280
+    },
+    "rowThemes": {
+      "kind": "title1",
+      "maxW": 4436,
+      "text": "Themes: presets, Settings → Appearance, shared screen component",
+      "w": 240,
+      "x": 0,
+      "y": 4260
+    }
+  },
+  "order": [
+    "Main.dc.html",
+    "Settings.dc.html",
+    "Login.dc.html",
+    "Passphrase.dc.html",
+    "Recovery.dc.html",
+    "Flow.dc.html",
+    "Desktop.dc.html",
+    "ThemeGallery.dc.html",
+    "Screen.dc.html"
+  ],
+  "pages": [],
+  "title": "Emo"
+}

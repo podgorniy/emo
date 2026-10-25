@@ -1,0 +1,235 @@
+/* SPDX-License-Identifier: AGPL-3.0-or-later */
+/* Settings sections (ui.md §11): uppercase muted headers and
+   surface cards whose rows are separated by 1 px lines; the cards have a lit
+   rim and a soft lift, and a 1 px line where a theme draws no depth (Ink's
+   white cards on white, ui.md §14.4). The pane chrome
+   (column, header, title, hint) is shared with History; the
+   wordmark, sync dot and switcher above it are App's pane bar
+   (ui.md §2.2). */
+
+/* Under the pane bar; on a phone, clear of the fixed pane dots (18 + 44 px).
+   Its heads stick (lib/sticky.ts): the title at --head-top — under the safe
+   area and the offline band on a phone, under the pane bar (12 + 50 px) on a
+   desktop — a section's or day's header under the title, an open record's
+   row under that */
+.settings-container {
+  --head-top: var(--safe-top, 0px);
+  --title-h: 2.75rem;
+  --section-h: 1.75rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 1rem calc(62px + var(--safe-bottom, 0px));
+  width: 100%;
+  touch-action: pan-y pinch-zoom;
+}
+
+@media (min-width: 900px) {
+  .settings-container {
+    --head-top: calc(62px + var(--safe-top, 0px));
+    padding-bottom: calc(2rem + var(--safe-bottom, 0px));
+  }
+}
+
+/* The title's row, held at the top while the pane scrolls under it */
+.settings-header {
+  position: sticky;
+  top: var(--head-top);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  height: var(--title-h);
+}
+
+.settings-title {
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  font-family: var(--font-display, inherit);
+  font-size: 1.625rem;
+  font-weight: 500;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--c-ink, #1c1c1a);
+}
+
+.settings-hint {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--c-muted, #5c6670);
+}
+
+/* Under the title and the hint (none on a desktop in Settings) */
+.settings-container > main {
+  margin-top: 1.25rem;
+}
+
+/* Desktop: the tabs in the pane bar go anywhere directly; no swipe hint
+   (ui.md §9) */
+@media (min-width: 900px) {
+  .swipe-hint {
+    display: none;
+  }
+}
+
+/* Focused when opened from the pane bar; a heading is not a control */
+.settings-title:focus {
+  outline: none;
+}
+
+.settings-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Held under the title while its section scrolls. The padding is the room
+   its background takes once held; the margins keep its words where they
+   were */
+.section-header {
+  position: sticky;
+  top: calc(var(--head-top) + var(--title-h));
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: -0.5rem 0.25rem -0.25rem;
+  padding: 0.5rem 0 0.25rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--c-muted, #5c6670);
+}
+
+/* Held, with content under it: a band across the screen behind its words,
+   on the page's ground, where the page's gradient starts (the top of the
+   screen); on a desktop the page's own background, fixed to the viewport,
+   as the pane bar's. Clear until then, so the light behind the pane shows
+   through */
+.settings-header[data-stuck]::before,
+.section-header[data-stuck]::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0 calc(50% - 50vw);
+  background: var(--c-ground, #e4edf1);
+}
+
+@media (min-width: 900px) {
+  .settings-header[data-stuck]::before,
+  .section-header[data-stuck]::before {
+    background: var(--c-page, var(--c-ground, #e4edf1)) fixed;
+  }
+}
+
+/* Nothing focused or linked to lands under the held heads (WCAG 2.4.11): a
+   section under the title, a control under its section's header too; a
+   sheet scrolls on its own */
+.settings-section {
+  scroll-margin-top: calc(var(--head-top) + var(--title-h));
+}
+
+.settings-section :where(a, button, input, select, textarea, [tabindex]):not([role="dialog"] *) {
+  scroll-margin-top: calc(
+    var(--head-top) + var(--title-h) + var(--section-h) + 0.5rem
+  );
+}
+
+.section-header .aside {
+  text-transform: none;
+  letter-spacing: normal;
+  font-weight: 400;
+}
+
+.settings-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--c-surface, #ffffff);
+  border-radius: var(--r-card, 16px);
+  box-shadow: var(--fx-rim), var(--fx-lift-1), var(--fx-edge-line);
+  overflow: hidden;
+}
+
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-height: 52px;
+  padding: 0.625rem 1rem;
+  color: var(--c-ink, #1c1c1a);
+}
+
+.settings-row + .settings-row {
+  border-top: 1px solid var(--c-line, #e2e8f0);
+}
+
+.settings-row.stacked {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.row-button {
+  width: 100%;
+  min-height: 44px;
+  border: none;
+  background: none;
+  /* The row's ink, not the browser's black (dark themes) */
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.row-button:disabled {
+  cursor: default;
+  color: var(--c-muted, #5c6670);
+}
+
+.row-sub,
+.settings-note {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: var(--c-muted, #5c6670);
+}
+
+.settings-note {
+  margin: 0 0.25rem;
+}
+
+.settings-link {
+  min-height: 44px;
+  border: none;
+  background: none;
+  padding: 0;
+  font: inherit;
+  color: var(--c-ink, #1c1c1a);
+  text-decoration-line: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+/* A phone: a text action ends at the right edge, where the thumb is — on a
+   line of its own, or at the end of its row (ui.md §4.5, owner
+   decision 2026-10-10) */
+@media (max-width: 899px) {
+  .settings-link {
+    /* Block, for the auto margin in plain flow too (a button stays as wide as
+       its words) */
+    display: block;
+    margin-left: auto;
+    text-align: right;
+  }
+}
+
+.settings-section :focus-visible {
+  outline: 3px solid var(--c-focus, #4f46e5);
+  outline-offset: 2px;
+}

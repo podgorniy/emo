@@ -1,0 +1,66 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+x-logging: &logging
+  driver: json-file
+  options:
+    max-size: "20m"
+    max-file: "5"
+
+services:
+  emo:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # EMO_IMAGE: a registry image instead of the local build; EMO_IMAGE_TAG
+    # pins a version or a commit's build (rollback: ops.md §3.2)
+    image: ${EMO_IMAGE:-emo}:${EMO_IMAGE_TAG:-latest}
+    container_name: emo
+    restart: unless-stopped
+    # Plain HTTP on the loopback only, at PORT (8080 unless .env says
+    # otherwise) inside and out; TLS is the proxy's job (ops.md §2.3)
+    ports:
+      - "127.0.0.1:${PORT:-8080}:${PORT:-8080}"
+    volumes:
+      - ./data:/data
+    env_file:
+      - .env
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+    logging: *logging
+    healthcheck:
+      test: ["CMD", "/emo", "healthcheck"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+
+  # The built-in HTTPS proxy, on with COMPOSE_PROFILES=https in .env (`make
+  # init DOMAIN=…` sets it): ports 80 and 443, a Let's Encrypt certificate for
+  # BASE_URL's host, renewed by Caddy (Caddyfile). Leave it off when a proxy of
+  # your own already holds 80 and 443 on this host (ops.md §2.3)
+  caddy:
+    image: caddy:2.11.7-alpine@sha256:d8542f48d34a9cf4e4c11a478865229840e87e4c96ea3f439101f31a5d35f75f
+    profiles: ["https"]
+    container_name: emo-caddy
+    restart: unless-stopped
+    depends_on:
+      emo:
+        condition: service_healthy
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    environment:
+      EMO_SITE: ${BASE_URL}
+      EMO_PORT: ${PORT:-8080}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      # Certificates and the ACME account: survive `make down`
+      - caddy_data:/data
+      - caddy_config:/config
+    logging: *logging
+
+volumes:
+  caddy_data:
+  caddy_config:

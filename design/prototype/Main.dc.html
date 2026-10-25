@@ -1,0 +1,1215 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Emo — check-in</title>
+    <script src="./support.js"></script>
+  </head>
+  <body>
+    <x-dc>
+      <helmet>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600&amp;display=swap"
+          rel="stylesheet">
+        <style>
+        body {
+          margin: 0;
+        }
+        a {
+          color: #4338CA;
+        }
+        a:hover {
+          color: #312E81;
+        }
+        .bl * {
+          box-sizing: border-box;
+        }
+        .bl :where(button) {
+          font: inherit;
+          color: inherit;
+        }
+        .bl :focus {
+          outline: none;
+        }
+        .bl :focus-visible {
+          outline: 3px solid #4F46E5;
+          outline-offset: 2px;
+        }
+        .sr {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          overflow: hidden;
+          clip: rect(0 0 0 0);
+          white-space: nowrap;
+        }
+        .q {
+          margin: 0;
+          font-size: 26px;
+          line-height: 1.2;
+          font-weight: 500;
+          letter-spacing: -0.01em;
+          color: #1E2A26;
+        }
+        .hint {
+          margin: 6px 0 0;
+          font-size: 15px;
+          line-height: 1.4;
+          color: #4E5853;
+        }
+        .scr {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+        }
+        .fwd {
+          animation: inR .32s cubic-bezier(.2,.7,.2,1);
+        }
+        .back {
+          animation: inL .32s cubic-bezier(.2,.7,.2,1);
+        }
+        .rise {
+          animation: rise .38s cubic-bezier(.2,.7,.2,1);
+        }
+        .fade {
+          animation: fade .5s ease;
+        }
+        .turn {
+          animation: turn .34s cubic-bezier(.2,.7,.2,1);
+        }
+        @keyframes inR {
+          from {
+            opacity: 0;
+            transform: translateX(28px);
+          }
+          to {
+            opacity: 1;
+            transform: none;
+          }
+        }
+        @keyframes inL {
+          from {
+            opacity: 0;
+            transform: translateX(-28px);
+          }
+          to {
+            opacity: 1;
+            transform: none;
+          }
+        }
+        @keyframes rise {
+          from {
+            opacity: 0;
+            transform: translateY(36px);
+          }
+          to {
+            opacity: 1;
+            transform: none;
+          }
+        }
+        @keyframes fade {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+        @keyframes turn {
+          from {
+            opacity: .2;
+            transform: scaleX(.82);
+          }
+          to {
+            opacity: 1;
+            transform: none;
+          }
+        }
+        .opt {
+          min-height: 48px;
+          padding: 10px 14px;
+          border-radius: 12px;
+          border: 1.5px solid #B3BDB7;
+          background: #F7FAFB;
+          text-align: left;
+          font-size: 16px;
+          line-height: 1.25;
+          cursor: pointer;
+          transition: background .15s,border-color .15s,color .15s,transform .1s;
+        }
+        .opt:hover {
+          border-color: #1E2A26;
+        }
+        .opt:active {
+          transform: scale(.98);
+        }
+        .opt.on {
+          background: #1E2A26;
+          border-color: #1E2A26;
+          color: #FFFFFF;
+        }
+        .chip {
+          min-height: 44px;
+          padding: 8px 14px;
+          border-radius: 22px;
+          border: 1.5px solid #B3BDB7;
+          background: #F7FAFB;
+          font-size: 15px;
+          cursor: pointer;
+          transition: background .15s,border-color .15s,color .15s;
+        }
+        .chip:hover {
+          border-color: #1E2A26;
+        }
+        .chip.on {
+          background: #1E2A26;
+          border-color: #1E2A26;
+          color: #FFFFFF;
+        }
+        .seg {
+          display: grid;
+          grid-template-columns: repeat(2,minmax(0,1fr));
+          gap: 4px;
+          padding: 4px;
+          border-radius: 14px;
+          background: #D3E0E6;
+        }
+        .tab {
+          min-height: 40px;
+          border: none;
+          border-radius: 10px;
+          background: transparent;
+          font-size: 15px;
+          cursor: pointer;
+          color: #36413C;
+          transition: background .2s,box-shadow .2s;
+        }
+        .tab.on {
+          background: #FFFFFF;
+          color: #1E2A26;
+          box-shadow: 0 1px 3px rgba(0,0,0,.12);
+        }
+        .hit {
+          position: absolute;
+          border: none;
+          background: transparent;
+          border-radius: 12px;
+          cursor: pointer;
+          padding: 0;
+          transition: background .15s;
+        }
+        .hit:hover {
+          background: rgba(79,70,229,.08);
+        }
+        .zf {
+          transition: fill .18s;
+        }
+        .btn {
+          height: 56px;
+          border-radius: 16px;
+          border: none;
+          font-size: 17px;
+          font-weight: 500;
+          cursor: pointer;
+          transition: background .15s,opacity .15s,transform .1s;
+        }
+        .btn:active {
+          transform: scale(.98);
+        }
+        .btn.primary {
+          flex: 1;
+          background: #1E2A26;
+          color: #FFFFFF;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          padding: 0 16px;
+        }
+        .btn.primary:hover {
+          background: #2F3D38;
+        }
+        .btn.primary:disabled {
+          background: #A9B4AE;
+          color: #F7FAFB;
+          cursor: default;
+          transform: none;
+        }
+        .btn.ghost {
+          width: 56px;
+          background: #F7FAFB;
+          border: 1.5px solid #B3BDB7;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .btn.ghost:disabled {
+          opacity: .35;
+          cursor: default;
+        }
+        .link {
+          background: none;
+          border: none;
+          padding: 10px 8px;
+          min-height: 44px;
+          font-size: 15px;
+          color: #4338CA;
+          text-decoration: underline;
+          text-underline-offset: 3px;
+          cursor: pointer;
+        }
+        .now {
+          width: 208px;
+          height: 208px;
+          border-radius: 50%;
+          border: none;
+          background: #4F46E5;
+          color: #FFFFFF;
+          font-size: 30px;
+          font-weight: 500;
+          letter-spacing: -0.01em;
+          cursor: pointer;
+          box-shadow: 0 18px 40px -18px rgba(67,56,202,.6);
+          transition: transform .18s,box-shadow .18s,background .18s;
+        }
+        .now:hover {
+          background: #4338CA;
+        }
+        .now:active {
+          transform: scale(.96);
+        }
+        .dot {
+          width: 44px;
+          height: 44px;
+          border: none;
+          background: none;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          padding: 0;
+        }
+        .dot span {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: #A3ADA6;
+          transition: background .2s,width .2s;
+        }
+        .dot.on span {
+          width: 22px;
+          border-radius: 4px;
+          background: #4F46E5;
+        }
+        .rng {
+          -webkit-appearance: none;
+          appearance: none;
+          width: 100%;
+          height: 48px;
+          background: transparent;
+          margin: 0;
+          cursor: pointer;
+        }
+        .rng::-webkit-slider-runnable-track {
+          height: 6px;
+          border-radius: 3px;
+          background: #B3BDB7;
+        }
+        .rng::-moz-range-track {
+          height: 6px;
+          border-radius: 3px;
+          background: #B3BDB7;
+        }
+        .rng::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          width: 34px;
+          height: 34px;
+          margin-top: -14px;
+          border-radius: 50%;
+          background: #1E2A26;
+          border: 4px solid #F7FAFB;
+          box-shadow: 0 2px 8px rgba(30,42,38,.35);
+        }
+        .rng::-moz-range-thumb {
+          width: 26px;
+          height: 26px;
+          border-radius: 50%;
+          background: #1E2A26;
+          border: 4px solid #F7FAFB;
+        }
+        .rng.untouched::-webkit-slider-thumb {
+          background: #F7FAFB;
+          border: 2px dashed #1E2A26;
+          box-shadow: none;
+        }
+        .rng.untouched::-moz-range-thumb {
+          background: #F7FAFB;
+          border: 2px dashed #1E2A26;
+        }
+        .poles {
+          display: flex;
+          justify-content: space-between;
+          gap: 16px;
+          font-size: 15px;
+          line-height: 1.3;
+          color: #36413C;
+        }
+        .poles span:last-child {
+          text-align: right;
+        }
+        .note {
+          width: 100%;
+          min-height: 120px;
+          resize: none;
+          border-radius: 14px;
+          border: 1.5px solid #B3BDB7;
+          background: #F7FAFB;
+          padding: 14px;
+          font: inherit;
+          font-size: 17px;
+          line-height: 1.4;
+          color: #1E2A26;
+        }
+        .note.err {
+          border-color: #4338CA;
+          border-width: 2px;
+        }
+        .txt {
+          width: 100%;
+          height: 52px;
+          border-radius: 12px;
+          border: 1.5px solid #B3BDB7;
+          background: #F7FAFB;
+          padding: 0 14px;
+          font: inherit;
+          font-size: 17px;
+          color: #1E2A26;
+        }
+        .txt:focus-visible,
+        .note:focus-visible {
+          outline: 3px solid #4F46E5;
+          outline-offset: 1px;
+          border-color: #4F46E5;
+        }
+        .sel {
+          margin: 0;
+          min-height: 22px;
+          font-size: 15px;
+          line-height: 1.35;
+          color: #36413C;
+          text-align: center;
+        }
+        .sel b {
+          font-weight: 500;
+          color: #1E2A26;
+        }
+        .logo {
+          background: none;
+          border: none;
+          padding: 10px 4px;
+          min-height: 44px;
+          font-size: 17px;
+          font-weight: 600;
+          letter-spacing: .02em;
+          color: #1E2A26;
+          cursor: pointer;
+          -webkit-user-select: none;
+          user-select: none;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .bl * {
+            animation: none !important;
+            transition: none !important;
+          }
+        }
+        </style>
+      </helmet>
+      <div class="bl" tabIndex="-1" onKeyDown="{{onKey}}"
+        onPointerDown="{{pDown}}" onPointerMove="{{pMove}}"
+        onPointerUp="{{pUp}}" onPointerCancel="{{pUp}}"
+        style="position: relative; width: 390px; height: 844px; overflow: hidden; background: #E4EDF1; color: #1E2A26; font-family: 'Onest', 'Segoe UI', system-ui, sans-serif; touch-action: pan-y">
+        <sc-if value="{{isHome}}" hint-placeholder-val="{{ true }}">
+          <div class="fade"
+            style="position: absolute; inset: 0; overflow: hidden">
+            <div
+              style="display: flex; width: 780px; height: 844px; transform: translateX({{paneX}}px); transition: transform .36s cubic-bezier(.2,.7,.2,1)">
+              <main aria-label="Home" aria-hidden="{{pane0Hidden}}"
+                style="width: 390px; height: 844px; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center">
+                <div
+                  style="position: absolute; top: 12px; left: 16px; right: 16px; display: flex; align-items: center; justify-content: space-between">
+                  <button class="logo" onPointerDown="{{logoDown}}"
+                    onPointerUp="{{logoUp}}" onPointerLeave="{{logoUp}}"
+                    aria-label="Emo — press and hold for settings">Emo</button>
+                  <span role="img" aria-label="Synced"
+                    style="width: 10px; height: 10px; border-radius: 50%; background: #7F877F; margin-right: 14px"></span>
+                </div>
+                <button class="now" id="bl-now"
+                  onClick="{{startManual}}">Now</button>
+                <button class="link" onClick="{{startAfter}}"
+                  style="margin-top: 24px">after an event</button>
+              </main>
+              <div aria-hidden="{{pane1Hidden}}"
+                style="width: 390px; height: 844px">
+                <dc-import name="Settings" embedded="{{ true }}"
+                  hint-size="390px,844px"></dc-import>
+              </div>
+            </div>
+            <nav aria-label="Panes"
+              style="position: absolute; left: 0; right: 0; bottom: 18px; display: flex; justify-content: center">
+              <button class="{{dot0}}" onClick="{{toPane0}}" aria-label="Home"
+                aria-current="{{dot0Cur}}"><span></span></button>
+              <button class="{{dot1}}" onClick="{{toPane1}}"
+                aria-label="Settings"
+                aria-current="{{dot1Cur}}"><span></span></button>
+            </nav>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{isForm}}" hint-placeholder-val="{{ false }}">
+          <div class="rise"
+            style="position: absolute; inset: 0; display: flex; flex-direction: column">
+            <header
+              style="display: flex; align-items: center; gap: 12px; padding: 8px 12px 0 20px; height: 52px">
+              <div aria-hidden="true" style="display: flex; gap: 4px; flex: 1">
+                <sc-for list="{{segs}}" as="sg" hint-placeholder-count="10">
+                  <span
+                    style="flex: 1; height: 4px; border-radius: 2px; background: {{sg.bg}}; transition: background .25s"></span>
+                </sc-for>
+              </div>
+              <span class="sr"
+                aria-live="polite">Step {{ stepNum }} of 10</span>
+              <button class="link" onClick="{{skip}}"
+                style="color: #4E5853">Skip check-in</button>
+            </header>
+            <sc-if value="{{isAfter}}" hint-placeholder-val="{{ false }}">
+              <p
+                style="margin: 0 20px; font-size: 13px; color: #4E5853">after an event</p>
+            </sc-if>
+
+            <div
+              style="flex: 1; overflow-y: auto; padding: 6px 20px 12px; transform: translateX({{dragX}}px); transition: {{dragTr}}">
+              <sc-if value="{{s0}}" hint-placeholder-val="{{ true }}">
+                <section class="scr {{enter}}" style="gap: 12px">
+                  <h1 class="q" id="bl-q" tabIndex="-1">Where in the body?</h1>
+                  <div class="seg" role="tablist" aria-label="Body view">
+                    <button role="tab" class="{{tabFrontCls}}"
+                      aria-selected="{{viewFront}}"
+                      onClick="{{showFront}}">Front{{ frontBadge }}</button>
+                    <button role="tab" class="{{tabBackCls}}"
+                      aria-selected="{{viewBack}}"
+                      onClick="{{showBack}}">Back{{ backBadge }}</button>
+                  </div>
+                  <div class="fig"
+                    style="position: relative; width: 260px; height: 520px; align-self: center; transform: scale(.93); transform-origin: top center; margin-bottom: -36px">
+                    <sc-if value="{{viewFront}}"
+                      hint-placeholder-val="{{ true }}">
+                      <div class="turn">
+                        <svg width="260" height="520" viewBox="0 0 260 520"
+                          aria-hidden="true" style="display: block">
+                          <defs>
+                            <clipPath id="silF">
+                              <ellipse cx="130" cy="48" rx="40"
+                                ry="48"></ellipse>
+                              <rect x="106" y="84" width="48" height="60"
+                                rx="14"></rect>
+                              <rect x="22" y="134" width="216" height="58"
+                                rx="29"></rect>
+                              <rect x="58" y="150" width="144" height="242"
+                                rx="26"></rect>
+                              <rect x="22" y="160" width="38" height="244"
+                                rx="19"></rect>
+                              <rect x="200" y="160" width="38" height="244"
+                                rx="19"></rect>
+                              <rect x="66" y="360" width="60" height="160"
+                                rx="26"></rect>
+                              <rect x="134" y="360" width="60" height="160"
+                                rx="26"></rect>
+                            </clipPath>
+                          </defs>
+                          <g fill="none" stroke="{{silLine}}" stroke-width="3">
+                            <ellipse cx="130" cy="48" rx="40" ry="48"></ellipse>
+                            <rect x="106" y="84" width="48" height="60"
+                              rx="14"></rect>
+                            <rect x="22" y="134" width="216" height="58"
+                              rx="29"></rect>
+                            <rect x="58" y="150" width="144" height="242"
+                              rx="26"></rect>
+                            <rect x="22" y="160" width="38" height="244"
+                              rx="19"></rect>
+                            <rect x="200" y="160" width="38" height="244"
+                              rx="19"></rect>
+                            <rect x="66" y="360" width="60" height="160"
+                              rx="26"></rect>
+                            <rect x="134" y="360" width="60" height="160"
+                              rx="26"></rect>
+                          </g>
+                          <g fill="{{silFill}}">
+                            <ellipse cx="130" cy="48" rx="40" ry="48"></ellipse>
+                            <rect x="106" y="84" width="48" height="60"
+                              rx="14"></rect>
+                            <rect x="22" y="134" width="216" height="58"
+                              rx="29"></rect>
+                            <rect x="58" y="150" width="144" height="242"
+                              rx="26"></rect>
+                            <rect x="22" y="160" width="38" height="244"
+                              rx="19"></rect>
+                            <rect x="200" y="160" width="38" height="244"
+                              rx="19"></rect>
+                            <rect x="66" y="360" width="60" height="160"
+                              rx="26"></rect>
+                            <rect x="134" y="360" width="60" height="160"
+                              rx="26"></rect>
+                          </g>
+                          <g clip-path="url(#silF)">
+                            <rect class="zf" x="80" y="0" width="100"
+                              height="46" fill="{{zf.forehead}}"></rect>
+                            <rect class="zf" x="80" y="46" width="100"
+                              height="44" fill="{{zf.jaw}}"></rect>
+                            <rect class="zf" x="96" y="90" width="68"
+                              height="44" fill="{{zf.throat}}"></rect>
+                            <rect class="zf" x="0" y="134" width="260"
+                              height="44" fill="{{zf.shoulders}}"></rect>
+                            <rect class="zf" x="58" y="178" width="144"
+                              height="68" fill="{{zf.chest}}"></rect>
+                            <rect class="zf" x="58" y="246" width="144"
+                              height="46" fill="{{zf.solar_plexus}}"></rect>
+                            <rect class="zf" x="58" y="292" width="144"
+                              height="46" fill="{{zf.belly}}"></rect>
+                            <rect class="zf" x="58" y="338" width="144"
+                              height="46" fill="{{zf.lower_belly}}"></rect>
+                            <rect class="zf" x="0" y="178" width="58"
+                              height="240" fill="{{zf.arms_hands}}"></rect>
+                            <rect class="zf" x="202" y="178" width="58"
+                              height="240" fill="{{zf.arms_hands}}"></rect>
+                            <rect class="zf" x="0" y="384" width="260"
+                              height="136" fill="{{zf.legs_feet}}"></rect>
+                          </g>
+                          <g clip-path="url(#silF)" stroke="{{seam}}"
+                            stroke-width="1.5">
+                            <line x1="80" y1="46" x2="180" y2="46"></line>
+                            <line x1="96" y1="90" x2="164" y2="90"></line>
+                            <line x1="0" y1="134" x2="260" y2="134"></line>
+                            <line x1="0" y1="178" x2="260" y2="178"></line>
+                            <line x1="58" y1="246" x2="202" y2="246"></line>
+                            <line x1="58" y1="292" x2="202" y2="292"></line>
+                            <line x1="58" y1="338" x2="202" y2="338"></line>
+                            <line x1="58" y1="384" x2="202" y2="384"></line>
+                            <line x1="58" y1="178" x2="58" y2="392"></line>
+                            <line x1="202" y1="178" x2="202" y2="392"></line>
+                            <line x1="130" y1="420" x2="130" y2="520"></line>
+                          </g>
+                        </svg>
+                      </div>
+                    </sc-if>
+                    <sc-if value="{{viewBack}}"
+                      hint-placeholder-val="{{ false }}">
+                      <div class="turn">
+                        <svg width="260" height="520" viewBox="0 0 260 520"
+                          aria-hidden="true" style="display: block">
+                          <defs>
+                            <clipPath id="silB">
+                              <ellipse cx="130" cy="48" rx="40"
+                                ry="48"></ellipse>
+                              <rect x="106" y="84" width="48" height="60"
+                                rx="14"></rect>
+                              <rect x="22" y="134" width="216" height="58"
+                                rx="29"></rect>
+                              <rect x="58" y="150" width="144" height="242"
+                                rx="26"></rect>
+                              <rect x="22" y="160" width="38" height="244"
+                                rx="19"></rect>
+                              <rect x="200" y="160" width="38" height="244"
+                                rx="19"></rect>
+                              <rect x="66" y="360" width="60" height="160"
+                                rx="26"></rect>
+                              <rect x="134" y="360" width="60" height="160"
+                                rx="26"></rect>
+                            </clipPath>
+                          </defs>
+                          <g fill="none" stroke="{{silLine}}" stroke-width="3">
+                            <ellipse cx="130" cy="48" rx="40" ry="48"></ellipse>
+                            <rect x="106" y="84" width="48" height="60"
+                              rx="14"></rect>
+                            <rect x="22" y="134" width="216" height="58"
+                              rx="29"></rect>
+                            <rect x="58" y="150" width="144" height="242"
+                              rx="26"></rect>
+                            <rect x="22" y="160" width="38" height="244"
+                              rx="19"></rect>
+                            <rect x="200" y="160" width="38" height="244"
+                              rx="19"></rect>
+                            <rect x="66" y="360" width="60" height="160"
+                              rx="26"></rect>
+                            <rect x="134" y="360" width="60" height="160"
+                              rx="26"></rect>
+                          </g>
+                          <g fill="{{silFill}}">
+                            <ellipse cx="130" cy="48" rx="40" ry="48"></ellipse>
+                            <rect x="106" y="84" width="48" height="60"
+                              rx="14"></rect>
+                            <rect x="22" y="134" width="216" height="58"
+                              rx="29"></rect>
+                            <rect x="58" y="150" width="144" height="242"
+                              rx="26"></rect>
+                            <rect x="22" y="160" width="38" height="244"
+                              rx="19"></rect>
+                            <rect x="200" y="160" width="38" height="244"
+                              rx="19"></rect>
+                            <rect x="66" y="360" width="60" height="160"
+                              rx="26"></rect>
+                            <rect x="134" y="360" width="60" height="160"
+                              rx="26"></rect>
+                          </g>
+                          <g clip-path="url(#silB)">
+                            <rect class="zf" x="96" y="90" width="68"
+                              height="44" fill="{{zf.neck}}"></rect>
+                            <rect class="zf" x="0" y="134" width="260"
+                              height="44" fill="{{zf.shoulders}}"></rect>
+                            <rect class="zf" x="58" y="178" width="144"
+                              height="100" fill="{{zf.upper_back}}"></rect>
+                            <rect class="zf" x="58" y="278" width="144"
+                              height="90" fill="{{zf.lower_back}}"></rect>
+                            <rect class="zf" x="0" y="178" width="58"
+                              height="240" fill="{{zf.arms_hands}}"></rect>
+                            <rect class="zf" x="202" y="178" width="58"
+                              height="240" fill="{{zf.arms_hands}}"></rect>
+                            <rect class="zf" x="0" y="384" width="260"
+                              height="136" fill="{{zf.legs_feet}}"></rect>
+                          </g>
+                          <g clip-path="url(#silB)" stroke="{{seam}}"
+                            stroke-width="1.5">
+                            <line x1="96" y1="90" x2="164" y2="90"></line>
+                            <line x1="0" y1="134" x2="260" y2="134"></line>
+                            <line x1="0" y1="178" x2="260" y2="178"></line>
+                            <line x1="58" y1="278" x2="202" y2="278"></line>
+                            <line x1="58" y1="368" x2="202" y2="368"></line>
+                            <line x1="58" y1="178" x2="58" y2="392"></line>
+                            <line x1="202" y1="178" x2="202" y2="392"></line>
+                            <line x1="130" y1="420" x2="130" y2="520"></line>
+                          </g>
+                        </svg>
+                      </div>
+                    </sc-if>
+                    <sc-for list="{{hits}}" as="z" hint-placeholder-count="12">
+                      <button class="hit" onClick="{{z.pick}}"
+                        aria-label="{{z.label}}" aria-pressed="{{z.on}}"
+                        aria-hidden="{{z.hid}}" tabIndex="{{z.tab}}"
+                        style="left: {{z.x}}px; top: {{z.y}}px; width: {{z.w}}px; height: {{z.h}}px"></button>
+                    </sc-for>
+                  </div>
+                  <p class="sel"
+                    aria-live="polite">{{ selPre }}<b>{{ selText }}</b></p>
+                  <div
+                    style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+                    <button class="{{wholeCls}}" onClick="{{pickWhole}}"
+                      aria-pressed="{{wholeOn}}"
+                      style="text-align: center">Whole body</button>
+                    <button class="{{nowhereCls}}" onClick="{{pickNowhere}}"
+                      aria-pressed="{{nowhereOn}}"
+                      style="text-align: center">Nowhere</button>
+                  </div>
+                </section>
+              </sc-if>
+
+              <sc-if value="{{s1}}" hint-placeholder-val="{{ false }}">
+                <section class="scr {{enter}}">
+                  <div>
+                    <h1 class="q" id="bl-q" tabIndex="-1">What is it like?</h1>
+                    <p class="hint">Choose any that fit</p>
+                  </div>
+                  <div role="group" aria-labelledby="bl-q"
+                    style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+                    <sc-for list="{{quals}}" as="o" hint-placeholder-count="21">
+                      <button class="{{o.cls}}" onClick="{{o.pick}}"
+                        aria-pressed="{{o.on}}">{{ o.label }}</button>
+                    </sc-for>
+                  </div>
+                </section>
+              </sc-if>
+
+              <sc-if value="{{s2}}" hint-placeholder-val="{{ false }}">
+                <section class="scr {{enter}}"
+                  style="padding-top: 40px; gap: 56px">
+                  <h1 class="q" id="bl-q" tabIndex="-1">How strong is it?</h1>
+                  <div style="display: flex; flex-direction: column; gap: 10px">
+                    <input type="range" min="0" max="10" step="1"
+                      class="rng {{intenCls}}" value="{{inten}}"
+                      onChange="{{setInten}}" onPointerDown="{{touchInten}}"
+                      aria-labelledby="bl-q" aria-valuetext="{{intenText}}">
+                    <div
+                      class="poles"><span>barely there</span><span>very strong</span></div>
+                    <sc-if value="{{intenUntouched}}"
+                      hint-placeholder-val="{{ true }}">
+                      <p
+                        style="margin: 12px 0 0; font-size: 14px; color: #4E5853">Slider not moved — that is fine too.</p>
+                    </sc-if>
+                  </div>
+                </section>
+              </sc-if>
+
+              <sc-if value="{{s3}}" hint-placeholder-val="{{ false }}">
+                <section class="scr {{enter}}"
+                  style="padding-top: 40px; gap: 56px">
+                  <h1 class="q" id="bl-q"
+                    tabIndex="-1">Unpleasant or pleasant?</h1>
+                  <div style="display: flex; flex-direction: column; gap: 10px">
+                    <div style="position: relative">
+                      <span aria-hidden="true"
+                        style="position: absolute; left: 50%; top: 8px; width: 2px; height: 32px; margin-left: -1px; background: #7F877F; border-radius: 1px"></span>
+                      <input type="range" min="-3" max="3" step="1"
+                        class="rng {{valCls}}" value="{{val}}"
+                        onChange="{{setVal}}" onPointerDown="{{touchVal}}"
+                        aria-labelledby="bl-q" aria-valuetext="{{valText}}"
+                        style="position: relative">
+                    </div>
+                    <div
+                      class="poles"><span>unpleasant</span><span style="text-align: center">neutral</span><span>pleasant</span></div>
+                    <sc-if value="{{valUntouched}}"
+                      hint-placeholder-val="{{ true }}">
+                      <p
+                        style="margin: 12px 0 0; font-size: 14px; color: #4E5853">Slider not moved — that is fine too.</p>
+                    </sc-if>
+                  </div>
+                </section>
+              </sc-if>
+
+              <sc-if value="{{s4}}" hint-placeholder-val="{{ false }}">
+                <section class="scr {{enter}}"
+                  style="padding-top: 40px; gap: 56px">
+                  <h1 class="q" id="bl-q"
+                    tabIndex="-1">How charged is the body?</h1>
+                  <div style="display: flex; flex-direction: column; gap: 10px">
+                    <input type="range" min="0" max="10" step="1"
+                      class="rng {{aroCls}}" value="{{aro}}"
+                      onChange="{{setAro}}" onPointerDown="{{touchAro}}"
+                      aria-labelledby="bl-q" aria-valuetext="{{aroText}}">
+                    <div
+                      class="poles"><span>slow, sluggish</span><span>wired, keyed up</span></div>
+                    <sc-if value="{{aroUntouched}}"
+                      hint-placeholder-val="{{ true }}">
+                      <p
+                        style="margin: 12px 0 0; font-size: 14px; color: #4E5853">Slider not moved — that is fine too.</p>
+                    </sc-if>
+                  </div>
+                </section>
+              </sc-if>
+
+              <sc-if value="{{s5}}" hint-placeholder-val="{{ false }}">
+                <section class="scr {{enter}}">
+                  <div>
+                    <h1 class="q" id="bl-q"
+                      tabIndex="-1">Is there a word for it?</h1>
+                    <p class="hint">Optional. The first level is enough</p>
+                  </div>
+                  <div role="group" aria-labelledby="bl-q"
+                    style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+                    <sc-for list="{{l1}}" as="o" hint-placeholder-count="8">
+                      <button class="{{o.cls}}" onClick="{{o.pick}}"
+                        aria-pressed="{{o.on}}">{{ o.label }}</button>
+                    </sc-for>
+                  </div>
+                  <sc-if value="{{hasL2}}" hint-placeholder-val="{{ false }}">
+                    <div class="fwd"
+                      style="display: flex; flex-direction: column; gap: 10px">
+                      <p
+                        style="margin: 0; font-size: 15px; color: #36413C">More precisely <span style="color: #4E5853">(optional)</span></p>
+                      <div role="group" aria-label="More precisely"
+                        style="display: flex; flex-wrap: wrap; gap: 8px">
+                        <sc-for list="{{l2}}" as="o" hint-placeholder-count="8">
+                          <button class="{{o.cls}}" onClick="{{o.pick}}"
+                            aria-pressed="{{o.on}}">{{ o.label }}</button>
+                        </sc-for>
+                      </div>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{needConf}}"
+                    hint-placeholder-val="{{ false }}">
+                    <div class="fwd"
+                      style="display: flex; flex-direction: column; gap: 10px">
+                      <p id="bl-conf"
+                        style="margin: 0; font-size: 15px; color: #36413C">How sure are you of the word?</p>
+                      <div role="group" aria-labelledby="bl-conf"
+                        style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+                        <sc-for list="{{confs}}" as="o"
+                          hint-placeholder-count="3">
+                          <button class="{{o.cls}}" onClick="{{o.pick}}"
+                            aria-pressed="{{o.on}}"
+                            style="text-align: center">{{ o.label }}</button>
+                        </sc-for>
+                      </div>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{isUnknown}}"
+                    hint-placeholder-val="{{ false }}">
+                    <p class="fwd"
+                      style="margin: 0; font-size: 15px; line-height: 1.4; color: #36413C">“Don’t know” is an answer too. Nothing more needed here.</p>
+                  </sc-if>
+                </section>
+              </sc-if>
+
+              <sc-if value="{{s6}}" hint-placeholder-val="{{ false }}">
+                <section class="scr {{enter}}">
+                  <div>
+                    <h1 class="q" id="bl-q"
+                      tabIndex="-1">There is an urge to…</h1>
+                    <p class="hint">One option, optional</p>
+                  </div>
+                  <div role="group" aria-labelledby="bl-q"
+                    style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+                    <sc-for list="{{urges}}" as="o" hint-placeholder-count="13">
+                      <button class="{{o.cls}}" onClick="{{o.pick}}"
+                        aria-pressed="{{o.on}}">{{ o.label }}</button>
+                    </sc-for>
+                  </div>
+                </section>
+              </sc-if>
+
+              <sc-if value="{{s7}}" hint-placeholder-val="{{ false }}">
+                <section class="scr {{enter}}"
+                  style="padding-top: 40px; gap: 56px">
+                  <h1 class="q" id="bl-q"
+                    tabIndex="-1">Where was your attention just before this?</h1>
+                  <div style="display: flex; flex-direction: column; gap: 10px">
+                    <input type="range" min="0" max="10" step="1"
+                      class="rng {{headCls}}" value="{{head}}"
+                      onChange="{{setHead}}" onPointerDown="{{touchHead}}"
+                      aria-labelledby="bl-q" aria-valuetext="{{headText}}">
+                    <div
+                      class="poles"><span>here, in the body</span><span>in my head, in thoughts</span></div>
+                    <sc-if value="{{headUntouched}}"
+                      hint-placeholder-val="{{ true }}">
+                      <p
+                        style="margin: 12px 0 0; font-size: 14px; color: #4E5853">Slider not moved — that is fine too.</p>
+                    </sc-if>
+                  </div>
+                </section>
+              </sc-if>
+
+              <sc-if value="{{s8}}" hint-placeholder-val="{{ false }}">
+                <section class="scr {{enter}}">
+                  <div>
+                    <h1 class="q" id="bl-q"
+                      tabIndex="-1">What is the situation?</h1>
+                    <p class="hint">One option</p>
+                  </div>
+                  <div role="group" aria-labelledby="bl-q"
+                    style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+                    <sc-for list="{{ctxs}}" as="o" hint-placeholder-count="10">
+                      <button class="{{o.cls}}" onClick="{{o.pick}}"
+                        aria-pressed="{{o.on}}">{{ o.label }}</button>
+                    </sc-for>
+                  </div>
+                  <sc-if value="{{isOther}}" hint-placeholder-val="{{ false }}">
+                    <div class="fwd"
+                      style="display: flex; flex-direction: column; gap: 8px">
+                      <label for="bl-other"
+                        style="font-size: 15px; color: #36413C">Which situation? <span style="color: #4E5853">(optional)</span></label>
+                      <input id="bl-other" class="txt" type="text"
+                        value="{{ctxOther}}" onChange="{{setOther}}"
+                        autocomplete="off" maxlength="40"
+                        placeholder="a word or two">
+                    </div>
+                  </sc-if>
+                </section>
+              </sc-if>
+
+              <sc-if value="{{s9}}" hint-placeholder-val="{{ false }}">
+                <section class="scr {{enter}}">
+                  <div>
+                    <h1 class="q" id="bl-q"
+                      tabIndex="-1">One fact, one line</h1>
+                    <p class="hint">Optional. What and where — not why</p>
+                  </div>
+                  <div style="display: flex; flex-direction: column; gap: 8px">
+                    <label for="bl-note" class="sr">Note</label>
+                    <textarea id="bl-note" class="note {{noteCls}}"
+                      value="{{note}}" onChange="{{setNote}}" autocomplete="off"
+                      autocorrect="off" spellcheck="false"
+                      aria-describedby="bl-note-help"
+                      placeholder="e.g. call, kitchen, 15 minutes"></textarea>
+                    <div id="bl-note-help"
+                      style="display: flex; justify-content: space-between; gap: 12px; font-size: 14px">
+                      <span aria-live="polite"
+                        style="color: #312E81; font-weight: 500">{{ noteMsg }}</span>
+                      <span
+                        style="color: #4E5853; white-space: nowrap">{{ noteCount }} / 160</span>
+                    </div>
+                  </div>
+                </section>
+              </sc-if>
+            </div>
+
+            <footer
+              style="display: flex; gap: 12px; padding: 12px 20px 20px; border-top: 1px solid #C9D6DC; background: #E4EDF1">
+              <button class="btn ghost" onClick="{{goBack}}"
+                disabled="{{backOff}}" aria-label="Back">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                  stroke="#1E2A26" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" aria-hidden="true">
+                  <path d="M15 5l-7 7 7 7"></path>
+                </svg>
+              </button>
+              <button class="btn primary" onClick="{{goNext}}"
+                disabled="{{nextOff}}">{{ nextLabel }}</button>
+            </footer>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{isSaved}}" hint-placeholder-val="{{ false }}">
+          <div class="fade" role="status"
+            style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px">
+            <svg width="56" height="56" viewBox="0 0 56 56" fill="none"
+              aria-hidden="true">
+              <circle cx="28" cy="28" r="26" stroke="#4F46E5"
+                stroke-width="2"></circle>
+              <path d="M18 29l7 7 13-15" stroke="#1E2A26" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            <p style="margin: 0; font-size: 22px; font-weight: 500">Saved</p>
+          </div>
+        </sc-if>
+      </div>
+    </x-dc>
+    <script type="text/x-dc" data-dc-script
+      data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { mode: 'home', pane: 0, step: 0, dir: 'fwd', trigger: 'manual', view: 'front', drag: 0, dragging: false, d: this.blank() };
+    this.sw = null; this.lp = null; this.homeT = null;
+  }
+  blank() {
+    return { loc: [], nowhere: false, q: [], inten: 5, intenT: false, val: 0, valT: false, aro: 5, aroT: false,
+      w1: null, w2: null, conf: null, urge: null, head: 5, headT: false, ctx: null, ctxOther: '', note: '', noteErr: false };
+  }
+  componentDidMount() { const s = this.state; this.prevSnap = { step: s.step, mode: s.mode, d: { ctx: s.d.ctx } }; }
+  componentWillUnmount() { clearTimeout(this.homeT); clearTimeout(this.lp); }
+  componentDidUpdate() {
+    const s = this.state;
+    const ps = this.prevSnap || { step: s.step, mode: s.mode, d: { ctx: s.d.ctx } };
+    this.prevSnap = { step: s.step, mode: s.mode, d: { ctx: s.d.ctx } };
+    const focus = (id, delay) => setTimeout(() => { const el = document.getElementById(id); if (el && el.focus) el.focus({ preventScroll: true }); }, delay || 0);
+    if (ps.step !== s.step || ps.mode !== s.mode) {
+      if (s.mode === 'form') focus(s.step === 9 ? 'bl-note' : (s.step === 8 && s.d.ctx === 'other' ? 'bl-other' : 'bl-q'), 40);
+      else if (s.mode === 'home') focus('bl-now');
+    } else if (s.mode === 'form' && s.step === 8 && s.d.ctx === 'other' && ps.d.ctx !== 'other') {
+      focus('bl-other', 40);
+    }
+  }
+  setD(patch) { this.setState((s) => ({ d: Object.assign({}, s.d, patch) })); }
+  valid(step, d) {
+    if (step === 0) return d.nowhere || d.loc.length > 0;
+    if (step === 1) return d.q.length > 0;
+    if (step === 5) return !d.w1 || !!d.conf;
+    if (step === 8) return !!d.ctx;
+    if (step === 9) return !d.noteErr;
+    return true;
+  }
+  start(trigger) { this.setState({ mode: 'form', step: 0, dir: 'fwd', trigger: trigger, view: 'front', d: this.blank() }); }
+  next() {
+    const s = this.state; if (s.mode !== 'form' || !this.valid(s.step, s.d)) return;
+    if (s.step === 9) return this.save();
+    this.setState({ step: s.step + 1, dir: 'fwd' });
+  }
+  back() { const s = this.state; if (s.mode === 'form' && s.step > 0) this.setState({ step: s.step - 1, dir: 'back' }); }
+  save() {
+    this.setState({ mode: 'saved' });
+    clearTimeout(this.homeT);
+    this.homeT = setTimeout(() => this.setState({ mode: 'home', pane: 0 }), 1500);
+  }
+  near(v, min, max, lo, hi) {
+    const t = (v - min) / (max - min);
+    return t < 0.35 ? 'closer to “' + lo + '”' : t > 0.65 ? 'closer to “' + hi + '”' : 'in the middle';
+  }
+  renderVals() {
+    const s = this.state, d = s.d, me = this;
+    const LBL = { forehead: 'forehead / eyes', jaw: 'jaw', throat: 'throat', neck: 'neck', shoulders: 'shoulders', chest: 'chest',
+      solar_plexus: 'solar plexus', belly: 'belly', lower_belly: 'lower belly', lower_back: 'lower back', upper_back: 'upper back',
+      arms_hands: 'arms / hands', legs_feet: 'legs / feet', whole_body: 'whole body' };
+    const ORDER = ['forehead', 'jaw', 'throat', 'neck', 'shoulders', 'chest', 'solar_plexus', 'belly', 'lower_belly', 'upper_back', 'lower_back', 'arms_hands', 'legs_feet'];
+    const FRONT_KEYS = ['forehead', 'jaw', 'throat', 'shoulders', 'chest', 'solar_plexus', 'belly', 'lower_belly', 'arms_hands', 'legs_feet'];
+    const BACK_KEYS = ['neck', 'shoulders', 'upper_back', 'lower_back', 'arms_hands', 'legs_feet'];
+    const whole = d.loc.indexOf('whole_body') >= 0;
+    const toggleLoc = (k) => {
+      const cur = d.loc.filter((x) => x !== 'whole_body');
+      const has = cur.indexOf(k) >= 0;
+      me.setD({ nowhere: false, loc: has ? cur.filter((x) => x !== k) : cur.concat([k]) });
+    };
+    const zf = {}; ORDER.forEach((k) => { zf[k] = d.loc.indexOf(k) >= 0 ? '#4F46E5' : 'none'; });
+    const HF = [
+      { k: 'forehead', x: 88, y: 0, w: 84, h: 46 }, { k: 'jaw', x: 88, y: 46, w: 84, h: 44 }, { k: 'throat', x: 98, y: 90, w: 64, h: 44 },
+      { k: 'shoulders', x: 14, y: 134, w: 232, h: 44 }, { k: 'chest', x: 60, y: 178, w: 140, h: 68 },
+      { k: 'solar_plexus', x: 60, y: 246, w: 140, h: 46 }, { k: 'belly', x: 60, y: 292, w: 140, h: 46 },
+      { k: 'lower_belly', x: 60, y: 338, w: 140, h: 46 }, { k: 'arms_hands', x: 12, y: 178, w: 48, h: 230 },
+      { k: 'arms_hands', x: 200, y: 178, w: 48, h: 230, dup: 1 }, { k: 'legs_feet', x: 62, y: 384, w: 68, h: 136 },
+      { k: 'legs_feet', x: 130, y: 384, w: 68, h: 136, dup: 1 }
+    ];
+    const HB = [
+      { k: 'neck', x: 98, y: 90, w: 64, h: 44 }, { k: 'shoulders', x: 14, y: 134, w: 232, h: 44 },
+      { k: 'upper_back', x: 60, y: 178, w: 140, h: 100 }, { k: 'lower_back', x: 60, y: 278, w: 140, h: 90 },
+      { k: 'arms_hands', x: 12, y: 178, w: 48, h: 230 }, { k: 'arms_hands', x: 200, y: 178, w: 48, h: 230, dup: 1 },
+      { k: 'legs_feet', x: 62, y: 384, w: 68, h: 136 }, { k: 'legs_feet', x: 130, y: 384, w: 68, h: 136, dup: 1 }
+    ];
+    const hits = (s.view === 'front' ? HF : HB).map((z) => {
+      const on = d.loc.indexOf(z.k) >= 0;
+      return Object.assign({}, z, { label: LBL[z.k], on: on, hid: !!z.dup, tab: z.dup ? -1 : 0, pick: () => toggleLoc(z.k) });
+    });
+    const countIn = (keys) => d.loc.filter((k) => keys.indexOf(k) >= 0).length;
+    const nF = countIn(FRONT_KEYS), nB = countIn(BACK_KEYS);
+    const sel = ORDER.filter((k) => d.loc.indexOf(k) >= 0).map((k) => LBL[k]);
+    let next0 = 'Next';
+    if (d.nowhere) next0 = 'Next: nowhere →';
+    else if (whole) next0 = 'Next: whole body →';
+    else if (sel.length && sel.length <= 2) next0 = 'Next: ' + sel.join(', ') + ' →';
+    else if (sel.length) next0 = 'Next (' + sel.length + ') →';
+
+    let selPre = 'Selected: ', selText = '';
+    if (d.nowhere) selText = 'nowhere';
+    else if (whole) selText = 'whole body';
+    else if (sel.length) selText = sel.join(', ');
+    else { selPre = 'Tap the body to select zones'; }
+    const multi = (arr, field, excl) => arr.map((label) => {
+      const on = d[field].indexOf(label) >= 0;
+      return { label: label, on: on, cls: on ? 'opt on' : 'opt', pick: () => {
+        let cur = d[field];
+        if (on) cur = cur.filter((x) => x !== label);
+        else if (excl.indexOf(label) >= 0) cur = [label];
+        else cur = cur.filter((x) => excl.indexOf(x) < 0).concat([label]);
+        const p = {}; p[field] = cur; me.setD(p);
+      } };
+    });
+    const single = (arr, field) => arr.map((label) => {
+      const on = d[field] === label;
+      return { label: label, on: on, cls: on ? 'opt on' : 'opt', pick: () => { const p = {}; p[field] = on ? null : label; me.setD(p); } };
+    });
+    const QUAL = ['heavy', 'light', 'tight', 'pressing outward', 'lump', 'warm', 'hot', 'cold', 'trembling', 'tingling', 'pulsing',
+      'numb', 'hollow', 'queasy', 'tense', 'relaxed', 'aching', 'pulling', 'tickly', 'nothing', 'can’t tell'];
+    const WORDS = {
+      'fear': ['anxiety', 'worry', 'wariness', 'tense waiting', 'panic', 'terror', 'self-consciousness', 'insecurity'],
+      'anger': ['irritation', 'frustration', 'resentment', 'indignation', 'rage', 'disgust', 'contempt', 'impatience'],
+      'sadness': ['longing', 'sorrow', 'loneliness', 'disappointment', 'grief', 'despondency', 'self-pity', 'helplessness'],
+      'shame': ['awkwardness', 'guilt', 'humiliation', 'embarrassment', 'worthlessness'],
+      'joy': ['interest', 'relief', 'calm', 'tenderness', 'thrill', 'gratitude', 'contentment', 'enthusiasm', 'warmth toward someone'],
+      'surprise': ['confusion', 'bewilderment', 'curiosity', 'stunned'],
+      'empty': ['numbness', 'boredom', 'detachment', '“wrapped in cotton wool”', 'nothing', 'frozen'],
+      'don’t know': []
+    };
+    const l1 = Object.keys(WORDS).map((label) => {
+      const on = d.w1 === label;
+      return { label: label, on: on, cls: on ? 'opt on' : 'opt', pick: () => {
+        if (on) me.setD({ w1: null, w2: null, conf: null });
+        else me.setD({ w1: label, w2: null, conf: label === 'don’t know' ? 'unknown' : null });
+      } };
+    });
+    const l2 = (d.w1 ? WORDS[d.w1] : []).map((label) => {
+      const on = d.w2 === label;
+      return { label: label, on: on, cls: on ? 'chip on' : 'chip', pick: () => me.setD({ w2: on ? null : label }) };
+    });
+    const confs = [['guess', 'guessing'], ['sure', 'sure'], ['unknown', 'don’t know']].map((c) => {
+      const on = d.conf === c[0];
+      return { label: c[1], on: on, cls: on ? 'opt on' : 'opt', pick: () => me.setD({ conf: on ? null : c[0] }) };
+    });
+    const URGES = ['leave', 'shrink', 'freeze', 'move', 'hit', 'cry', 'shout', 'sleep', 'eat', 'hug / hold close', 'talk', 'stay silent', 'nothing'];
+    const CTX = ['work', 'people', 'alone', 'food', 'on the way', 'home', 'screen', 'body / sport', 'sleep (before / after)', 'other'];
+    const STOP = ['потому что', 'значит', 'думаю', 'наверное', 'из-за', 'поэтому', 'кажется что', 'это значит',
+      'тому що', 'бо', 'значить', 'мабуть', 'напевно', 'через те що', 'тому', 'здається що', 'це означає',
+      'because', 'means', 'i think', 'probably', 'maybe', 'due to', "that's why", 'it seems', 'this means'];
+    const stopRe = new RegExp("(?<![\\p{L}'’])(" + STOP.map((w) => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|') + ")(?![\\p{L}'’])", 'iu');
+    const slider = (key, tkey) => ({
+      set: (e) => { const p = {}; p[key] = Number(e.target.value); p[tkey] = true; me.setD(p); },
+      touch: () => { if (!d[tkey]) { const p = {}; p[tkey] = true; me.setD(p); } }
+    });
+    const si = slider('inten', 'intenT'), sv = slider('val', 'valT'), sa = slider('aro', 'aroT'), sh = slider('head', 'headT');
+    const step = s.step;
+    const segs = []; for (let i = 0; i < 10; i++) segs.push({ bg: i <= step ? '#4F46E5' : '#BCC5C0' });
+    const valid = this.valid(step, d);
+    const flip = (v) => me.setState({ view: v });
+    return {
+      isHome: s.mode === 'home', isForm: s.mode === 'form', isSaved: s.mode === 'saved',
+      paneX: -390 * s.pane, pane0Hidden: s.pane !== 0, pane1Hidden: s.pane !== 1,
+      dot0: s.pane === 0 ? 'dot on' : 'dot', dot1: s.pane === 1 ? 'dot on' : 'dot',
+      dot0Cur: s.pane === 0 ? 'page' : null, dot1Cur: s.pane === 1 ? 'page' : null,
+      toPane0: () => me.setState({ pane: 0 }), toPane1: () => me.setState({ pane: 1 }),
+      startManual: () => me.start('manual'), startAfter: () => me.start('after_event'),
+      logoDown: () => { clearTimeout(me.lp); me.lp = setTimeout(() => me.setState({ pane: 1 }), 600); },
+      logoUp: () => clearTimeout(me.lp),
+      isAfter: s.trigger === 'after_event',
+      segs: segs, stepNum: step + 1, enter: s.dir === 'fwd' ? 'fwd' : 'back',
+      s0: step === 0, s1: step === 1, s2: step === 2, s3: step === 3, s4: step === 4,
+      s5: step === 5, s6: step === 6, s7: step === 7, s8: step === 8, s9: step === 9,
+      viewFront: s.view === 'front', viewBack: s.view === 'back',
+      tabFrontCls: s.view === 'front' ? 'tab on' : 'tab', tabBackCls: s.view === 'back' ? 'tab on' : 'tab',
+      showFront: () => flip('front'), showBack: () => flip('back'),
+      frontBadge: nF ? ' · ' + nF : '', backBadge: nB ? ' · ' + nB : '',
+      zf: zf, hits: hits, selPre: selPre, selText: selText,
+      isOther: d.ctx === 'other', ctxOther: d.ctxOther,
+      setOther: (e) => me.setD({ ctxOther: Array.from(e.target.value).slice(0, 40).join('') }),
+      dragX: s.drag, dragTr: s.dragging ? 'none' : 'transform .28s cubic-bezier(.2,.7,.2,1)',
+      silFill: whole ? '#C7D2FE' : '#F7FAFB', silLine: whole ? '#4F46E5' : '#8E9892', seam: whole ? '#A5B4FC' : '#CBD4D0',
+      wholeOn: whole, wholeCls: whole ? 'opt on' : 'opt',
+      pickWhole: () => me.setD(whole ? { loc: [] } : { loc: ['whole_body'], nowhere: false }),
+      nowhereOn: d.nowhere, nowhereCls: d.nowhere ? 'opt on' : 'opt',
+      pickNowhere: () => me.setD(d.nowhere ? { nowhere: false } : { nowhere: true, loc: [] }),
+      quals: multi(QUAL, 'q', ['nothing', 'can’t tell']),
+      inten: d.inten, setInten: si.set, touchInten: si.touch, intenCls: d.intenT ? '' : 'untouched', intenUntouched: !d.intenT,
+      intenText: this.near(d.inten, 0, 10, 'barely there', 'very strong'),
+      val: d.val, setVal: sv.set, touchVal: sv.touch, valCls: d.valT ? '' : 'untouched', valUntouched: !d.valT,
+      valText: d.val === 0 ? 'neutral' : this.near(d.val, -3, 3, 'unpleasant', 'pleasant'),
+      aro: d.aro, setAro: sa.set, touchAro: sa.touch, aroCls: d.aroT ? '' : 'untouched', aroUntouched: !d.aroT,
+      aroText: this.near(d.aro, 0, 10, 'slow', 'wired'),
+      head: d.head, setHead: sh.set, touchHead: sh.touch, headCls: d.headT ? '' : 'untouched', headUntouched: !d.headT,
+      headText: this.near(d.head, 0, 10, 'in the body', 'in my head'),
+      l1: l1, l2: l2, hasL2: l2.length > 0, needConf: !!d.w1 && d.w1 !== 'don’t know', isUnknown: d.w1 === 'don’t know', confs: confs,
+      urges: single(URGES, 'urge'), ctxs: single(CTX, 'ctx'),
+      note: d.note, noteCount: Array.from(d.note).length, noteCls: d.noteErr ? 'err' : '',
+      noteMsg: d.noteErr ? 'What and where — not why' : '',
+      setNote: (e) => { const v = Array.from(e.target.value).slice(0, 160).join(''); me.setD({ note: v, noteErr: stopRe.test(v) }); },
+      skip: () => me.save(),
+      goBack: () => me.back(), goNext: () => me.next(),
+      backOff: step === 0, nextOff: !valid, nextLabel: step === 0 ? next0 : (step === 9 ? 'Save' : 'Next'),
+      onKey: (e) => {
+        const t = e.target || {};
+        const tag = t.tagName || '';
+        const role = t.getAttribute ? t.getAttribute('role') : null;
+        if (role === 'tab' && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) {
+          e.preventDefault(); e.stopPropagation(); flip(s.view === 'front' ? 'back' : 'front'); return;
+        }
+        const inField = tag === 'INPUT' || tag === 'TEXTAREA';
+        if (s.mode === 'form') {
+          if (tag === 'TEXTAREA' && e.key === 'Enter' && (e.metaKey || e.ctrlKey)) { e.preventDefault(); me.next(); return; }
+          if (inField) return;
+          if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); me.next(); }
+          else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); me.back(); }
+        } else if (s.mode === 'home' && !inField) {
+          if (e.key === 'ArrowRight') me.setState({ pane: 1 });
+          else if (e.key === 'ArrowLeft') me.setState({ pane: 0 });
+        }
+      },
+      pDown: (e) => {
+        const t = e.target;
+        if (t && t.closest && t.closest('input,textarea')) { me.sw = null; return; }
+        me.sw = { x: e.clientX, y: e.clientY, h: null };
+      },
+      pMove: (e) => {
+        const o = me.sw; if (!o || s.mode !== 'form') return;
+        const dx = e.clientX - o.x, dy = e.clientY - o.y;
+        if (o.h === null) { if (Math.abs(dx) < 10 && Math.abs(dy) < 10) return; o.h = Math.abs(dx) > Math.abs(dy); }
+        if (!o.h) return;
+        const canFwd = me.valid(s.step, d), canBack = s.step > 0;
+        const k = (dx < 0 && !canFwd) || (dx > 0 && !canBack) ? 0.2 : 0.6;
+        me.setState({ drag: Math.max(-140, Math.min(140, dx * k)), dragging: true });
+      },
+      pUp: (e) => {
+        const o = me.sw; me.sw = null;
+        if (s.dragging || s.drag) me.setState({ drag: 0, dragging: false });
+        if (!o) return;
+        const dx = e.clientX - o.x, dy = e.clientY - o.y;
+        if (Math.abs(dx) < 60 || Math.abs(dy) > Math.abs(dx) * 0.7) return;
+        if (s.mode === 'home') me.setState({ pane: dx < 0 ? 1 : 0 });
+        else if (s.mode === 'form') { if (dx > 0) me.back(); else me.next(); }
+      }
+    };
+  }
+}
+</script>
+  </body>
+</html>

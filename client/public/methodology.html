@@ -1,0 +1,4034 @@
+<!doctype html>
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
+<!--
+  The methodology, for people who use Emo and anyone who reads their export:
+  llm/methodology.md §0–§7 in en, uk and ru, with the personal context
+  left out. A change there is made here too, in all three languages.
+  Static and script-free (CSP). Served at /methodology too (server/app.ts and
+  sw.js PAGES). About and the sign-in screen add #en, #uk or #ru; the export
+  sheet links #<lang>-s4, the field map. Ids are <lang>-s<section>[-<topic>].
+  The mark goes to the app; on a phone it and the languages are a bar at the
+  bottom, under the thumb (ui.md §4.5).
+  Own prose keeps the vocabulary rule (shared/i18n/forbidden.ts); names of
+  theories, scales and works sit in <cite> or <i class="term">, which the
+  test skips (shared/i18n/forbidden_test.ts).
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Emo · Methodology</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/methodology.css">
+  </head>
+  <body>
+    <header class="top">
+      <a class="brand" href="/">
+        <img src="/mark.svg" alt="">
+        <span>Emo</span>
+      </a>
+      <nav class="lang" aria-label="Language">
+        <a href="#en" hreflang="en" lang="en">English</a>
+        <a href="#uk" hreflang="uk" lang="uk">Українська</a>
+        <a href="#ru" hreflang="ru" lang="ru">Русский</a>
+      </nav>
+    </header>
+    <main>
+      <article id="en" lang="en">
+        <div class="hero">
+          <p class="eyebrow">Emo · Methodology</p>
+          <h1>Why Emo asks what it asks</h1>
+          <p class="lead">
+            The theories and measurement traditions behind each field of a
+            check-in, what was deliberately left out, and what that means for
+            how the data can be analysed.
+          </p>
+          <p class="dateline">
+            Field names match the export (JSONL; the CSV writes
+            <code>affect.valence</code> as <code>affect_valence</code>).
+          </p>
+        </div>
+
+        <div class="layout">
+          <nav class="toc" id="en-toc" aria-labelledby="en-toc-h">
+            <h2 id="en-toc-h">Contents</h2>
+            <ol>
+              <li>
+                <a href="#en-s0"><span class="n">0</span>How firm each source
+                  is</a>
+              </li>
+              <li>
+                <a href="#en-s1"><span class="n">1</span>How data is
+                  collected</a>
+              </li>
+              <li>
+                <a href="#en-s2"><span class="n">2</span>The models behind the
+                  fields</a>
+              </li>
+              <li>
+                <a href="#en-s3"><span class="n">3</span>What was deliberately
+                  left out</a>
+              </li>
+              <li>
+                <a href="#en-s4"><span class="n">4</span>Field, basis,
+                  metric</a>
+              </li>
+              <li>
+                <a href="#en-s5"><span class="n">5</span>Notes for
+                  analysis</a>
+              </li>
+              <li>
+                <a href="#en-s6"><span class="n">6</span>Limits of the whole
+                  design</a>
+              </li>
+              <li>
+                <a href="#en-s7"><span class="n">7</span>Key references</a>
+              </li>
+            </ol>
+          </nav>
+
+          <div class="content">
+            <section class="part" id="en-s0">
+              <h2><span class="n">0</span>How firm each source is</h2>
+              <p>
+                Every source below carries one of three marks.
+              </p>
+              <ul class="legend">
+                <li>
+                  <span class="ev ev-a"><span class="vh">Evidence level
+                    </span>A</span>
+                  <p>
+                    Established findings: they replicate, and there are
+                    meta-analyses.
+                  </p>
+                </li>
+                <li>
+                  <span class="ev ev-b"><span class="vh">Evidence level
+                    </span>B</span>
+                  <p>
+                    An actively researched model, with criticism and competing
+                    theories.
+                  </p>
+                </li>
+                <li>
+                  <span class="ev ev-c"><span class="vh">Evidence level
+                    </span>C</span>
+                  <p>
+                    A clinical tradition or a practical model without a strong
+                    experimental base. A source of vocabulary and procedure,
+                    never grounds for statistical conclusions.
+                  </p>
+                </li>
+              </ul>
+            </section>
+
+            <section class="part" id="en-s1">
+              <h2><span class="n">1</span>How data is collected</h2>
+
+              <section class="topic" id="en-s1-1">
+                <h3>
+                  <span class="n">1.1</span>Experience sampling and ecological
+                  momentary assessment
+                </h3>
+                <p class="tags">
+                  <span class="ev ev-a"><span class="vh">Evidence level
+                    </span>A</span>
+                  <code>trigger</code> <code>reminder_id</code>
+                  <code>skipped</code>
+                </p>
+                <ul>
+                  <li>
+                    Csikszentmihalyi &amp; Larson (1987): the Experience
+                    Sampling Method (ESM). Shiffman, Stone &amp; Hufford (2008):
+                    Ecological Momentary Assessment (EMA).
+                  </li>
+                  <li>
+                    The idea: many short measurements
+                    <strong>in the moment</strong>, in everyday surroundings,
+                    prompted by a random signal.
+                  </li>
+                  <li>
+                    Why: looking back (“how was your week?”) is distorted by
+                    peaks, endings and the present state (Kahneman’s
+                    <i class="term">peak-end rule</i>; Robinson &amp; Clore,
+                    2002, the accessibility model: a retrospective report draws
+                    on beliefs about oneself, not on experience).
+                  </li>
+                  <li>
+                    For someone who has long been cut off from bodily signals,
+                    looking back is especially uninformative: beliefs about
+                    their own states are missing or formulaic.
+                  </li>
+                </ul>
+                <h4>What follows for the record</h4>
+                <ul>
+                  <li>
+                    <code>trigger = random</code>: signal-contingent sampling.
+                  </li>
+                  <li>
+                    <code>trigger = manual</code>: event-contingent sampling. A
+                    growing share of <code>manual</code> entries means more
+                    spontaneous noticing, which is itself a target outcome.
+                  </li>
+                  <li>
+                    <code>skipped</code>: compliance. The EMA standard is at
+                    least 70–80% of prompts answered; below that the data is
+                    systematically biased, because the hard moments are the
+                    ones skipped (§5.3).
+                  </li>
+                  <li>
+                    A short form (60 seconds or less): an EMA requirement for
+                    keeping compliance over weeks and months.
+                  </li>
+                </ul>
+                <div class="note">
+                  <p>
+                    <time datetime="2026-10-10">Since 10 Oct 2026</time>
+                    The response window is 15 minutes after the notification
+                    appears. An answer is a tap on it, or a check-in started on
+                    one’s own while it is still on screen. Later, the entry is
+                    <code>manual</code> and the reminder counts as unanswered.
+                  </p>
+                </div>
+              </section>
+
+              <section class="topic" id="en-s1-2">
+                <h3><span class="n">1.2</span>Measurement reactivity</h3>
+                <p class="tags">
+                  <span class="ev ev-a"><span class="vh">Evidence level
+                    </span>A</span>
+                  <span class="ev ev-b"><span class="vh">Evidence level
+                    </span>B</span>
+                </p>
+                <ul>
+                  <li>
+                    Measuring changes what is measured (Barta, Tennen &amp;
+                    Litt, 2012, a review of diary research).
+                  </li>
+                  <li>
+                    Here reactivity <strong>is the goal</strong>: turning
+                    attention to the body again and again is the intervention
+                    itself (affect labelling, §2.11; interoceptive training,
+                    §2.3).
+                  </li>
+                  <li>
+                    For analysis: a change in the state cannot be separated
+                    from a change in the skill of reading it. This is a
+                    fundamental limit; keep it in mind in every interpretation.
+                  </li>
+                </ul>
+              </section>
+              <a class="back" href="#en-toc">Contents ↑</a>
+            </section>
+
+            <section class="part" id="en-s2">
+              <h2><span class="n">2</span>The models behind the fields</h2>
+
+              <section class="topic" id="en-s2-1">
+                <h3>
+                  <span class="n">2.1</span>The circumplex model of affect
+                </h3>
+                <p class="tags">
+                  <span class="ev ev-a"><span class="vh">Evidence level
+                    </span>A</span>
+                  <code>affect.valence</code> <code>affect.arousal</code>
+                </p>
+                <ul>
+                  <li>
+                    Russell (1980); Russell &amp; Barrett (1999),
+                    <i class="term">core affect</i>.
+                  </li>
+                  <li>
+                    Any state can be placed on two continuous axes: valence
+                    (pleasant to unpleasant) and arousal (sluggish to
+                    activated). A named, discrete state is built on top of
+                    them.
+                  </li>
+                  <li>
+                    Why it matters: someone who <strong>cannot</strong> yet
+                    name what is going on can still rate pleasantness and
+                    energy. It is the lowest level of access, and the place to
+                    start.
+                  </li>
+                  <li>
+                    For analysis: the (valence, arousal) coordinates are the
+                    main raw variable. The word (<code>affect.word</code>) is
+                    secondary.
+                  </li>
+                </ul>
+              </section>
+
+              <section class="topic" id="en-s2-2">
+                <h3>
+                  <span class="n">2.2</span><i class="term">Constructed
+                    emotion</i> and <i class="term">emotional granularity</i>
+                </h3>
+                <p class="tags">
+                  <span class="ev ev-b"><span class="vh">Evidence level
+                    </span>B</span>
+                  <code>affect.word</code>
+                </p>
+                <ul>
+                  <li>
+                    Barrett (2006, 2017, <cite>How Emotions Are Made</cite>).
+                    The competing position is <i class="term">basic
+                      emotions</i> (Ekman, Panksepp). The debate is not
+                    settled; for keeping a diary it does not matter much.
+                  </li>
+                  <li>
+                    Granularity, or differentiation: telling close states apart
+                    (“anxiety” or “irritation” or “shame” rather than “bad”).
+                  </li>
+                  <li>
+                    Evidence
+                    <span class="ev ev-a"><span class="vh">level
+                      </span>A</span>: low granularity goes with poorer
+                    regulation, more impulsivity and alexithymia; high
+                    granularity with more adaptive strategies (Barrett et al.,
+                    2001; Kashdan, Barrett &amp; McKnight, 2015, a review).
+                  </li>
+                  <li>
+                    The classic metric: the mean ICC between ratings of several
+                    states within a person across many moments; granularity
+                    = 1 − ICC (Tugade, Fredrickson &amp; Barrett, 2004).
+                    <strong>It does not apply here directly</strong>: an entry
+                    holds one word, not ratings on a set of words. §5.1 lists
+                    stand-ins.
+                  </li>
+                  <li>
+                    The two-level list (8 broad words, then about 50 finer
+                    ones) is procedural scaffolding: someone with low
+                    granularity first picks a cluster, then refines it.
+                  </li>
+                </ul>
+              </section>
+
+              <section class="topic" id="en-s2-3">
+                <h3><span class="n">2.3</span>Interoception</h3>
+                <p class="tags">
+                  <span class="ev ev-a"><span class="vh">Evidence level
+                    </span>A</span>
+                  <span class="ev ev-b"><span class="vh">Evidence level
+                    </span>B</span>
+                  <code>body.locations</code> <code>body.qualities</code>
+                  <code>body.intensity</code> <code>latency_sec</code>
+                </p>
+                <ul>
+                  <li>
+                    Craig (2002, 2009): interoception as the basis of the
+                    subjective sense of self (the insula).
+                  </li>
+                  <li>
+                    Garfinkel et al. (2015): a three-part model that matters
+                    for analysis.
+                    <ol>
+                      <li>
+                        <strong>Interoceptive accuracy</strong>: objective
+                        precision (heartbeat counting, for example).
+                      </li>
+                      <li>
+                        <strong>Interoceptive sensibility</strong>: one’s own
+                        rating of one’s sensitivity (the MAIA and BPQ
+                        questionnaires).
+                      </li>
+                      <li>
+                        <strong>Interoceptive awareness</strong>: the
+                        metacognitive match between the two.
+                      </li>
+                    </ol>
+                    The diary measures only sensibility, and awareness
+                    indirectly through <code>affect.word_confidence</code>.
+                    Accuracy <strong>cannot be measured</strong> by a diary;
+                    draw no conclusions about it.
+                  </li>
+                  <li>
+                    Khalsa et al. (2018): a consensus review of interoception
+                    in psychiatry.
+                  </li>
+                  <li>
+                    Interoceptive training: Price &amp; Hooven (2018), MABT, a
+                    body-awareness therapy based on mindfulness; randomised
+                    trials of moderate quality
+                    <span class="ev ev-b"><span class="vh">Evidence level
+                      </span>B</span>.
+                  </li>
+                  <li>
+                    A questionnaire for a periodic outside measurement (every
+                    3–6 months): MAIA-2 (Mehling et al., 2018).
+                  </li>
+                </ul>
+              </section>
+
+              <section class="topic" id="en-s2-4">
+                <h3><span class="n">2.4</span>Body maps</h3>
+                <p class="tags">
+                  <span class="ev ev-b"><span class="vh">Evidence level
+                    </span>B</span>
+                  <code>body.locations</code>
+                </p>
+                <ul>
+                  <li>
+                    Nummenmaa et al. (2014, PNAS,
+                    <cite>Bodily maps of emotions</cite>): topographies that
+                    hold across cultures. Fear and anxiety: the chest and upper
+                    body. Anger: the arms, head and chest. Sadness: less
+                    activation in the limbs. Depression: an overall
+                    “switching off”.
+                  </li>
+                  <li>
+                    For analysis: the spread of zones by valence or by word can
+                    be compared with these maps as a prior expectation. A
+                    mismatch is not an error; it is data.
+                  </li>
+                </ul>
+              </section>
+
+              <section class="topic" id="en-s2-5">
+                <h3>
+                  <span class="n">2.5</span>Somatic markers: the case for the
+                  whole idea
+                </h3>
+                <p class="tags">
+                  <span class="ev ev-b"><span class="vh">Evidence level
+                    </span>B</span>
+                  <code>urge</code>
+                </p>
+                <ul>
+                  <li>
+                    Damasio (1994, <cite>Descartes’ Error</cite>); Bechara et
+                    al. (1997), the Iowa Gambling Task.
+                  </li>
+                  <li>
+                    Bodily signals take part in decisions before they reach
+                    awareness. Criticism: Dunn, Dalgleish &amp; Lawrence (2006)
+                    find the evidence weaker than the popular version. The
+                    general idea (the body informs choice) holds; the details
+                    of the mechanism do not.
+                  </li>
+                  <li>
+                    Relevance: <code>urge</code> records a tendency to act, the
+                    closest available correlate of a “marker”.
+                  </li>
+                </ul>
+              </section>
+
+              <section class="topic" id="en-s2-6">
+                <h3><span class="n">2.6</span>Action tendencies</h3>
+                <p class="tags">
+                  <span class="ev ev-a"><span class="vh">Evidence level
+                    </span>A</span>
+                  <span class="ev ev-b"><span class="vh">Evidence level
+                    </span>B</span>
+                  <code>urge</code>
+                </p>
+                <ul>
+                  <li>
+                    Frijda (1986): an affective state as readiness to act
+                    (<i class="term">action readiness</i>).
+                  </li>
+                  <li>
+                    Lang (1995): motivational systems of approach and
+                    avoidance.
+                  </li>
+                  <li>
+                    The urge list (leave, shrink, freeze, move, hit, cry…) maps
+                    directly onto fight, flight and freeze, plus approach. It
+                    is useful precisely because an urge is often read earlier
+                    and more easily than a named state.
+                  </li>
+                </ul>
+              </section>
+
+              <section class="topic" id="en-s2-7">
+                <h3>
+                  <span class="n">2.7</span>Alexithymia: “nothing”, “don’t
+                  know”, “can’t tell”
+                </h3>
+                <p class="tags">
+                  <span class="ev ev-a"><span class="vh">Evidence level
+                    </span>A</span>
+                  <code>body.qualities</code> <code>affect.word</code>
+                </p>
+                <ul>
+                  <li>
+                    Sifneos (1973) coined the term. Bagby, Parker &amp; Taylor
+                    (1994): TAS-20, with three factors:
+                    <i class="term">difficulty identifying feelings</i> (DIF),
+                    <i class="term">difficulty describing feelings</i> (DDF)
+                    and <i class="term">externally oriented thinking</i> (EOT).
+                  </li>
+                  <li>
+                    Thinking that is mostly operational and turned outward is
+                    the pattern of living “outside oneself”: attention held on
+                    tasks and the world rather than on inner states. EOT shows
+                    up in <code>head_mode</code>.
+                  </li>
+                  <li>
+                    Valid “nothing” and “don’t know” answers are mandatory.
+                    Without them a person with alexithymia picks a random word,
+                    and the data looks better than it is.
+                  </li>
+                  <li>
+                    Outside measurement: TAS-20 at the start and every 6
+                    months. Expected change: lower DIF and DDF.
+                  </li>
+                  <li>
+                    About half of autistic adults have alexithymia (Kinnaird,
+                    Stewart &amp; Tsakanikos, 2019, a meta-analysis). Where
+                    this applies, the trajectory and the expectations differ
+                    (§6).
+                  </li>
+                </ul>
+              </section>
+
+              <section class="topic" id="en-s2-8">
+                <h3>
+                  <span class="n">2.8</span><i class="term">Levels of
+                    emotional awareness</i>: how the fields are ordered
+                </h3>
+                <p class="tags">
+                  <span class="ev ev-b"><span class="vh">Evidence level
+                    </span>B</span>
+                  <code>body.locations</code> <code>urge</code>
+                  <code>affect.word</code>
+                </p>
+                <ul>
+                  <li>
+                    Lane &amp; Schwartz (1987), the
+                    <i class="term">Levels of Emotional Awareness Scale</i>
+                    (LEAS). The ladder: (1) bodily sensations, (2) action
+                    tendencies, (3) single named states, (4) blends of them,
+                    (5) blends in oneself and in someone else.
+                  </li>
+                  <li>
+                    The record’s fields sit on exactly this ladder: the body
+                    (1), <code>urge</code> (2), <code>affect.word</code> (3).
+                    Several words or qualities in one entry mark a step up to
+                    level 4.
+                  </li>
+                </ul>
+              </section>
+
+              <section class="topic" id="en-s2-9">
+                <h3>
+                  <span class="n">2.9</span>Experiential avoidance: no “why”
+                </h3>
+                <p class="tags">
+                  <span class="ev ev-a"><span class="vh">Evidence level
+                    </span>A</span>
+                  <code>head_mode</code>
+                </p>
+                <ul>
+                  <li>
+                    Hayes et al. (1996, 2006), ACT; the AAQ-II questionnaire
+                    (Bond et al., 2011).
+                  </li>
+                  <li>
+                    Avoiding inner experience through thinking, activity and
+                    analysis. Intellectualising is one form of it.
+                  </li>
+                  <li>
+                    Mind-wandering: Killingsworth &amp; Gilbert (2010,
+                    Science), experience sampling with 2,250 people. About 47%
+                    of the time, attention is not on the current activity, and
+                    a wandering mind predicts lower happiness.
+                    <code>head_mode</code> is a direct analogue of their
+                    question.
+                  </li>
+                </ul>
+              </section>
+
+              <section class="topic" id="en-s2-10">
+                <h3>
+                  <span class="n">2.10</span>Rumination and processing mode:
+                  no “why”, a short note
+                </h3>
+                <p class="tags">
+                  <span class="ev ev-a"><span class="vh">Evidence level
+                    </span>A</span>
+                  <code>note</code>
+                </p>
+                <ul>
+                  <li>
+                    Nolen-Hoeksema (1991, 2008): rumination as a factor in
+                    depression.
+                  </li>
+                  <li>
+                    Watkins (2008): constructive and unconstructive repetitive
+                    thought. The <strong>abstract</strong> mode (“why is this
+                    happening to me”, “what does it mean”) does harm; the
+                    <strong>concrete</strong> mode (“what exactly, where, how”)
+                    is neutral or helps.
+                  </li>
+                  <li>
+                    Kross &amp; Ayduk (2011, 2017): self-distancing. Asking
+                    “why” from an immersed position intensifies affect without
+                    processing it.
+                  </li>
+                  <li>
+                    Hence the note turns away causes and meanings (“because”,
+                    “means”, “due to”, “that’s why”) and abstract-mode
+                    questions (“why”, “what’s wrong with me”), and the form
+                    asks “what and where”, never “why”. Hedges (“probably”, “I
+                    think”, “it seems”) are not the abstract mode but caution,
+                    close to <code>affect.word_confidence = guess</code> and to
+                    the distanced stance of ACT.
+                  </li>
+                </ul>
+                <div class="note">
+                  <p>
+                    <time datetime="2026-10-09">Since 9 Oct 2026</time>
+                    Hedges are no longer turned away: “thinking about the
+                    deadline” is a fact about attention.
+                  </p>
+                </div>
+              </section>
+
+              <section class="topic" id="en-s2-11">
+                <h3>
+                  <span class="n">2.11</span>Affect labelling: why the diary
+                  is itself an intervention
+                </h3>
+                <p class="tags">
+                  <span class="ev ev-a"><span class="vh">Evidence level
+                    </span>A</span>
+                  <code>affect.word</code>
+                </p>
+                <ul>
+                  <li>
+                    Lieberman et al. (2007): naming affect lowers amygdala
+                    activity and raises ventrolateral prefrontal activity.
+                    Torre &amp; Lieberman (2018), a review: the effect is
+                    robust and works as implicit regulation.
+                  </li>
+                  <li>
+                    Pennebaker (1997), expressive writing.
+                    <strong>Not used as a model</strong>: its protocol is long
+                    narratives with meanings and causes, which works against
+                    this purpose (§2.10). Only the finding is taken: putting
+                    affect into words regulates it.
+                  </li>
+                </ul>
+              </section>
+
+              <section class="topic" id="en-s2-12">
+                <h3>
+                  <span class="n">2.12</span>Titration and somatic approaches:
+                  60 seconds, small doses
+                </h3>
+                <p class="tags">
+                  <span class="ev ev-c"><span class="vh">Evidence level
+                    </span>C</span>
+                </p>
+                <ul>
+                  <li>
+                    Levine (1997, 2010), Somatic Experiencing: titration,
+                    pendulation, the window of tolerance (Siegel’s term, 1999).
+                    Ogden (2006), Sensorimotor Psychotherapy.
+                  </li>
+                  <li>
+                    Gendlin (1978), Focusing and the “felt sense”: the list of
+                    qualities (heavy, lump, tight…) comes from this tradition.
+                  </li>
+                  <li>
+                    The experimental base is weak; randomised trials of SE are
+                    few and small. It serves as a source of a
+                    <strong>safety procedure</strong> (do not flood) and of
+                    vocabulary, not as scientific grounds.
+                  </li>
+                </ul>
+              </section>
+
+              <section class="topic" id="en-s2-13">
+                <h3>
+                  <span class="n">2.13</span>Schema therapy: the “detached
+                  protector”
+                </h3>
+                <p class="tags">
+                  <span class="ev ev-b"><span class="vh">Evidence level
+                    </span>B</span>
+                </p>
+                <ul>
+                  <li>
+                    Young, Klosko &amp; Weishaar (2003). The
+                    <i class="term">Detached Protector</i> mode: chronic
+                    disconnection from inner experience as protection, with the
+                    <i class="term">Emotional Deprivation</i> schema as a
+                    typical root.
+                  </li>
+                  <li>
+                    Questionnaires: YSQ-S3, SMI. Not needed to analyse the
+                    diary; relevant for a therapist.
+                  </li>
+                </ul>
+              </section>
+
+              <section class="topic" id="en-s2-14">
+                <h3>
+                  <span class="n">2.14</span>Motivational design: no streaks,
+                  no achievements
+                </h3>
+                <p class="tags">
+                  <span class="ev ev-a"><span class="vh">Evidence level
+                    </span>A</span>
+                </p>
+                <ul>
+                  <li>
+                    Deci &amp; Ryan, Self-Determination Theory: external
+                    rewards undermine intrinsic motivation (Deci, Koestner
+                    &amp; Ryan, 1999, a meta-analysis).
+                  </li>
+                  <li>
+                    For anyone who leans on a perfectionist, “in the head”
+                    mode, streaks turn the practice into one more task to
+                    complete, which reproduces the avoidance.
+                  </li>
+                </ul>
+              </section>
+              <a class="back" href="#en-toc">Contents ↑</a>
+            </section>
+
+            <section class="part" id="en-s3">
+              <h2><span class="n">3</span>What was deliberately left out</h2>
+              <dl class="cards">
+                <div>
+                  <dt>PANAS and similar lists of 20 adjectives</dt>
+                  <dd>
+                    Long; demands distinctions that are not there yet; invites
+                    random picks.
+                  </dd>
+                </div>
+                <div>
+                  <dt>Emoji faces and <i class="term">mood trackers</i></dt>
+                  <dd>
+                    A label instead of the body; low granularity gets locked
+                    in.
+                  </dd>
+                </div>
+                <div>
+                  <dt>Polyvagal theory (Porges) as a foundation</dt>
+                  <dd>
+                    Popular in somatic circles, but its key neurophysiological
+                    claims are not supported (Grossman &amp; Taylor, 2007;
+                    Grossman, 2023). The “ventral” and “dorsal” vocabulary is
+                    not used.
+                  </dd>
+                </div>
+                <div>
+                  <dt>HRV and wearable sensors</dt>
+                  <dd>
+                    They put exteroception in place of interoception. In
+                    Garfinkel’s terms sensibility is not accuracy, and
+                    sensibility is what needs training.
+                  </dd>
+                </div>
+                <div>
+                  <dt>Cognitive columns (the ABC form of CBT)</dt>
+                  <dd>They add a layer of thinking about thinking.</dd>
+                </div>
+              </dl>
+              <a class="back" href="#en-toc">Contents ↑</a>
+            </section>
+
+            <section class="part" id="en-s4">
+              <h2><span class="n">4</span>Field, basis, metric</h2>
+              <p>
+                What each field of the export rests on, and what to compute
+                from it.
+              </p>
+              <dl class="fields">
+                <div>
+                  <dt><code>trigger</code></dt>
+                  <dd><span class="k">Basis</span>ESM / EMA (§1.1)</dd>
+                  <dd>
+                    <span class="k">Compute</span>the share of
+                    <code>manual</code> by week
+                  </dd>
+                </div>
+                <div>
+                  <dt><code>skipped</code></dt>
+                  <dd>
+                    <span class="k">Basis</span>EMA compliance (§1.1, §5.3),
+                    with the gaps
+                  </dd>
+                  <dd>
+                    <span class="k">Compute</span>% answered; the pattern of
+                    gaps by time of day, day of week and context
+                  </dd>
+                </div>
+                <div>
+                  <dt><code>latency_sec</code></dt>
+                  <dd>
+                    <span class="k">Basis</span>an indirect measure of what
+                    access costs, like reaction time in implicit tasks
+                  </dd>
+                  <dd>
+                    <span class="k">Compute</span>the weekly median; its
+                    spread; latency by valence (longer towards the negative?)
+                  </dd>
+                </div>
+                <div>
+                  <dt><code>body.locations</code></dt>
+                  <dd><span class="k">Basis</span>Nummenmaa (§2.4)</dd>
+                  <dd>
+                    <span class="k">Compute</span>zone frequencies; zones ×
+                    word; zones × valence
+                  </dd>
+                </div>
+                <div>
+                  <dt><code>body.qualities</code></dt>
+                  <dd>
+                    <span class="k">Basis</span>the Focusing and SE vocabulary
+                    (§2.12); LEAS level 1 (§2.8)
+                  </dd>
+                  <dd>
+                    <span class="k">Compute</span>the number of distinct
+                    qualities; the share of “nothing” and “can’t tell”
+                  </dd>
+                </div>
+                <div>
+                  <dt><code>body.intensity</code></dt>
+                  <dd><span class="k">Basis</span>none of its own</dd>
+                  <dd>
+                    <span class="k">Compute</span>the correlation with arousal.
+                    It is expected to be positive; its absence marks a split
+                    between body and affect
+                  </dd>
+                </div>
+                <div>
+                  <dt>
+                    <code>affect.valence</code> <code>affect.arousal</code>
+                  </dt>
+                  <dd><span class="k">Basis</span>Russell (§2.1)</dd>
+                  <dd>
+                    <span class="k">Compute</span>the distribution; dynamic
+                    metrics (§5.2)
+                  </dd>
+                </div>
+                <div>
+                  <dt><code>affect.word</code></dt>
+                  <dd>
+                    <span class="k">Basis</span>granularity (§2.2); LEAS
+                    level 3
+                  </dd>
+                  <dd>
+                    <span class="k">Compute</span>distinct words; entropy; the
+                    share of finer words against broad ones; the share of
+                    empty and “don’t know”
+                  </dd>
+                </div>
+                <div>
+                  <dt><code>affect.word_confidence</code></dt>
+                  <dd>
+                    <span class="k">Basis</span>interoceptive awareness (§2.3)
+                  </dd>
+                  <dd>
+                    <span class="k">Compute</span>the share of
+                    <code>sure</code>; its change over time
+                  </dd>
+                </div>
+                <div>
+                  <dt><code>urge</code></dt>
+                  <dd>
+                    <span class="k">Basis</span>Frijda (§2.6); LEAS level 2
+                  </dd>
+                  <dd>
+                    <span class="k">Compute</span>the distribution; urge ×
+                    valence
+                  </dd>
+                </div>
+                <div>
+                  <dt><code>head_mode</code></dt>
+                  <dd>
+                    <span class="k">Basis</span>avoidance and mind-wandering
+                    (§2.9)
+                  </dd>
+                  <dd>
+                    <span class="k">Compute</span>the mean; its correlation
+                    with latency and with “nothing”
+                  </dd>
+                </div>
+                <div>
+                  <dt><code>context_tag</code></dt>
+                  <dd><span class="k">Basis</span>EMA context sampling</dd>
+                  <dd>
+                    <span class="k">Compute</span>every metric above, split by
+                    context
+                  </dd>
+                </div>
+                <div>
+                  <dt><code>note</code></dt>
+                  <dd>
+                    <span class="k">Basis</span>Watkins, the concrete mode
+                    (§2.10)
+                  </dd>
+                  <dd>
+                    <span class="k">Compute</span>nothing: it is not analysed
+                    by numbers; it is material for therapy sessions
+                  </dd>
+                </div>
+              </dl>
+              <a class="back" href="#en-toc">Contents ↑</a>
+            </section>
+
+            <section class="part" id="en-s5">
+              <h2><span class="n">5</span>Notes for analysis</h2>
+
+              <section class="topic" id="en-s5-1">
+                <h3>
+                  <span class="n">5.1</span>Stand-ins for granularity with one
+                  word per entry
+                </h3>
+                <p>The classic ICC method does not apply. Options:</p>
+                <ul>
+                  <li>
+                    <strong>Distinct words</strong> in a window (a week, a
+                    month). Crude, but transparent.
+                  </li>
+                  <li>
+                    <strong>Shannon entropy</strong> of the word distribution
+                    in a window: H = −Σ pᵢ log pᵢ. Normalise by log(number of
+                    entries), or it grows with the amount of data.
+                  </li>
+                  <li>
+                    <strong>The share of finer words</strong> (the second
+                    level) among all chosen words.
+                  </li>
+                  <li>
+                    <strong>Conditional granularity</strong>: the number of
+                    different words within one (valence, arousal) cell. If
+                    (−2, 7) is always “anxiety”, it is low; if “annoyance”,
+                    “shame” and “wariness” turn up there too, it is growing.
+                  </li>
+                  <li>
+                    Optional, and not before 6 months: extend the form to 4–6
+                    ratings for the words within a cluster, then compute the
+                    classic ICC.
+                  </li>
+                </ul>
+              </section>
+
+              <section class="topic" id="en-s5-2">
+                <h3><span class="n">5.2</span>Dynamic affect metrics</h3>
+                <p class="tags">
+                  <span class="ev ev-a"><span class="vh">Evidence level
+                    </span>A</span>
+                  <code>affect.valence</code>
+                </p>
+                <ul>
+                  <li>
+                    <strong>Inertia</strong> (<i class="term">emotional
+                      inertia</i>): the lag-1 autocorrelation of valence
+                    (Kuppens, Allen &amp; Sheeber, 2010). High inertia goes
+                    with depression and rigidity. As the channel recovers,
+                    inertia is expected to <strong>fall</strong>: the state
+                    starts responding to context.
+                  </li>
+                  <li>
+                    <strong>Instability</strong>: the MSSD or RMSSD of
+                    consecutive values (Jahng, Wood &amp; Trull, 2008).
+                    Caution: entries are unevenly spaced, so use
+                    interval-adjusted variants, or only pairs of entries within
+                    one day.
+                  </li>
+                  <li>
+                    <strong>Variability</strong>: the within-person SD. A rise
+                    in SD early on is normal and expected (a signal appears);
+                    do not read it as getting worse.
+                  </li>
+                  <li>
+                    Separate <strong>within-day</strong> and
+                    <strong>between-day</strong> variance (a multilevel model:
+                    entries within days within weeks). For one person this is
+                    an ordinary two-level model, or simply aggregating by day.
+                  </li>
+                </ul>
+              </section>
+
+              <section class="topic" id="en-s5-3">
+                <h3><span class="n">5.3</span>Gaps are not random</h3>
+                <p class="tags">
+                  <code>skipped</code> <code>stopped_at</code>
+                  <code>reminder_id</code> <code>status</code>
+                  <code>reason</code>
+                </p>
+                <ul>
+                  <li>
+                    In EMA, gaps fall more often on moments of strong affect or
+                    heavy load (missing not at random). Here a gap is also a
+                    likely marker of an avoidance episode.
+                  </li>
+                  <li>
+                    Analyse the pattern of gaps itself: time of day, day of
+                    week, the entry before (a gap after a negative entry?),
+                    context.
+                  </li>
+                  <li>Do not impute.</li>
+                  <li>
+                    The cancellation reason in the reminder log
+                    (<code>reason</code>) separates technical gaps from a
+                    person’s: <code>overdue</code> (the server was down) and
+                    <code>settings</code> (the window changed) are not gaps;
+                    <code>tz_change</code> is a move;
+                    <code>no_device</code> means notifications were off on
+                    every device (data about load too, but not a missed
+                    signal). Unanswered means <code>sent</code> with no entry
+                    carrying that <code>reminder_id</code>.
+                  </li>
+                  <li>
+                    A planned pause in reminders (a day, three days, a week) is
+                    an honest, analysable gap, not notifications quietly
+                    switched off. Moments that fall into a pause stay in the
+                    reminder log as <code>paused</code>. They count neither as
+                    answers nor as gaps; analyse them separately, since the
+                    pause itself is data about load and avoidance.
+                  </li>
+                  <li>
+                    A partial entry (“Stop here”, or a form left with some
+                    answers, <code>stopped_at</code>) counts as a gap for
+                    compliance, and its answered fields are observed data, not
+                    imputation: they are never filled up to a full entry.
+                  </li>
+                </ul>
+                <div class="note">
+                  <p>
+                    <time datetime="2026-10-10">Since 10 Oct 2026</time>
+                    Cancelled reminders carry a <code>reason</code>; earlier
+                    rows have none.
+                  </p>
+                </div>
+              </section>
+
+              <section class="topic" id="en-s5-4">
+                <h3>
+                  <span class="n">5.4</span>Progress, and what only looks like
+                  it
+                </h3>
+                <p class="tags">
+                  <span class="ev ev-c"><span class="vh">Evidence level
+                    </span>C</span>
+                </p>
+                <p>
+                  The expected course by phase, qualitative, from clinical
+                  descriptions:
+                </p>
+                <ol class="phases">
+                  <li>
+                    <span class="when">0–2 months</span>
+                    Many “nothing” and “don’t know” answers, high latency, high
+                    <code>head_mode</code>.
+                  </li>
+                  <li>
+                    <span class="when">2–6 months</span>
+                    Fewer “nothing” answers, more negative and more intense
+                    entries: <strong>not getting worse</strong> but access
+                    appearing. SD rises. Gaps may rise too, as avoidance
+                    pushes back.
+                  </li>
+                  <li>
+                    <span class="when">6–12 months</span>
+                    Positive valence appears; more distinct words, more manual
+                    check-ins, lower latency, lower inertia.
+                  </li>
+                  <li>
+                    <span class="when">Later</span>
+                    Entries with several words or qualities at once (LEAS
+                    level 4).
+                  </li>
+                </ol>
+                <h4>Artefacts not to mistake for an effect</h4>
+                <ul>
+                  <li>
+                    <strong>Regression to the mean</strong> in the first weeks.
+                  </li>
+                  <li>
+                    <strong>Learning the interface</strong>: latency also falls
+                    simply as the form becomes familiar. Check: latency by type
+                    of answer (“nothing” against a specific word) should
+                    diverge if access is what changed, not familiarity.
+                  </li>
+                  <li>
+                    <strong>Season and day of week</strong>: valence on a
+                    Monday against a Saturday. Compare week with week, not day
+                    with day.
+                  </li>
+                  <li>
+                    <strong>Time-of-day bias</strong>: random signals should
+                    cover the whole waking window evenly; check that they do.
+                  </li>
+                  <li>
+                    <strong>Changes to the instrument’s wording</strong>:
+                    questions and pole labels are part of the measurement.
+                    Every entry stores its wording version
+                    (<code>ui.copy</code>; no field means version 1). Compare
+                    slider values and words within one version only, and do not
+                    count a shift at a version boundary as an effect. Version 2
+                    made the arousal poles neutral, which may weaken the link
+                    between valence and arousal.
+                  </li>
+                </ul>
+                <div class="note">
+                  <p>
+                    <time datetime="2026-10-10">Since 10 Oct 2026</time>
+                    Every hour of the window is drawn equally often when the
+                    window holds “number of reminders × the gap between them”
+                    (6 hours for three, 2 hours apart). Before that date the
+                    first and last hours were drawn about a third more often
+                    than the middle. A narrower window still works that way,
+                    and the skew is stronger there: in a 5-hour window the
+                    second and fourth hours are never drawn. Compare
+                    time-of-day shares within one period and one window.
+                  </p>
+                </div>
+              </section>
+
+              <section class="topic" id="en-s5-5">
+                <h3><span class="n">5.5</span>Minimum amounts</h3>
+                <ul class="tiles">
+                  <li>
+                    <span class="num">12–15</span>
+                    entries a week, at least, for weekly aggregates
+                  </li>
+                  <li>
+                    <span class="num">60–100</span>
+                    entries for autocorrelation or MSSD, using only pairs less
+                    than 8 hours apart
+                  </li>
+                  <li>
+                    <span class="num">8 weeks</span>
+                    in each phase, at least, to compare before and after
+                  </li>
+                  <li>
+                    <span class="num">n ≥ 100</span>
+                    entries for correlations between fields (intensity ×
+                    arousal, say); fewer make the confidence intervals useless
+                  </li>
+                </ul>
+              </section>
+
+              <section class="topic" id="en-s5-6">
+                <h3>
+                  <span class="n">5.6</span>Outside anchors, not from the diary
+                </h3>
+                <p>
+                  To check that the diary’s metrics reflect anything at all,
+                  every 3–6 months:
+                </p>
+                <ul class="anchors">
+                  <li>
+                    <span class="scale">TAS-20</span>
+                    <span>alexithymia: DIF and DDF expected to
+                      <span class="dir">fall ↓</span></span>
+                  </li>
+                  <li>
+                    <span class="scale">MAIA-2</span>
+                    <span>interoceptive sensibility: Noticing,
+                      <i class="term">Emotional Awareness</i> and Body
+                      Listening expected to <span class="dir">rise ↑</span></span>
+                  </li>
+                  <li>
+                    <span class="scale">AAQ-II</span>
+                    <span>avoidance: expected to
+                      <span class="dir">fall ↓</span></span>
+                  </li>
+                  <li>
+                    <span class="scale">PHQ-9, GAD-7</span>
+                    <span>if needed, a check that the rise of negative entries
+                      in phase 2 has not turned into clinical depression or
+                      anxiety</span>
+                  </li>
+                </ul>
+                <p>
+                  All four are freely available and take 10–15 minutes
+                  together.
+                </p>
+              </section>
+              <a class="back" href="#en-toc">Contents ↑</a>
+            </section>
+
+            <section class="part" id="en-s6">
+              <h2><span class="n">6</span>Limits of the whole design</h2>
+              <ul>
+                <li>
+                  <strong>N = 1.</strong> Each diary is an idiographic study:
+                  every conclusion is about change within the person who keeps
+                  it. Norms (how many words there “should” be) do not apply.
+                </li>
+                <li>
+                  <strong>Skill and state are mixed</strong> (§1.2): is a rise
+                  in recorded negative affect a rise in negative affect, or in
+                  the ability to notice it? The diary cannot tell. Only outside
+                  anchors and clinical context can.
+                </li>
+                <li>
+                  <strong>If neurotype is the leading factor</strong> (autism,
+                  or marked alexithymia as a trait), the goal shifts from
+                  “restoring access” to “building an explicit system of
+                  translation”: body, then words, then action. The metrics stay
+                  the same; the expected pace and ceiling differ, and the share
+                  of <code>affect.word_confidence = guess</code> may stay high,
+                  which is normal.
+                </li>
+              </ul>
+              <div class="note warn">
+                <p>
+                  <strong>The diary does not replace a therapist.</strong>
+                  Somatic and affect-focused approaches (ISTDP, SE, EFT, schema
+                  therapy) rely on co-regulation in contact, which data cannot
+                  reproduce. The diary is a tool between sessions and a source
+                  of material for them.
+                </p>
+              </div>
+              <a class="back" href="#en-toc">Contents ↑</a>
+            </section>
+
+            <section class="part" id="en-s7">
+              <h2><span class="n">7</span>Key references</h2>
+              <ol class="refs">
+                <li>
+                  Bagby, Parker, Taylor (1994).
+                  <cite>The twenty-item Toronto Alexithymia Scale</cite>.
+                  <i class="term">J Psychosom Res</i>.
+                </li>
+                <li>
+                  Barrett (2006). <cite>Solving the emotion paradox</cite>.
+                  <i class="term">Pers Soc Psychol Rev</i>.
+                </li>
+                <li>Barrett (2017). <cite>How Emotions Are Made</cite>.</li>
+                <li>
+                  Barta, Tennen, Litt (2012).
+                  <cite>Measurement reactivity in diary research</cite>. In
+                  <cite>Handbook of Research Methods for Studying Daily
+                    Life</cite>.
+                </li>
+                <li>
+                  Bond et al. (2011). <cite>AAQ-II</cite>.
+                  <i class="term">Behav Ther</i>.
+                </li>
+                <li>
+                  Craig (2002). <cite>How do you feel?</cite>
+                  <i class="term">Nat Rev Neurosci</i>; (2009)
+                  <i class="term">Nat Rev Neurosci</i>.
+                </li>
+                <li>
+                  Csikszentmihalyi, Larson (1987).
+                  <cite>Validity and reliability of the Experience-Sampling
+                    Method</cite>. <i class="term">J Nerv Ment Dis</i>.
+                </li>
+                <li>Damasio (1994). <cite>Descartes’ Error</cite>.</li>
+                <li>
+                  Deci, Koestner, Ryan (1999).
+                  <cite>A meta-analytic review of experiments examining the
+                    effects of extrinsic rewards on intrinsic motivation</cite>.
+                  <i class="term">Psychol Bull</i>.
+                </li>
+                <li>
+                  Dunn, Dalgleish, Lawrence (2006).
+                  <cite>The somatic marker hypothesis: a critical
+                    evaluation</cite>. <i class="term">Neurosci Biobehav
+                    Rev</i>.
+                </li>
+                <li>Frijda (1986). <cite>The Emotions</cite>.</li>
+                <li>
+                  Garfinkel et al. (2015).
+                  <cite>Knowing your own heart</cite>.
+                  <i class="term">Biol Psychol</i>.
+                </li>
+                <li>Gendlin (1978). <cite>Focusing</cite>.</li>
+                <li>
+                  Grossman, Taylor (2007).
+                  <cite>Toward understanding respiratory sinus
+                    arrhythmia</cite>. <i class="term">Biol Psychol</i>;
+                  Grossman (2023).
+                  <cite>Fundamental challenges and likely refutations of the
+                    five basic premises of the polyvagal theory</cite>.
+                  <i class="term">Biol Psychol</i>.
+                </li>
+                <li>
+                  Hayes et al. (1996). <cite>Experiential avoidance and
+                    behavioral disorders</cite>.
+                  <i class="term">J Consult Clin Psychol</i>; Hayes et al.
+                  (2006). <cite>Acceptance and Commitment Therapy: model,
+                    processes and outcomes</cite>.
+                  <i class="term">Behav Res Ther</i>.
+                </li>
+                <li>
+                  Jahng, Wood, Trull (2008).
+                  <cite>Analysis of affective instability in ecological
+                    momentary assessment</cite>.
+                  <i class="term">Psychol Methods</i>.
+                </li>
+                <li>
+                  Kashdan, Barrett, McKnight (2015).
+                  <cite>Unpacking emotion differentiation</cite>.
+                  <i class="term">Curr Dir Psychol Sci</i>.
+                </li>
+                <li>
+                  Khalsa et al. (2018).
+                  <cite>Interoception and mental health: a roadmap</cite>.
+                  <i class="term">Biol Psychiatry CNNI</i>.
+                </li>
+                <li>
+                  Killingsworth, Gilbert (2010).
+                  <cite>A wandering mind is an unhappy mind</cite>.
+                  <i class="term">Science</i>.
+                </li>
+                <li>
+                  Kinnaird, Stewart, Tsakanikos (2019).
+                  <cite>Investigating alexithymia in autism: a systematic
+                    review and meta-analysis</cite>.
+                  <i class="term">Eur Psychiatry</i>.
+                </li>
+                <li>
+                  Kross, Ayduk (2017). <cite>Self-distancing</cite>.
+                  <i class="term">Adv Exp Soc Psychol</i>.
+                </li>
+                <li>
+                  Kuppens, Allen, Sheeber (2010).
+                  <cite>Emotional inertia and psychological
+                    maladjustment</cite>. <i class="term">Psychol Sci</i>.
+                </li>
+                <li>
+                  Lane, Schwartz (1987).
+                  <cite>Levels of emotional awareness</cite>.
+                  <i class="term">Am J Psychiatry</i>.
+                </li>
+                <li>Levine (2010). <cite>In an Unspoken Voice</cite>.</li>
+                <li>
+                  Lieberman et al. (2007).
+                  <cite>Putting feelings into words</cite>.
+                  <i class="term">Psychol Sci</i>; Torre, Lieberman (2018).
+                  <i class="term">Emotion Review</i>.
+                </li>
+                <li>
+                  Mehling et al. (2018). <cite>MAIA-2</cite>.
+                  <i class="term">PLoS ONE</i>.
+                </li>
+                <li>
+                  Nolen-Hoeksema, Wisco, Lyubomirsky (2008).
+                  <cite>Rethinking rumination</cite>.
+                  <i class="term">Perspect Psychol Sci</i>.
+                </li>
+                <li>
+                  Nummenmaa et al. (2014).
+                  <cite>Bodily maps of emotions</cite>.
+                  <i class="term">PNAS</i>.
+                </li>
+                <li>
+                  Ogden, Minton, Pain (2006). <cite>Trauma and the Body</cite>.
+                </li>
+                <li>
+                  Price, Hooven (2018).
+                  <cite>Interoceptive awareness skills for emotion regulation
+                    (MABT)</cite>. <i class="term">Front Psychol</i>.
+                </li>
+                <li>
+                  Robinson, Clore (2002).
+                  <cite>Belief and feeling: evidence for an accessibility model
+                    of emotional self-report</cite>.
+                  <i class="term">Psychol Bull</i>.
+                </li>
+                <li>
+                  Russell (1980). <cite>A circumplex model of affect</cite>.
+                  <i class="term">J Pers Soc Psychol</i>; Russell, Barrett
+                  (1999). <i class="term">J Pers Soc Psychol</i>.
+                </li>
+                <li>
+                  Shiffman, Stone, Hufford (2008).
+                  <cite>Ecological Momentary Assessment</cite>.
+                  <i class="term">Annu Rev Clin Psychol</i>.
+                </li>
+                <li>
+                  Sifneos (1973).
+                  <cite>The prevalence of “alexithymic” characteristics in
+                    psychosomatic patients</cite>.
+                  <i class="term">Psychother Psychosom</i>.
+                </li>
+                <li>
+                  Tugade, Fredrickson, Barrett (2004).
+                  <cite>Psychological resilience and positive emotional
+                    granularity</cite>. <i class="term">J Pers</i>.
+                </li>
+                <li>
+                  Watkins (2008).
+                  <cite>Constructive and unconstructive repetitive
+                    thought</cite>. <i class="term">Psychol Bull</i>.
+                </li>
+                <li>
+                  Young, Klosko, Weishaar (2003). <cite>Schema Therapy</cite>.
+                </li>
+              </ol>
+              <p class="foot">
+                Emo is a self-observation journal, not a medical device. This
+                page is part of its source code (AGPL):
+                <a class="project" href="https://github.com/podgorniy/emo">github.com/podgorniy/emo</a>
+              </p>
+              <a class="back" href="#en-toc">Contents ↑</a>
+            </section>
+          </div>
+        </div>
+      </article>
+
+      <article id="uk" lang="uk">
+        <div class="hero">
+          <p class="eyebrow">Emo · Методологія</p>
+          <h1>Чому Emo питає саме це</h1>
+          <p class="lead">
+            На які теорії та вимірювальні традиції спирається кожне поле
+            запису, що свідомо не взято і як це визначає допустимі способи
+            аналізу даних.
+          </p>
+          <p class="dateline">
+            Назви полів — як в експорті (JSONL; у CSV
+            <code>affect.valence</code> записується як
+            <code>affect_valence</code>).
+          </p>
+        </div>
+
+        <div class="layout">
+          <nav class="toc" id="uk-toc" aria-labelledby="uk-toc-h">
+            <h2 id="uk-toc-h">Зміст</h2>
+            <ol>
+              <li>
+                <a href="#uk-s0"><span class="n">0</span>Наскільки надійне
+                  кожне джерело</a>
+              </li>
+              <li>
+                <a href="#uk-s1"><span class="n">1</span>Метод збору даних</a>
+              </li>
+              <li>
+                <a href="#uk-s2"><span class="n">2</span>Моделі, що визначили
+                  поля</a>
+              </li>
+              <li>
+                <a href="#uk-s3"><span class="n">3</span>Що свідомо не
+                  взято</a>
+              </li>
+              <li>
+                <a href="#uk-s4"><span class="n">4</span>Поле, підґрунтя,
+                  метрика</a>
+              </li>
+              <li>
+                <a href="#uk-s5"><span class="n">5</span>Нотатки для
+                  аналізу</a>
+              </li>
+              <li>
+                <a href="#uk-s6"><span class="n">6</span>Обмеження всієї
+                  конструкції</a>
+              </li>
+              <li>
+                <a href="#uk-s7"><span class="n">7</span>Ключова
+                  література</a>
+              </li>
+            </ol>
+          </nav>
+
+          <div class="content">
+            <section class="part" id="uk-s0">
+              <h2><span class="n">0</span>Наскільки надійне кожне джерело</h2>
+              <p>Кожне джерело нижче позначене одним із трьох рівнів.</p>
+              <ul class="legend">
+                <li>
+                  <span class="ev ev-a"><span class="vh">Рівень доказовості
+                    </span>A</span>
+                  <p>Усталена емпірика: відтворюється, є метааналізи.</p>
+                </li>
+                <li>
+                  <span class="ev ev-b"><span class="vh">Рівень доказовості
+                    </span>B</span>
+                  <p>
+                    Модель, яку активно досліджують; є критика й конкурентні
+                    теорії.
+                  </p>
+                </li>
+                <li>
+                  <span class="ev ev-c"><span class="vh">Рівень доказовості
+                    </span>C</span>
+                  <p>
+                    Клінічна традиція або практична модель без сильної
+                    експериментальної бази. Джерело словника й процедури, але
+                    не підстава для статистичних висновків.
+                  </p>
+                </li>
+              </ul>
+            </section>
+
+            <section class="part" id="uk-s1">
+              <h2><span class="n">1</span>Метод збору даних</h2>
+
+              <section class="topic" id="uk-s1-1">
+                <h3>
+                  <span class="n">1.1</span>Experience Sampling Method /
+                  Ecological Momentary Assessment
+                </h3>
+                <p class="tags">
+                  <span class="ev ev-a"><span class="vh">Рівень доказовості
+                    </span>A</span>
+                  <code>trigger</code> <code>reminder_id</code>
+                  <code>skipped</code>
+                </p>
+                <ul>
+                  <li>
+                    Csikszentmihalyi &amp; Larson (1987) — ESM; Shiffman, Stone
+                    &amp; Hufford (2008) — EMA.
+                  </li>
+                  <li>
+                    Суть: багаторазові короткі заміри
+                    <strong>у моменті</strong>, у природному середовищі, за
+                    випадковим сигналом.
+                  </li>
+                  <li>
+                    Чому: ретроспективні звіти («як минув тиждень?») спотворені
+                    піками, завершеннями й поточним станом (Kahneman,
+                    <i class="term">peak-end rule</i>; Robinson &amp; Clore,
+                    2002 — модель доступності: ретроспекція спирається на
+                    переконання про себе, а не на досвід).
+                  </li>
+                  <li>
+                    Для людини, яка давно відрізана від тілесних сигналів,
+                    ретроспективні звіти особливо марні: переконань про власні
+                    стани немає або вони шаблонні.
+                  </li>
+                </ul>
+                <h4>Наслідки для запису</h4>
+                <ul>
+                  <li>
+                    <code>trigger = random</code> — сигнально-контингентна
+                    вибірка (signal-contingent sampling).
+                  </li>
+                  <li>
+                    <code>trigger = manual</code> — подієва вибірка
+                    (event-contingent). Зростання частки <code>manual</code> —
+                    це зростання спонтанного помічання, що саме по собі є
+                    цільовим результатом.
+                  </li>
+                  <li>
+                    <code>skipped</code> — облік комплаєнсу. Стандарт в EMA —
+                    щонайменше 70–80% відповідей; нижче дані систематично
+                    зміщені: пропускають саме важкі моменти (§5.3).
+                  </li>
+                  <li>
+                    Коротка форма (не довше 60 секунд) — вимога EMA, щоб
+                    утримати комплаєнс тижнями й місяцями.
+                  </li>
+                </ul>
+                <div class="note">
+                  <p>
+                    <time datetime="2026-10-10">З 10.10.2026</time>
+                    Вікно відповіді — 15 хвилин після появи сповіщення.
+                    Відповідь — дотик до нього або запис, розпочатий
+                    самостійно, поки сповіщення ще на екрані. Пізніше запис —
+                    <code>manual</code>, а нагадування лишається без
+                    відповіді.
+                  </p>
+                </div>
+              </section>
+
+              <section class="topic" id="uk-s1-2">
+                <h3><span class="n">1.2</span>Реактивність вимірювання</h3>
+                <p class="tags">
+                  <span class="ev ev-a"><span class="vh">Рівень доказовості
+                    </span>A</span>
+                  <span class="ev ev-b"><span class="vh">Рівень доказовості
+                    </span>B</span>
+                </p>
+                <ul>
+                  <li>
+                    Сам факт вимірювання змінює те, що вимірюють (Barta, Tennen
+                    &amp; Litt, 2012 — огляд щоденникових досліджень).
+                  </li>
+                  <li>
+                    Тут реактивність <strong>і є метою</strong>: регулярне
+                    спрямування уваги в тіло — це і є інтервенція (affect
+                    labeling, §2.11; інтероцептивний тренінг, §2.3).
+                  </li>
+                  <li>
+                    Для аналізу: неможливо відокремити «зміну стану» від «зміни
+                    навички зчитування». Це принципове обмеження; його треба
+                    тримати в голові під час будь-якої інтерпретації.
+                  </li>
+                </ul>
+              </section>
+              <a class="back" href="#uk-toc">До змісту ↑</a>
+            </section>
+
+            <section class="part" id="uk-s2">
+              <h2><span class="n">2</span>Моделі, що визначили поля</h2>
+
+              <section class="topic" id="uk-s2-1">
+                <h3>
+                  <span class="n">2.1</span>Циркумплексна модель афекту
+                </h3>
+                <p class="tags">
+                  <span class="ev ev-a"><span class="vh">Рівень доказовості
+                    </span>A</span>
+                  <code>affect.valence</code> <code>affect.arousal</code>
+                </p>
+                <ul>
+                  <li>
+                    Russell (1980); Russell &amp; Barrett (1999) —
+                    <i class="term">core affect</i>.
+                  </li>
+                  <li>
+                    Будь-який стан описують дві неперервні осі: валентність
+                    (приємно — неприємно) й активація (мляво — збуджено).
+                    Названий дискретний стан — надбудова над ними.
+                  </li>
+                  <li>
+                    Чому це важливо: оцінити валентність і активацію може
+                    людина, яка ще <strong>не вміє</strong> назвати свій стан.
+                    Це нижній рівень доступу, з нього й починають.
+                  </li>
+                  <li>
+                    Для аналізу: координати (valence, arousal) — основна сира
+                    змінна. Слово (<code>affect.word</code>) — вторинна.
+                  </li>
+                </ul>
+              </section>
+
+              <section class="topic" id="uk-s2-2">
+                <h3>
+                  <span class="n">2.2</span><i class="term">Теорія
+                    конструйованих емоцій</i> і <i class="term">емоційна
+                    гранулярність</i>
+                </h3>
+                <p class="tags">
+                  <span class="ev ev-b"><span class="vh">Рівень доказовості
+                    </span>B</span>
+                  <code>affect.word</code>
+                </p>
+                <ul>
+                  <li>
+                    Barrett (2006, 2017, <cite>How Emotions Are Made</cite>).
+                    Конкурентна позиція — <i class="term">базові емоції</i>
+                    (Ekman, Panksepp). Суперечка не закрита; для практики
+                    щоденника вона не критична.
+                  </li>
+                  <li>
+                    Гранулярність, або диференціація: здатність розрізняти
+                    близькі стани («тривога», «роздратування» чи «сором»
+                    замість «погано»).
+                  </li>
+                  <li>
+                    Емпірика
+                    <span class="ev ev-a"><span class="vh">рівня
+                      </span>A</span>: низька гранулярність пов’язана з гіршою
+                    регуляцією, більшою імпульсивністю, алекситимією; висока —
+                    з адаптивнішими стратегіями (Barrett et al., 2001; Kashdan,
+                    Barrett &amp; McKnight, 2015 — огляд).
+                  </li>
+                  <li>
+                    Класична метрика: середній ICC між оцінками кількох станів у
+                    межах людини за багатьма моментами; гранулярність = 1 − ICC
+                    (Tugade, Fredrickson &amp; Barrett, 2004).
+                    <strong>У цій схемі не застосовна напряму</strong>:
+                    фіксується одне слово, а не шкали за набором слів.
+                    Сурогати — у §5.1.
+                  </li>
+                  <li>
+                    Дворівневий словник (8 базових слів, далі близько 50
+                    гранулярних) — процедурна підпора: людина з низькою
+                    гранулярністю спершу обирає кластер, потім уточнює.
+                  </li>
+                </ul>
+              </section>
+
+              <section class="topic" id="uk-s2-3">
+                <h3><span class="n">2.3</span>Інтероцепція</h3>
+                <p class="tags">
+                  <span class="ev ev-a"><span class="vh">Рівень доказовості
+                    </span>A</span>
+                  <span class="ev ev-b"><span class="vh">Рівень доказовості
+                    </span>B</span>
+                  <code>body.locations</code> <code>body.qualities</code>
+                  <code>body.intensity</code> <code>latency_sec</code>
+                </p>
+                <ul>
+                  <li>
+                    Craig (2002, 2009) — інтероцепція як основа суб’єктивного
+                    відчуття себе (інсула).
+                  </li>
+                  <li>
+                    Garfinkel et al. (2015) — трикомпонентна модель, важлива
+                    для аналізу:
+                    <ol>
+                      <li>
+                        <strong>interoceptive accuracy</strong> — об’єктивна
+                        точність (наприклад, лічба серцебиття);
+                      </li>
+                      <li>
+                        <strong>interoceptive sensibility</strong> —
+                        суб’єктивна самооцінка чутливості (опитувальники MAIA,
+                        BPQ);
+                      </li>
+                      <li>
+                        <strong>interoceptive awareness</strong> —
+                        метакогнітивна відповідність між першими двома.
+                      </li>
+                    </ol>
+                    Щоденник вимірює лише sensibility і опосередковано
+                    awareness — через <code>affect.word_confidence</code>.
+                    Точність за щоденником <strong>не вимірювана</strong>; не
+                    робити про неї висновків.
+                  </li>
+                  <li>
+                    Khalsa et al. (2018) — консенсусний огляд інтероцепції в
+                    психіатрії.
+                  </li>
+                  <li>
+                    Інтероцептивний тренінг: Price &amp; Hooven (2018) — MABT,
+                    терапія на основі усвідомлення тіла; є рандомізовані
+                    дослідження помірної якості
+                    <span class="ev ev-b"><span class="vh">Рівень доказовості
+                      </span>B</span>.
+                  </li>
+                  <li>
+                    Опитувальник для періодичного зовнішнього заміру (раз на
+                    3–6 місяців): MAIA-2 (Mehling et al., 2018).
+                  </li>
+                </ul>
+              </section>
+
+              <section class="topic" id="uk-s2-4">
+                <h3><span class="n">2.4</span>Тілесні карти</h3>
+                <p class="tags">
+                  <span class="ev ev-b"><span class="vh">Рівень доказовості
+                    </span>B</span>
+                  <code>body.locations</code>
+                </p>
+                <ul>
+                  <li>
+                    Nummenmaa et al. (2014, PNAS,
+                    <cite>Bodily maps of emotions</cite>) — топографії, стійкі
+                    між культурами: страх і тривога — груди, верх тіла; злість
+                    — руки, голова, груди; смуток — знижена активація в
+                    кінцівках; депресія — загальне «вимкнення».
+                  </li>
+                  <li>
+                    Для аналізу: розподіл зон за валентністю й за словом можна
+                    порівнювати з цими картами як з апріорним очікуванням.
+                    Розбіжність — не помилка, а дані.
+                  </li>
+                </ul>
+              </section>
+
+              <section class="topic" id="uk-s2-5">
+                <h3>
+                  <span class="n">2.5</span>Соматичні маркери: обґрунтування
+                  всієї затії
+                </h3>
+                <p class="tags">
+                  <span class="ev ev-b"><span class="vh">Рівень доказовості
+                    </span>B</span>
+                  <code>urge</code>
+                </p>
+                <ul>
+                  <li>
+                    Damasio (1994, <cite>Descartes’ Error</cite>); Bechara et
+                    al. (1997) — Iowa Gambling Task.
+                  </li>
+                  <li>
+                    Тілесні сигнали беруть участь в ухваленні рішень ще до їх
+                    усвідомлення. Критика: Dunn, Dalgleish &amp; Lawrence
+                    (2006) — емпірика слабша, ніж популярна версія. Загальна
+                    ідея («тіло інформує вибір») тримається, деталі механізму —
+                    ні.
+                  </li>
+                  <li>
+                    Релевантність: поле <code>urge</code> фіксує тенденцію до
+                    дії — найближчий доступний корелят «маркера».
+                  </li>
+                </ul>
+              </section>
+
+              <section class="topic" id="uk-s2-6">
+                <h3><span class="n">2.6</span>Тенденції до дії</h3>
+                <p class="tags">
+                  <span class="ev ev-a"><span class="vh">Рівень доказовості
+                    </span>A</span>
+                  <span class="ev ev-b"><span class="vh">Рівень доказовості
+                    </span>B</span>
+                  <code>urge</code>
+                </p>
+                <ul>
+                  <li>
+                    Frijda (1986) — афективний стан як готовність до дії
+                    (<i class="term">action readiness</i>).
+                  </li>
+                  <li>
+                    Lang (1995) — мотиваційні системи наближення та уникання.
+                  </li>
+                  <li>
+                    Словник спонукань (піти, стиснутися, завмерти, рухатися,
+                    вдарити, плакати…) — пряме відображення на «бий, тікай,
+                    завмри» плюс наближення. Він корисний саме тому, що
+                    спонукання часто зчитується раніше й легше, ніж названий
+                    стан.
+                  </li>
+                </ul>
+              </section>
+
+              <section class="topic" id="uk-s2-7">
+                <h3>
+                  <span class="n">2.7</span>Алекситимія: «нічого», «не знаю»,
+                  «не можу визначити»
+                </h3>
+                <p class="tags">
+                  <span class="ev ev-a"><span class="vh">Рівень доказовості
+                    </span>A</span>
+                  <code>body.qualities</code> <code>affect.word</code>
+                </p>
+                <ul>
+                  <li>
+                    Sifneos (1973) — термін. Bagby, Parker &amp; Taylor (1994)
+                    — TAS-20, три чинники: <i class="term">труднощі
+                      ідентифікації почуттів</i> (DIF), <i class="term">труднощі
+                      опису почуттів</i> (DDF), <i class="term">зовнішньо
+                      орієнтоване мислення</i> (EOT).
+                  </li>
+                  <li>
+                    Переважання операційного, зовнішньо орієнтованого мислення
+                    — це патерн життя «поза собою»: увага тримається на
+                    завданнях і зовнішньому світі, а не на внутрішніх станах.
+                    EOT відображається в полі <code>head_mode</code>.
+                  </li>
+                  <li>
+                    Валідні варіанти «нічого» і «не знаю» обов’язкові: інакше
+                    людина з алекситимією обирає випадкове слово, і дані
+                    виглядають кращими, ніж є.
+                  </li>
+                  <li>
+                    Зовнішній замір: TAS-20 на старті й раз на 6 місяців.
+                    Очікувана динаміка — зниження DIF і DDF.
+                  </li>
+                  <li>
+                    Алекситимія в аутичних дорослих — близько 50% (Kinnaird,
+                    Stewart &amp; Tsakanikos, 2019, метааналіз). Якщо це
+                    застосовно, траєкторія та очікування інші (§6).
+                  </li>
+                </ul>
+              </section>
+
+              <section class="topic" id="uk-s2-8">
+                <h3>
+                  <span class="n">2.8</span><i class="term">Рівні емоційного
+                    усвідомлення</i>: порядок полів
+                </h3>
+                <p class="tags">
+                  <span class="ev ev-b"><span class="vh">Рівень доказовості
+                    </span>B</span>
+                  <code>body.locations</code> <code>urge</code>
+                  <code>affect.word</code>
+                </p>
+                <ul>
+                  <li>
+                    Lane &amp; Schwartz (1987) —
+                    <i class="term">Levels of Emotional Awareness Scale</i>
+                    (LEAS). Ієрархія: (1) тілесні відчуття → (2) тенденції до
+                    дії → (3) окремі названі стани → (4) їх суміші → (5) суміші
+                    в себе й в іншого.
+                  </li>
+                  <li>
+                    Поля запису розташовані саме за цією драбиною: тіло (1) →
+                    <code>urge</code> (2) → <code>affect.word</code> (3). Кілька
+                    слів чи якостей в одному записі — перехід до рівня (4).
+                  </li>
+                </ul>
+              </section>
+
+              <section class="topic" id="uk-s2-9">
+                <h3>
+                  <span class="n">2.9</span>Експериєнційне уникання: без «чому»
+                </h3>
+                <p class="tags">
+                  <span class="ev ev-a"><span class="vh">Рівень доказовості
+                    </span>A</span>
+                  <code>head_mode</code>
+                </p>
+                <ul>
+                  <li>
+                    Hayes et al. (1996, 2006) — ACT; опитувальник AAQ-II (Bond
+                    et al., 2011).
+                  </li>
+                  <li>
+                    Уникання внутрішнього досвіду через мислення, діяльність,
+                    аналіз. Інтелектуалізація — одна з його форм.
+                  </li>
+                  <li>
+                    Mind-wandering: Killingsworth &amp; Gilbert (2010, Science)
+                    — ESM на 2250 людях: близько 47% часу увага не на поточній
+                    діяльності, а блукання думок передбачає менше відчуття
+                    щастя. <code>head_mode</code> — прямий аналог їхнього
+                    питання.
+                  </li>
+                </ul>
+              </section>
+
+              <section class="topic" id="uk-s2-10">
+                <h3>
+                  <span class="n">2.10</span>Румінація і режим обробки: без
+                  «чому», коротка нотатка
+                </h3>
+                <p class="tags">
+                  <span class="ev ev-a"><span class="vh">Рівень доказовості
+                    </span>A</span>
+                  <code>note</code>
+                </p>
+                <ul>
+                  <li>
+                    Nolen-Hoeksema (1991, 2008) — румінація як чинник депресії.
+                  </li>
+                  <li>
+                    Watkins (2008) — конструктивна й неконструктивна
+                    повторювана думка: <strong>абстрактний</strong> режим
+                    («чому це зі мною», «що це означає») шкідливий;
+                    <strong>конкретний</strong> («що саме, де, як») —
+                    нейтральний або корисний.
+                  </li>
+                  <li>
+                    Kross &amp; Ayduk (2011, 2017) — самодистанціювання:
+                    питання «чому» із зануреної позиції посилює афект без
+                    опрацювання.
+                  </li>
+                  <li>
+                    Звідси перевірка нотатки відхиляє причини й смисли («тому
+                    що», «бо», «через те що», «це означає») і питання
+                    абстрактного режиму («чому», «навіщо», «що зі мною не
+                    так»); форма питає «що і де», ніколи «чому». Застереження
+                    невпевненості («мабуть», «думаю», «здається») — не
+                    абстрактний режим, а обережність, близька до
+                    <code>affect.word_confidence = guess</code> і до
+                    дистанційованої позиції ACT.
+                  </li>
+                </ul>
+                <div class="note">
+                  <p>
+                    <time datetime="2026-10-09">З 09.10.2026</time>
+                    Застереження більше не відхиляються: «думаю про дедлайн» —
+                    факт про увагу.
+                  </p>
+                </div>
+              </section>
+
+              <section class="topic" id="uk-s2-11">
+                <h3>
+                  <span class="n">2.11</span>Affect labeling: чому щоденник
+                  сам по собі є інтервенцією
+                </h3>
+                <p class="tags">
+                  <span class="ev ev-a"><span class="vh">Рівень доказовості
+                    </span>A</span>
+                  <code>affect.word</code>
+                </p>
+                <ul>
+                  <li>
+                    Lieberman et al. (2007) — називання афекту знижує
+                    активність мигдалини й посилює активність вентролатеральної
+                    префронтальної кори. Torre &amp; Lieberman (2018) — огляд:
+                    ефект стійкий, працює як неявна регуляція.
+                  </li>
+                  <li>
+                    Pennebaker (1997) — експресивне письмо.
+                    <strong>Не використовується як модель</strong>: його
+                    протокол — довгі наративи зі смислами й причинами, що тут
+                    контрпродуктивно (§2.10). Береться лише факт: вербалізація
+                    афекту його регулює.
+                  </li>
+                </ul>
+              </section>
+
+              <section class="topic" id="uk-s2-12">
+                <h3>
+                  <span class="n">2.12</span>Титрування і соматичні підходи:
+                  60 секунд, малі дози
+                </h3>
+                <p class="tags">
+                  <span class="ev ev-c"><span class="vh">Рівень доказовості
+                    </span>C</span>
+                </p>
+                <ul>
+                  <li>
+                    Levine (1997, 2010) — Somatic Experiencing: титрування,
+                    маятник, вікно толерантності (термін Siegel, 1999). Ogden
+                    (2006) — Sensorimotor Psychotherapy.
+                  </li>
+                  <li>
+                    Gendlin (1978) — Focusing, «felt sense»: словник якостей
+                    (важкість, клубок, стиснення…) узято з цієї традиції.
+                  </li>
+                  <li>
+                    Експериментальна база слабка; рандомізованих досліджень SE
+                    мало, і вони невеликі. Використовується як джерело
+                    <strong>процедури безпеки</strong> (не затоплювати) і
+                    словника, а не як наукове обґрунтування.
+                  </li>
+                </ul>
+              </section>
+
+              <section class="topic" id="uk-s2-13">
+                <h3>
+                  <span class="n">2.13</span>Схема-терапія: «відсторонений
+                  захисник»
+                </h3>
+                <p class="tags">
+                  <span class="ev ev-b"><span class="vh">Рівень доказовості
+                    </span>B</span>
+                </p>
+                <ul>
+                  <li>
+                    Young, Klosko &amp; Weishaar (2003). Режим
+                    <i class="term">Detached Protector</i> — хронічне
+                    відключення від внутрішнього досвіду як захист; схема
+                    <i class="term">Emotional Deprivation</i> — типовий корінь.
+                  </li>
+                  <li>
+                    Опитувальники: YSQ-S3, SMI. Для аналізу щоденника не
+                    потрібні; релевантні для терапевта.
+                  </li>
+                </ul>
+              </section>
+
+              <section class="topic" id="uk-s2-14">
+                <h3>
+                  <span class="n">2.14</span>Мотиваційний дизайн: без стріків і
+                  досягнень
+                </h3>
+                <p class="tags">
+                  <span class="ev ev-a"><span class="vh">Рівень доказовості
+                    </span>A</span>
+                </p>
+                <ul>
+                  <li>
+                    Deci &amp; Ryan — Self-Determination Theory: зовнішні
+                    підкріплення підривають внутрішню мотивацію (Deci, Koestner
+                    &amp; Ryan, 1999, метааналіз).
+                  </li>
+                  <li>
+                    Для тих, хто спирається на перфекціоністський, «головний»
+                    режим, стріки перетворюють практику на ще одне завдання до
+                    виконання, що відтворює уникання.
+                  </li>
+                </ul>
+              </section>
+              <a class="back" href="#uk-toc">До змісту ↑</a>
+            </section>
+
+            <section class="part" id="uk-s3">
+              <h2><span class="n">3</span>Що свідомо не взято</h2>
+              <dl class="cards">
+                <div>
+                  <dt>PANAS і подібні списки з 20 прикметників</dt>
+                  <dd>
+                    Довго; вимагає розрізнення, якого ще немає; провокує
+                    випадковий вибір.
+                  </dd>
+                </div>
+                <div>
+                  <dt>Смайлики та <i class="term">mood tracker</i></dt>
+                  <dd>Ярлик замість тіла; низька гранулярність закріплюється.</dd>
+                </div>
+                <div>
+                  <dt>Полівагальна теорія (Porges) як підґрунтя</dt>
+                  <dd>
+                    Популярна в соматичному середовищі, але ключові
+                    нейрофізіологічні твердження не підтверджені (Grossman
+                    &amp; Taylor, 2007; Grossman, 2023). Словник «вентральний /
+                    дорсальний» не використовується.
+                  </dd>
+                </div>
+                <div>
+                  <dt>HRV і носимі датчики</dt>
+                  <dd>
+                    Підміна інтероцепції екстероцепцією. За Garfinkel,
+                    sensibility ≠ accuracy, і навчати треба саме sensibility.
+                  </dd>
+                </div>
+                <div>
+                  <dt>Когнітивні колонки (ABC-схема КПТ)</dt>
+                  <dd>Додають шар мислення про мислення.</dd>
+                </div>
+              </dl>
+              <a class="back" href="#uk-toc">До змісту ↑</a>
+            </section>
+
+            <section class="part" id="uk-s4">
+              <h2><span class="n">4</span>Поле, підґрунтя, метрика</h2>
+              <p>На що спирається кожне поле експорту і що за ним рахувати.</p>
+              <dl class="fields">
+                <div>
+                  <dt><code>trigger</code></dt>
+                  <dd><span class="k">Підґрунтя</span>ESM / EMA (§1.1)</dd>
+                  <dd>
+                    <span class="k">Що рахувати</span>частку
+                    <code>manual</code> за тижнями
+                  </dd>
+                </div>
+                <div>
+                  <dt><code>skipped</code></dt>
+                  <dd>
+                    <span class="k">Підґрунтя</span>комплаєнс EMA (§1.1, §5.3),
+                    разом із пропусками
+                  </dd>
+                  <dd>
+                    <span class="k">Що рахувати</span>% відповідей; патерн
+                    пропусків за часом доби, днем тижня, контекстом
+                  </dd>
+                </div>
+                <div>
+                  <dt><code>latency_sec</code></dt>
+                  <dd>
+                    <span class="k">Підґрунтя</span>непрямий індикатор вартості
+                    доступу; аналог часу реакції в імпліцитних завданнях
+                  </dd>
+                  <dd>
+                    <span class="k">Що рахувати</span>медіану за тижнями;
+                    розкид; латентність за валентністю (до негативу довше?)
+                  </dd>
+                </div>
+                <div>
+                  <dt><code>body.locations</code></dt>
+                  <dd><span class="k">Підґрунтя</span>Nummenmaa (§2.4)</dd>
+                  <dd>
+                    <span class="k">Що рахувати</span>частоти зон; зони ×
+                    слово; зони × валентність
+                  </dd>
+                </div>
+                <div>
+                  <dt><code>body.qualities</code></dt>
+                  <dd>
+                    <span class="k">Підґрунтя</span>словник Focusing і SE
+                    (§2.12); LEAS, рівень 1 (§2.8)
+                  </dd>
+                  <dd>
+                    <span class="k">Що рахувати</span>кількість унікальних;
+                    частку «нічого» і «не можу визначити»
+                  </dd>
+                </div>
+                <div>
+                  <dt><code>body.intensity</code></dt>
+                  <dd><span class="k">Підґрунтя</span>власного немає</dd>
+                  <dd>
+                    <span class="k">Що рахувати</span>кореляцію з arousal:
+                    очікується додатна, її відсутність — маркер дисоціації тіла
+                    й афекту
+                  </dd>
+                </div>
+                <div>
+                  <dt>
+                    <code>affect.valence</code> <code>affect.arousal</code>
+                  </dt>
+                  <dd><span class="k">Підґрунтя</span>Russell (§2.1)</dd>
+                  <dd>
+                    <span class="k">Що рахувати</span>розподіл; динамічні
+                    метрики (§5.2)
+                  </dd>
+                </div>
+                <div>
+                  <dt><code>affect.word</code></dt>
+                  <dd>
+                    <span class="k">Підґрунтя</span>гранулярність (§2.2); LEAS,
+                    рівень 3
+                  </dd>
+                  <dd>
+                    <span class="k">Що рахувати</span>унікальні слова;
+                    ентропію; частку гранулярних слів проти базових; частку
+                    порожніх і «не знаю»
+                  </dd>
+                </div>
+                <div>
+                  <dt><code>affect.word_confidence</code></dt>
+                  <dd>
+                    <span class="k">Підґрунтя</span>interoceptive awareness
+                    (§2.3)
+                  </dd>
+                  <dd>
+                    <span class="k">Що рахувати</span>частку
+                    <code>sure</code>; її динаміку
+                  </dd>
+                </div>
+                <div>
+                  <dt><code>urge</code></dt>
+                  <dd>
+                    <span class="k">Підґрунтя</span>Frijda (§2.6); LEAS, рівень
+                    2
+                  </dd>
+                  <dd>
+                    <span class="k">Що рахувати</span>розподіл; urge ×
+                    валентність
+                  </dd>
+                </div>
+                <div>
+                  <dt><code>head_mode</code></dt>
+                  <dd>
+                    <span class="k">Підґрунтя</span>уникання, mind-wandering
+                    (§2.9)
+                  </dd>
+                  <dd>
+                    <span class="k">Що рахувати</span>середнє; кореляцію з
+                    латентністю і з «нічого»
+                  </dd>
+                </div>
+                <div>
+                  <dt><code>context_tag</code></dt>
+                  <dd>
+                    <span class="k">Підґрунтя</span>контекстна вибірка EMA
+                  </dd>
+                  <dd>
+                    <span class="k">Що рахувати</span>усі метрики вище в розрізі
+                    контексту
+                  </dd>
+                </div>
+                <div>
+                  <dt><code>note</code></dt>
+                  <dd>
+                    <span class="k">Підґрунтя</span>Watkins, конкретний режим
+                    (§2.10)
+                  </dd>
+                  <dd>
+                    <span class="k">Що рахувати</span>нічого: кількісно не
+                    аналізується, це матеріал для сесій з терапевтом
+                  </dd>
+                </div>
+              </dl>
+              <a class="back" href="#uk-toc">До змісту ↑</a>
+            </section>
+
+            <section class="part" id="uk-s5">
+              <h2><span class="n">5</span>Нотатки для аналізу</h2>
+
+              <section class="topic" id="uk-s5-1">
+                <h3>
+                  <span class="n">5.1</span>Сурогати гранулярності для схеми
+                  «одне слово на запис»
+                </h3>
+                <p>Класичний ICC-метод незастосовний. Варіанти:</p>
+                <ul>
+                  <li>
+                    <strong>Кількість унікальних слів</strong> за вікно
+                    (тиждень, місяць). Грубо, але прозоро.
+                  </li>
+                  <li>
+                    <strong>Ентропія Шеннона</strong> розподілу слів за вікно:
+                    H = −Σ pᵢ log pᵢ. Нормувати на log(кількість записів),
+                    інакше вона зростає з обсягом даних.
+                  </li>
+                  <li>
+                    <strong>Частка гранулярних слів</strong> (другого рівня)
+                    серед усіх обраних.
+                  </li>
+                  <li>
+                    <strong>Умовна гранулярність</strong>: кількість різних
+                    слів у межах однієї клітинки (valence, arousal). Якщо при
+                    (−2, 7) завжди «тривога» — низька; якщо там же з’являються
+                    «досада», «сором», «настороженість» — зростає.
+                  </li>
+                  <li>
+                    Опційно, не раніше ніж за 6 місяців: розширити форму до 4–6
+                    шкал за словами в межах кластера й тоді рахувати класичний
+                    ICC.
+                  </li>
+                </ul>
+              </section>
+
+              <section class="topic" id="uk-s5-2">
+                <h3><span class="n">5.2</span>Динамічні метрики афекту</h3>
+                <p class="tags">
+                  <span class="ev ev-a"><span class="vh">Рівень доказовості
+                    </span>A</span>
+                  <code>affect.valence</code>
+                </p>
+                <ul>
+                  <li>
+                    <strong>Інерція</strong> (<i class="term">емоційна
+                      інерція</i>) — автокореляція lag-1 за валентністю
+                    (Kuppens, Allen &amp; Sheeber, 2010): висока інерція
+                    пов’язана з депресією та ригідністю. Під час відновлення
+                    каналу інерція має <strong>знижуватися</strong>: стан
+                    починає реагувати на контекст.
+                  </li>
+                  <li>
+                    <strong>Нестабільність</strong> — MSSD / RMSSD послідовних
+                    значень (Jahng, Wood &amp; Trull, 2008). Увага: інтервали
+                    між записами нерівні — використовувати варіанти з
+                    поправкою на інтервал або аналізувати лише пари записів у
+                    межах одного дня.
+                  </li>
+                  <li>
+                    <strong>Варіабельність</strong> — SD у межах людини.
+                    Зростання SD на ранньому етапі нормальне й очікуване
+                    (з’являється сигнал); не трактувати його як погіршення.
+                  </li>
+                  <li>
+                    Розділяти <strong>внутрішньоденну</strong> й
+                    <strong>міжденну</strong> дисперсію (багаторівнева модель:
+                    записи ⊂ дні ⊂ тижні). Для однієї людини це звичайна
+                    дворівнева модель або просто агрегування за днями.
+                  </li>
+                </ul>
+              </section>
+
+              <section class="topic" id="uk-s5-3">
+                <h3><span class="n">5.3</span>Пропуски не випадкові</h3>
+                <p class="tags">
+                  <code>skipped</code> <code>stopped_at</code>
+                  <code>reminder_id</code> <code>status</code>
+                  <code>reason</code>
+                </p>
+                <ul>
+                  <li>
+                    В EMA пропуски частіші в моменти сильного афекту або
+                    високої зайнятості (MNAR — missing not at random). Тут,
+                    крім того, пропуск — імовірний маркер епізоду уникання.
+                  </li>
+                  <li>
+                    Аналізувати сам патерн пропусків: час доби, день тижня,
+                    попередній запис (пропуск після негативного запису?),
+                    контекст.
+                  </li>
+                  <li>Не імпутувати.</li>
+                  <li>
+                    Причина скасування в журналі нагадувань
+                    (<code>reason</code>) відокремлює технічні прогалини від
+                    пропусків людини: <code>overdue</code> (сервер не
+                    працював) і <code>settings</code> (змінилося вікно) — не
+                    пропуски; <code>tz_change</code> — переїзд;
+                    <code>no_device</code> — сповіщення вимкнені на всіх
+                    пристроях (теж дані про навантаження, але не пропущений
+                    сигнал). Без відповіді — це <code>sent</code> без запису з
+                    цим <code>reminder_id</code>.
+                  </li>
+                  <li>
+                    Запланована пауза в нагадуваннях (1 день, 3 дні, тиждень) —
+                    чесна прогалина, яку можна аналізувати, а не приховане
+                    вимкнення сповіщень: моменти, що припали на паузу,
+                    лишаються в журналі нагадувань зі статусом
+                    <code>paused</code>. Їх не рахують ні відповідями, ні
+                    пропусками; аналізувати окремо (сама пауза — теж дані про
+                    навантаження й уникання).
+                  </li>
+                  <li>
+                    Частковий запис («Зупинитися тут» або покинута форма з
+                    відповідями, <code>stopped_at</code>) для комплаєнсу
+                    вважається пропуском, а його поля з відповідями —
+                    спостережені дані, не імпутація: їх не доповнюють до
+                    повного запису.
+                  </li>
+                </ul>
+                <div class="note">
+                  <p>
+                    <time datetime="2026-10-10">З 10.10.2026</time>
+                    Скасовані нагадування мають <code>reason</code>; у раніших
+                    рядків його немає.
+                  </p>
+                </div>
+              </section>
+
+              <section class="topic" id="uk-s5-4">
+                <h3>
+                  <span class="n">5.4</span>Прогрес і те, що лише на нього
+                  схоже
+                </h3>
+                <p class="tags">
+                  <span class="ev ev-c"><span class="vh">Рівень доказовості
+                    </span>C</span>
+                </p>
+                <p>
+                  Очікувана траєкторія за фазами — якісно, з клінічних описів:
+                </p>
+                <ol class="phases">
+                  <li>
+                    <span class="when">0–2 місяці</span>
+                    Багато «нічого» й «не знаю», висока латентність, високий
+                    <code>head_mode</code>.
+                  </li>
+                  <li>
+                    <span class="when">2–6 місяців</span>
+                    Менше «нічого», більше негативу й інтенсивності —
+                    <strong>не погіршення</strong>, а поява доступу. SD
+                    зростає. Можливе й зростання пропусків: уникання
+                    посилюється у відповідь.
+                  </li>
+                  <li>
+                    <span class="when">6–12 місяців</span>
+                    З’являється позитивна валентність; більше унікальних слів,
+                    більше записів із власної ініціативи, нижча латентність,
+                    нижча інерція.
+                  </li>
+                  <li>
+                    <span class="when">Далі</span>
+                    Записи з кількома словами чи якостями водночас (LEAS,
+                    рівень 4).
+                  </li>
+                </ol>
+                <h4>Артефакти, які не можна плутати з ефектом</h4>
+                <ul>
+                  <li>
+                    <strong>Регресія до середнього</strong> в перші тижні.
+                  </li>
+                  <li>
+                    <strong>Ефект навчання інтерфейсу</strong>: латентність
+                    падає й просто від звикання до форми. Контроль: латентність
+                    за типом відповіді («нічого» проти конкретного слова) має
+                    розходитися, якщо справа в доступі, а не в інтерфейсі.
+                  </li>
+                  <li>
+                    <strong>Сезонність і день тижня</strong>: валентність у
+                    понеділок і в суботу. Порівнювати тиждень із тижнем, а не
+                    день із днем.
+                  </li>
+                  <li>
+                    <strong>Зміщення часу доби</strong>: випадкові сигнали мають
+                    покривати все вікно неспання рівномірно; це треба
+                    перевіряти.
+                  </li>
+                  <li>
+                    <strong>Зміна формулювань інструмента</strong>: питання й
+                    підписи полюсів — частина вимірювання. Кожен запис зберігає
+                    версію формулювань (<code>ui.copy</code>; без поля — версія
+                    1). Значення повзунків і слова порівнювати лише в межах
+                    однієї версії; зсув на межі версій не вважати ефектом.
+                    Версія 2 зробила полюси arousal нейтральними, що може
+                    послабити зв’язок valence × arousal.
+                  </li>
+                </ul>
+                <div class="note">
+                  <p>
+                    <time datetime="2026-10-10">З 10.10.2026</time>
+                    Кожну годину вікна обирають однаково часто, якщо вікно
+                    вміщує «кількість нагадувань × інтервал» (6 годин для трьох
+                    через 2 години). До цієї дати першу й останню годину
+                    обирали приблизно на третину частіше за середину; у
+                    вужчому вікні так і лишилося, і перекіс там сильніший (у
+                    вікні 5 годин другу й четверту годину не обирають ніколи).
+                    Частки за часом доби порівнювати в межах одного періоду й
+                    одного вікна.
+                  </p>
+                </div>
+              </section>
+
+              <section class="topic" id="uk-s5-5">
+                <h3><span class="n">5.5</span>Мінімальні обсяги</h3>
+                <ul class="tiles">
+                  <li>
+                    <span class="num">12–15</span>
+                    записів на тиждень — щонайменше, для тижневих агрегатів
+                  </li>
+                  <li>
+                    <span class="num">60–100</span>
+                    записів для автокореляції та MSSD — і лише за парами з
+                    інтервалом менше 8 годин
+                  </li>
+                  <li>
+                    <span class="num">8 тижнів</span>
+                    у кожній фазі — мінімум, щоб порівняти «до» і «після»
+                  </li>
+                  <li>
+                    <span class="num">n ≥ 100</span>
+                    записів для кореляцій між полями (наприклад, intensity ×
+                    arousal); інакше довірчі інтервали марні
+                  </li>
+                </ul>
+              </section>
+
+              <section class="topic" id="uk-s5-6">
+                <h3>
+                  <span class="n">5.6</span>Зовнішні якорі, не зі щоденника
+                </h3>
+                <p>
+                  Щоб перевірити, що метрики щоденника взагалі щось
+                  відображають, раз на 3–6 місяців:
+                </p>
+                <ul class="anchors">
+                  <li>
+                    <span class="scale">TAS-20</span>
+                    <span>алекситимія: DIF і DDF мають
+                      <span class="dir">знижуватися ↓</span></span>
+                  </li>
+                  <li>
+                    <span class="scale">MAIA-2</span>
+                    <span>інтероцептивна чутливість: Noticing,
+                      <i class="term">Emotional Awareness</i>, Body Listening
+                      мають <span class="dir">зростати ↑</span></span>
+                  </li>
+                  <li>
+                    <span class="scale">AAQ-II</span>
+                    <span>уникання: має
+                      <span class="dir">знижуватися ↓</span></span>
+                  </li>
+                  <li>
+                    <span class="scale">PHQ-9, GAD-7</span>
+                    <span>за потреби — контроль того, що зростання негативу в
+                      другій фазі не перейшло в клінічну депресію чи
+                      тривогу</span>
+                  </li>
+                </ul>
+                <p>
+                  Усі чотири у відкритому доступі й заповнюються сумарно за
+                  10–15 хвилин.
+                </p>
+              </section>
+              <a class="back" href="#uk-toc">До змісту ↑</a>
+            </section>
+
+            <section class="part" id="uk-s6">
+              <h2><span class="n">6</span>Обмеження всієї конструкції</h2>
+              <ul>
+                <li>
+                  <strong>N = 1.</strong> Кожен щоденник — ідіографічне
+                  дослідження: усі висновки — про динаміку в межах того, хто
+                  його веде; нормативні пороги (скільки слів «має» бути)
+                  незастосовні.
+                </li>
+                <li>
+                  <strong>Змішування навички й стану</strong> (§1.2):
+                  зростання зафіксованого негативу — це зростання негативу чи
+                  здатності його помітити? За щоденником не розрізнити. Це
+                  розв’язують лише зовнішні якорі та клінічний контекст.
+                </li>
+                <li>
+                  <strong>Якщо провідний чинник — нейротип</strong> (аутизм,
+                  виражена алекситимія як риса), мета зміщується з «відновити
+                  доступ» на «побудувати явну систему перекладу»: тіло →
+                  словник → дія. Метрики ті самі, очікування щодо швидкості й
+                  стелі інші; частка
+                  <code>affect.word_confidence = guess</code> може лишатися
+                  високою, і це норма.
+                </li>
+              </ul>
+              <div class="note warn">
+                <p>
+                  <strong>Щоденник не замінює терапевта.</strong> Соматичні та
+                  афект-орієнтовані підходи (ISTDP, SE, EFT, схема-терапія)
+                  спираються на ко-регуляцію в контакті, яку дані не
+                  відтворюють. Щоденник — інструмент між сесіями та джерело
+                  матеріалу для них.
+                </p>
+              </div>
+              <a class="back" href="#uk-toc">До змісту ↑</a>
+            </section>
+
+            <section class="part" id="uk-s7">
+              <h2><span class="n">7</span>Ключова література</h2>
+              <ol class="refs" lang="en">
+                <li>
+                  Bagby, Parker, Taylor (1994).
+                  <cite>The twenty-item Toronto Alexithymia Scale</cite>.
+                  <i class="term">J Psychosom Res</i>.
+                </li>
+                <li>
+                  Barrett (2006). <cite>Solving the emotion paradox</cite>.
+                  <i class="term">Pers Soc Psychol Rev</i>.
+                </li>
+                <li>Barrett (2017). <cite>How Emotions Are Made</cite>.</li>
+                <li>
+                  Barta, Tennen, Litt (2012).
+                  <cite>Measurement reactivity in diary research</cite>. In
+                  <cite>Handbook of Research Methods for Studying Daily
+                    Life</cite>.
+                </li>
+                <li>
+                  Bond et al. (2011). <cite>AAQ-II</cite>.
+                  <i class="term">Behav Ther</i>.
+                </li>
+                <li>
+                  Craig (2002). <cite>How do you feel?</cite>
+                  <i class="term">Nat Rev Neurosci</i>; (2009)
+                  <i class="term">Nat Rev Neurosci</i>.
+                </li>
+                <li>
+                  Csikszentmihalyi, Larson (1987).
+                  <cite>Validity and reliability of the Experience-Sampling
+                    Method</cite>. <i class="term">J Nerv Ment Dis</i>.
+                </li>
+                <li>Damasio (1994). <cite>Descartes’ Error</cite>.</li>
+                <li>
+                  Deci, Koestner, Ryan (1999).
+                  <cite>A meta-analytic review of experiments examining the
+                    effects of extrinsic rewards on intrinsic motivation</cite>.
+                  <i class="term">Psychol Bull</i>.
+                </li>
+                <li>
+                  Dunn, Dalgleish, Lawrence (2006).
+                  <cite>The somatic marker hypothesis: a critical
+                    evaluation</cite>. <i class="term">Neurosci Biobehav
+                    Rev</i>.
+                </li>
+                <li>Frijda (1986). <cite>The Emotions</cite>.</li>
+                <li>
+                  Garfinkel et al. (2015).
+                  <cite>Knowing your own heart</cite>.
+                  <i class="term">Biol Psychol</i>.
+                </li>
+                <li>Gendlin (1978). <cite>Focusing</cite>.</li>
+                <li>
+                  Grossman, Taylor (2007).
+                  <cite>Toward understanding respiratory sinus
+                    arrhythmia</cite>. <i class="term">Biol Psychol</i>;
+                  Grossman (2023).
+                  <cite>Fundamental challenges and likely refutations of the
+                    five basic premises of the polyvagal theory</cite>.
+                  <i class="term">Biol Psychol</i>.
+                </li>
+                <li>
+                  Hayes et al. (1996). <cite>Experiential avoidance and
+                    behavioral disorders</cite>.
+                  <i class="term">J Consult Clin Psychol</i>; Hayes et al.
+                  (2006). <cite>Acceptance and Commitment Therapy: model,
+                    processes and outcomes</cite>.
+                  <i class="term">Behav Res Ther</i>.
+                </li>
+                <li>
+                  Jahng, Wood, Trull (2008).
+                  <cite>Analysis of affective instability in ecological
+                    momentary assessment</cite>.
+                  <i class="term">Psychol Methods</i>.
+                </li>
+                <li>
+                  Kashdan, Barrett, McKnight (2015).
+                  <cite>Unpacking emotion differentiation</cite>.
+                  <i class="term">Curr Dir Psychol Sci</i>.
+                </li>
+                <li>
+                  Khalsa et al. (2018).
+                  <cite>Interoception and mental health: a roadmap</cite>.
+                  <i class="term">Biol Psychiatry CNNI</i>.
+                </li>
+                <li>
+                  Killingsworth, Gilbert (2010).
+                  <cite>A wandering mind is an unhappy mind</cite>.
+                  <i class="term">Science</i>.
+                </li>
+                <li>
+                  Kinnaird, Stewart, Tsakanikos (2019).
+                  <cite>Investigating alexithymia in autism: a systematic
+                    review and meta-analysis</cite>.
+                  <i class="term">Eur Psychiatry</i>.
+                </li>
+                <li>
+                  Kross, Ayduk (2017). <cite>Self-distancing</cite>.
+                  <i class="term">Adv Exp Soc Psychol</i>.
+                </li>
+                <li>
+                  Kuppens, Allen, Sheeber (2010).
+                  <cite>Emotional inertia and psychological
+                    maladjustment</cite>. <i class="term">Psychol Sci</i>.
+                </li>
+                <li>
+                  Lane, Schwartz (1987).
+                  <cite>Levels of emotional awareness</cite>.
+                  <i class="term">Am J Psychiatry</i>.
+                </li>
+                <li>Levine (2010). <cite>In an Unspoken Voice</cite>.</li>
+                <li>
+                  Lieberman et al. (2007).
+                  <cite>Putting feelings into words</cite>.
+                  <i class="term">Psychol Sci</i>; Torre, Lieberman (2018).
+                  <i class="term">Emotion Review</i>.
+                </li>
+                <li>
+                  Mehling et al. (2018). <cite>MAIA-2</cite>.
+                  <i class="term">PLoS ONE</i>.
+                </li>
+                <li>
+                  Nolen-Hoeksema, Wisco, Lyubomirsky (2008).
+                  <cite>Rethinking rumination</cite>.
+                  <i class="term">Perspect Psychol Sci</i>.
+                </li>
+                <li>
+                  Nummenmaa et al. (2014).
+                  <cite>Bodily maps of emotions</cite>.
+                  <i class="term">PNAS</i>.
+                </li>
+                <li>
+                  Ogden, Minton, Pain (2006). <cite>Trauma and the Body</cite>.
+                </li>
+                <li>
+                  Price, Hooven (2018).
+                  <cite>Interoceptive awareness skills for emotion regulation
+                    (MABT)</cite>. <i class="term">Front Psychol</i>.
+                </li>
+                <li>
+                  Robinson, Clore (2002).
+                  <cite>Belief and feeling: evidence for an accessibility model
+                    of emotional self-report</cite>.
+                  <i class="term">Psychol Bull</i>.
+                </li>
+                <li>
+                  Russell (1980). <cite>A circumplex model of affect</cite>.
+                  <i class="term">J Pers Soc Psychol</i>; Russell, Barrett
+                  (1999). <i class="term">J Pers Soc Psychol</i>.
+                </li>
+                <li>
+                  Shiffman, Stone, Hufford (2008).
+                  <cite>Ecological Momentary Assessment</cite>.
+                  <i class="term">Annu Rev Clin Psychol</i>.
+                </li>
+                <li>
+                  Sifneos (1973).
+                  <cite>The prevalence of “alexithymic” characteristics in
+                    psychosomatic patients</cite>.
+                  <i class="term">Psychother Psychosom</i>.
+                </li>
+                <li>
+                  Tugade, Fredrickson, Barrett (2004).
+                  <cite>Psychological resilience and positive emotional
+                    granularity</cite>. <i class="term">J Pers</i>.
+                </li>
+                <li>
+                  Watkins (2008).
+                  <cite>Constructive and unconstructive repetitive
+                    thought</cite>. <i class="term">Psychol Bull</i>.
+                </li>
+                <li>
+                  Young, Klosko, Weishaar (2003). <cite>Schema Therapy</cite>.
+                </li>
+              </ol>
+              <p class="foot">
+                Emo — щоденник самоспостереження, а не медичний виріб. Ця
+                сторінка — частина його вихідного коду (AGPL):
+                <a class="project" href="https://github.com/podgorniy/emo">github.com/podgorniy/emo</a>
+              </p>
+              <a class="back" href="#uk-toc">До змісту ↑</a>
+            </section>
+          </div>
+        </div>
+      </article>
+
+      <article id="ru" lang="ru">
+        <div class="hero">
+          <p class="eyebrow">Emo · Методология</p>
+          <h1>Почему Emo спрашивает именно это</h1>
+          <p class="lead">
+            На какие теории и измерительные традиции опирается каждое поле
+            записи, что сознательно не взято и как это определяет допустимые
+            способы анализа данных.
+          </p>
+          <p class="dateline">
+            Имена полей — как в экспорте (JSONL; в CSV
+            <code>affect.valence</code> записывается как
+            <code>affect_valence</code>).
+          </p>
+        </div>
+
+        <div class="layout">
+          <nav class="toc" id="ru-toc" aria-labelledby="ru-toc-h">
+            <h2 id="ru-toc-h">Содержание</h2>
+            <ol>
+              <li>
+                <a href="#ru-s0"><span class="n">0</span>Насколько надёжен
+                  каждый источник</a>
+              </li>
+              <li>
+                <a href="#ru-s1"><span class="n">1</span>Метод сбора данных</a>
+              </li>
+              <li>
+                <a href="#ru-s2"><span class="n">2</span>Модели, определившие
+                  поля</a>
+              </li>
+              <li>
+                <a href="#ru-s3"><span class="n">3</span>Что сознательно не
+                  взято</a>
+              </li>
+              <li>
+                <a href="#ru-s4"><span class="n">4</span>Поле, основание,
+                  метрика</a>
+              </li>
+              <li>
+                <a href="#ru-s5"><span class="n">5</span>Заметки для
+                  анализа</a>
+              </li>
+              <li>
+                <a href="#ru-s6"><span class="n">6</span>Ограничения всей
+                  конструкции</a>
+              </li>
+              <li>
+                <a href="#ru-s7"><span class="n">7</span>Ключевая
+                  литература</a>
+              </li>
+            </ol>
+          </nav>
+
+          <div class="content">
+            <section class="part" id="ru-s0">
+              <h2><span class="n">0</span>Насколько надёжен каждый источник</h2>
+              <p>Каждый источник ниже помечен одним из трёх уровней.</p>
+              <ul class="legend">
+                <li>
+                  <span class="ev ev-a"><span class="vh">Уровень
+                      доказательности </span>A</span>
+                  <p>Устоявшаяся эмпирика: воспроизводится, есть мета-анализы.</p>
+                </li>
+                <li>
+                  <span class="ev ev-b"><span class="vh">Уровень
+                      доказательности </span>B</span>
+                  <p>
+                    Активно исследуемая модель; есть критика и конкурирующие
+                    теории.
+                  </p>
+                </li>
+                <li>
+                  <span class="ev ev-c"><span class="vh">Уровень
+                      доказательности </span>C</span>
+                  <p>
+                    Клиническая традиция или практическая модель без сильной
+                    экспериментальной базы. Источник словаря и процедуры, но не
+                    основание для статистических выводов.
+                  </p>
+                </li>
+              </ul>
+            </section>
+
+            <section class="part" id="ru-s1">
+              <h2><span class="n">1</span>Метод сбора данных</h2>
+
+              <section class="topic" id="ru-s1-1">
+                <h3>
+                  <span class="n">1.1</span>Experience Sampling Method /
+                  Ecological Momentary Assessment
+                </h3>
+                <p class="tags">
+                  <span class="ev ev-a"><span class="vh">Уровень
+                      доказательности </span>A</span>
+                  <code>trigger</code> <code>reminder_id</code>
+                  <code>skipped</code>
+                </p>
+                <ul>
+                  <li>
+                    Csikszentmihalyi &amp; Larson (1987) — ESM; Shiffman, Stone
+                    &amp; Hufford (2008) — EMA.
+                  </li>
+                  <li>
+                    Суть: многократные короткие замеры
+                    <strong>в моменте</strong>, в естественной среде, по
+                    случайному сигналу.
+                  </li>
+                  <li>
+                    Почему: ретроспективные отчёты («как прошла неделя?»)
+                    искажены пиками, концовками и текущим состоянием (Kahneman,
+                    <i class="term">peak-end rule</i>; Robinson &amp; Clore,
+                    2002 — модель доступности: ретроспекция опирается на
+                    убеждения о себе, а не на опыт).
+                  </li>
+                  <li>
+                    Для человека, давно отрезанного от телесных сигналов,
+                    ретроспективные отчёты особенно бесполезны: убеждений о
+                    своих состояниях нет или они шаблонные.
+                  </li>
+                </ul>
+                <h4>Следствия для записи</h4>
+                <ul>
+                  <li>
+                    <code>trigger = random</code> — сигнал-контингентная
+                    выборка (signal-contingent sampling).
+                  </li>
+                  <li>
+                    <code>trigger = manual</code> — событийная выборка
+                    (event-contingent). Рост доли <code>manual</code> — это
+                    рост спонтанного замечания, что само по себе целевой
+                    исход.
+                  </li>
+                  <li>
+                    <code>skipped</code> — учёт комплаенса. Стандарт в EMA — не
+                    меньше 70–80% ответов; ниже данные систематически смещены:
+                    пропускаются именно трудные моменты (§5.3).
+                  </li>
+                  <li>
+                    Короткая форма (не дольше 60 секунд) — требование EMA для
+                    удержания комплаенса на недели и месяцы.
+                  </li>
+                </ul>
+                <div class="note">
+                  <p>
+                    <time datetime="2026-10-10">С 10.10.2026</time>
+                    Окно ответа — 15 минут после появления уведомления. Ответ —
+                    тап по нему или запись, начатая самостоятельно, пока
+                    уведомление ещё на экране. Позже запись —
+                    <code>manual</code>, а напоминание считается неотвеченным.
+                  </p>
+                </div>
+              </section>
+
+              <section class="topic" id="ru-s1-2">
+                <h3><span class="n">1.2</span>Реактивность измерения</h3>
+                <p class="tags">
+                  <span class="ev ev-a"><span class="vh">Уровень
+                      доказательности </span>A</span>
+                  <span class="ev ev-b"><span class="vh">Уровень
+                      доказательности </span>B</span>
+                </p>
+                <ul>
+                  <li>
+                    Факт измерения меняет измеряемое (Barta, Tennen &amp; Litt,
+                    2012 — обзор дневниковых исследований).
+                  </li>
+                  <li>
+                    Здесь реактивность <strong>является целью</strong>:
+                    регулярное направление внимания в тело — это и есть
+                    интервенция (affect labeling, §2.11; интероцептивный
+                    тренинг, §2.3).
+                  </li>
+                  <li>
+                    Для анализа: нельзя отделить «изменение состояния» от
+                    «изменения навыка считывания». Это принципиальное
+                    ограничение; его нужно держать в голове при любой
+                    интерпретации.
+                  </li>
+                </ul>
+              </section>
+              <a class="back" href="#ru-toc">К содержанию ↑</a>
+            </section>
+
+            <section class="part" id="ru-s2">
+              <h2><span class="n">2</span>Модели, определившие поля</h2>
+
+              <section class="topic" id="ru-s2-1">
+                <h3>
+                  <span class="n">2.1</span>Циркумплексная модель аффекта
+                </h3>
+                <p class="tags">
+                  <span class="ev ev-a"><span class="vh">Уровень
+                      доказательности </span>A</span>
+                  <code>affect.valence</code> <code>affect.arousal</code>
+                </p>
+                <ul>
+                  <li>
+                    Russell (1980); Russell &amp; Barrett (1999) —
+                    <i class="term">core affect</i>.
+                  </li>
+                  <li>
+                    Любое состояние описывается двумя непрерывными осями:
+                    валентность (приятно — неприятно) и активация (вяло —
+                    возбуждённо). Названное дискретное состояние — надстройка
+                    над ними.
+                  </li>
+                  <li>
+                    Почему это важно: оценить валентность и активацию может
+                    человек, который пока <strong>не умеет</strong> назвать
+                    своё состояние. Это нижний уровень доступа, с него и
+                    начинают.
+                  </li>
+                  <li>
+                    Для анализа: координаты (valence, arousal) — основная сырая
+                    переменная. Слово (<code>affect.word</code>) — вторичная.
+                  </li>
+                </ul>
+              </section>
+
+              <section class="topic" id="ru-s2-2">
+                <h3>
+                  <span class="n">2.2</span><i class="term">Теория
+                    конструируемых эмоций</i> и <i class="term">эмоциональная
+                    гранулярность</i>
+                </h3>
+                <p class="tags">
+                  <span class="ev ev-b"><span class="vh">Уровень
+                      доказательности </span>B</span>
+                  <code>affect.word</code>
+                </p>
+                <ul>
+                  <li>
+                    Barrett (2006, 2017, <cite>How Emotions Are Made</cite>).
+                    Конкурирующая позиция — <i class="term">базовые эмоции</i>
+                    (Ekman, Panksepp). Спор не закрыт; для практики дневника он
+                    не критичен.
+                  </li>
+                  <li>
+                    Гранулярность, или дифференциация: способность различать
+                    близкие состояния («тревога», «раздражение» или «стыд»
+                    вместо «плохо»).
+                  </li>
+                  <li>
+                    Эмпирика
+                    <span class="ev ev-a"><span class="vh">уровня
+                      </span>A</span>: низкая гранулярность связана с худшей
+                    регуляцией, большей импульсивностью, алекситимией; высокая
+                    — с более адаптивными стратегиями (Barrett et al., 2001;
+                    Kashdan, Barrett &amp; McKnight, 2015 — обзор).
+                  </li>
+                  <li>
+                    Классическая метрика: средний ICC между оценками нескольких
+                    состояний внутри человека по множеству моментов;
+                    гранулярность = 1 − ICC (Tugade, Fredrickson &amp; Barrett,
+                    2004). <strong>В этой схеме напрямую не применима</strong>:
+                    фиксируется одно слово, а не шкалы по набору слов.
+                    Суррогаты — в §5.1.
+                  </li>
+                  <li>
+                    Двухуровневый словарь (8 базовых слов, затем около 50
+                    гранулярных) — процедурная подпорка: человек с низкой
+                    гранулярностью сначала выбирает кластер, потом уточняет.
+                  </li>
+                </ul>
+              </section>
+
+              <section class="topic" id="ru-s2-3">
+                <h3><span class="n">2.3</span>Интероцепция</h3>
+                <p class="tags">
+                  <span class="ev ev-a"><span class="vh">Уровень
+                      доказательности </span>A</span>
+                  <span class="ev ev-b"><span class="vh">Уровень
+                      доказательности </span>B</span>
+                  <code>body.locations</code> <code>body.qualities</code>
+                  <code>body.intensity</code> <code>latency_sec</code>
+                </p>
+                <ul>
+                  <li>
+                    Craig (2002, 2009) — интероцепция как основа субъективного
+                    ощущения себя (инсула).
+                  </li>
+                  <li>
+                    Garfinkel et al. (2015) — трёхкомпонентная модель, важная
+                    для анализа:
+                    <ol>
+                      <li>
+                        <strong>interoceptive accuracy</strong> — объективная
+                        точность (например, счёт сердцебиений);
+                      </li>
+                      <li>
+                        <strong>interoceptive sensibility</strong> —
+                        субъективная самооценка чувствительности (опросники
+                        MAIA, BPQ);
+                      </li>
+                      <li>
+                        <strong>interoceptive awareness</strong> —
+                        метакогнитивное соответствие между первыми двумя.
+                      </li>
+                    </ol>
+                    Дневник измеряет только sensibility и косвенно awareness —
+                    через <code>affect.word_confidence</code>. Точность по
+                    дневнику <strong>неизмерима</strong>; не делать выводов о
+                    ней.
+                  </li>
+                  <li>
+                    Khalsa et al. (2018) — консенсусный обзор интероцепции в
+                    психиатрии.
+                  </li>
+                  <li>
+                    Интероцептивный тренинг: Price &amp; Hooven (2018) — MABT,
+                    терапия на основе осознанности тела; есть РКИ умеренного
+                    качества
+                    <span class="ev ev-b"><span class="vh">Уровень
+                        доказательности </span>B</span>.
+                  </li>
+                  <li>
+                    Опросник для периодического внешнего замера (раз в 3–6
+                    месяцев): MAIA-2 (Mehling et al., 2018).
+                  </li>
+                </ul>
+              </section>
+
+              <section class="topic" id="ru-s2-4">
+                <h3><span class="n">2.4</span>Телесные карты</h3>
+                <p class="tags">
+                  <span class="ev ev-b"><span class="vh">Уровень
+                      доказательности </span>B</span>
+                  <code>body.locations</code>
+                </p>
+                <ul>
+                  <li>
+                    Nummenmaa et al. (2014, PNAS,
+                    <cite>Bodily maps of emotions</cite>) — кросскультурно
+                    устойчивые топографии: страх и тревога — грудь, верх тела;
+                    злость — руки, голова, грудь; грусть — снижение активации в
+                    конечностях; депрессия — общее «выключение».
+                  </li>
+                  <li>
+                    Для анализа: распределение зон по валентности и по слову
+                    можно сравнивать с этими картами как с априорным ожиданием.
+                    Расхождение — не ошибка, а данные.
+                  </li>
+                </ul>
+              </section>
+
+              <section class="topic" id="ru-s2-5">
+                <h3>
+                  <span class="n">2.5</span>Соматические маркеры: обоснование
+                  всей затеи
+                </h3>
+                <p class="tags">
+                  <span class="ev ev-b"><span class="vh">Уровень
+                      доказательности </span>B</span>
+                  <code>urge</code>
+                </p>
+                <ul>
+                  <li>
+                    Damasio (1994, <cite>Descartes’ Error</cite>); Bechara et
+                    al. (1997) — Iowa Gambling Task.
+                  </li>
+                  <li>
+                    Телесные сигналы участвуют в принятии решений до их
+                    осознания. Критика: Dunn, Dalgleish &amp; Lawrence (2006) —
+                    эмпирика слабее, чем популярная версия. Общая идея («тело
+                    информирует выбор») держится, детали механизма — нет.
+                  </li>
+                  <li>
+                    Релевантность: поле <code>urge</code> фиксирует тенденцию к
+                    действию — ближайший доступный коррелят «маркера».
+                  </li>
+                </ul>
+              </section>
+
+              <section class="topic" id="ru-s2-6">
+                <h3><span class="n">2.6</span>Тенденции к действию</h3>
+                <p class="tags">
+                  <span class="ev ev-a"><span class="vh">Уровень
+                      доказательности </span>A</span>
+                  <span class="ev ev-b"><span class="vh">Уровень
+                      доказательности </span>B</span>
+                  <code>urge</code>
+                </p>
+                <ul>
+                  <li>
+                    Frijda (1986) — аффективное состояние как готовность к
+                    действию (<i class="term">action readiness</i>).
+                  </li>
+                  <li>
+                    Lang (1995) — мотивационные системы приближения и
+                    избегания.
+                  </li>
+                  <li>
+                    Словарь побуждений (уйти, сжаться, замереть, двигаться,
+                    ударить, плакать…) — прямое отображение на «бей, беги,
+                    замри» плюс приближение. Он полезен именно потому, что
+                    побуждение часто считывается раньше и легче, чем названное
+                    состояние.
+                  </li>
+                </ul>
+              </section>
+
+              <section class="topic" id="ru-s2-7">
+                <h3>
+                  <span class="n">2.7</span>Алекситимия: «ничего», «не знаю»,
+                  «не могу определить»
+                </h3>
+                <p class="tags">
+                  <span class="ev ev-a"><span class="vh">Уровень
+                      доказательности </span>A</span>
+                  <code>body.qualities</code> <code>affect.word</code>
+                </p>
+                <ul>
+                  <li>
+                    Sifneos (1973) — термин. Bagby, Parker &amp; Taylor (1994)
+                    — TAS-20, три фактора: <i class="term">трудность
+                      идентификации чувств</i> (DIF), <i class="term">трудность
+                      описания чувств</i> (DDF), <i class="term">внешне
+                      ориентированное мышление</i> (EOT).
+                  </li>
+                  <li>
+                    Преобладание операторного, внешне ориентированного
+                    мышления — это паттерн жизни «вне себя»: внимание
+                    удерживается на задачах и внешнем мире, а не на внутренних
+                    состояниях. EOT отражается полем <code>head_mode</code>.
+                  </li>
+                  <li>
+                    Валидные варианты «ничего» и «не знаю» обязательны: иначе
+                    человек с алекситимией выбирает случайное слово, и данные
+                    выглядят лучше, чем есть.
+                  </li>
+                  <li>
+                    Внешний замер: TAS-20 на старте и раз в 6 месяцев.
+                    Ожидаемая динамика — снижение DIF и DDF.
+                  </li>
+                  <li>
+                    Алекситимия у аутичных взрослых — около 50% (Kinnaird,
+                    Stewart &amp; Tsakanikos, 2019, мета-анализ). Если это
+                    применимо, траектория и ожидания другие (§6).
+                  </li>
+                </ul>
+              </section>
+
+              <section class="topic" id="ru-s2-8">
+                <h3>
+                  <span class="n">2.8</span><i class="term">Уровни
+                    эмоционального осознавания</i>: порядок полей
+                </h3>
+                <p class="tags">
+                  <span class="ev ev-b"><span class="vh">Уровень
+                      доказательности </span>B</span>
+                  <code>body.locations</code> <code>urge</code>
+                  <code>affect.word</code>
+                </p>
+                <ul>
+                  <li>
+                    Lane &amp; Schwartz (1987) —
+                    <i class="term">Levels of Emotional Awareness Scale</i>
+                    (LEAS). Иерархия: (1) телесные ощущения → (2) тенденции к
+                    действию → (3) отдельные названные состояния → (4) их смеси
+                    → (5) смеси у себя и у другого.
+                  </li>
+                  <li>
+                    Поля записи расположены ровно по этой лестнице: тело (1) →
+                    <code>urge</code> (2) → <code>affect.word</code> (3).
+                    Несколько слов или качеств в одной записи — переход к
+                    уровню (4).
+                  </li>
+                </ul>
+              </section>
+
+              <section class="topic" id="ru-s2-9">
+                <h3>
+                  <span class="n">2.9</span>Экспериентальное избегание: без
+                  «почему»
+                </h3>
+                <p class="tags">
+                  <span class="ev ev-a"><span class="vh">Уровень
+                      доказательности </span>A</span>
+                  <code>head_mode</code>
+                </p>
+                <ul>
+                  <li>
+                    Hayes et al. (1996, 2006) — ACT; опросник AAQ-II (Bond et
+                    al., 2011).
+                  </li>
+                  <li>
+                    Избегание внутреннего опыта через мышление, деятельность,
+                    анализ. Интеллектуализация — одна из его форм.
+                  </li>
+                  <li>
+                    Mind-wandering: Killingsworth &amp; Gilbert (2010, Science)
+                    — ESM на 2250 человек: около 47% времени внимание не на
+                    текущей деятельности, а блуждание ума предсказывает
+                    снижение ощущения счастья. <code>head_mode</code> — прямой
+                    аналог их вопроса.
+                  </li>
+                </ul>
+              </section>
+
+              <section class="topic" id="ru-s2-10">
+                <h3>
+                  <span class="n">2.10</span>Руминация и режим обработки: без
+                  «почему», короткая заметка
+                </h3>
+                <p class="tags">
+                  <span class="ev ev-a"><span class="vh">Уровень
+                      доказательности </span>A</span>
+                  <code>note</code>
+                </p>
+                <ul>
+                  <li>
+                    Nolen-Hoeksema (1991, 2008) — руминация как фактор
+                    депрессии.
+                  </li>
+                  <li>
+                    Watkins (2008) — конструктивная и неконструктивная
+                    повторяющаяся мысль: <strong>абстрактный</strong> режим
+                    («почему это со мной», «что это значит») вреден;
+                    <strong>конкретный</strong> («что именно, где, как») —
+                    нейтрален или полезен.
+                  </li>
+                  <li>
+                    Kross &amp; Ayduk (2011, 2017) — самодистанцирование:
+                    вопрос «почему» в погружённой позиции усиливает аффект без
+                    переработки.
+                  </li>
+                  <li>
+                    Отсюда проверка заметки отклоняет причины и смыслы («потому
+                    что», «значит», «из-за», «поэтому») и вопросы абстрактного
+                    режима («почему», «зачем», «что со мной не так»); форма
+                    спрашивает «что и где», никогда «почему». Оговорки
+                    неуверенности («наверное», «думаю», «кажется») — не
+                    абстрактный режим, а осторожность, близкая к
+                    <code>affect.word_confidence = guess</code> и к
+                    дистанцированной позиции ACT.
+                  </li>
+                </ul>
+                <div class="note">
+                  <p>
+                    <time datetime="2026-10-09">С 09.10.2026</time>
+                    Оговорки больше не отклоняются: «думаю о дедлайне» — факт о
+                    внимании.
+                  </p>
+                </div>
+              </section>
+
+              <section class="topic" id="ru-s2-11">
+                <h3>
+                  <span class="n">2.11</span>Affect labeling: почему дневник
+                  сам по себе интервенция
+                </h3>
+                <p class="tags">
+                  <span class="ev ev-a"><span class="vh">Уровень
+                      доказательности </span>A</span>
+                  <code>affect.word</code>
+                </p>
+                <ul>
+                  <li>
+                    Lieberman et al. (2007) — называние аффекта снижает
+                    активность амигдалы и усиливает активность
+                    вентролатеральной префронтальной коры. Torre &amp;
+                    Lieberman (2018) — обзор: эффект устойчив, работает как
+                    неявная регуляция.
+                  </li>
+                  <li>
+                    Pennebaker (1997) — экспрессивное письмо.
+                    <strong>Не используется как модель</strong>: его протокол —
+                    длинные нарративы со смыслом и причинами, что здесь
+                    контрпродуктивно (§2.10). Берётся только факт: вербализация
+                    аффекта регуляторна.
+                  </li>
+                </ul>
+              </section>
+
+              <section class="topic" id="ru-s2-12">
+                <h3>
+                  <span class="n">2.12</span>Титрование и соматические
+                  подходы: 60 секунд, малые дозы
+                </h3>
+                <p class="tags">
+                  <span class="ev ev-c"><span class="vh">Уровень
+                      доказательности </span>C</span>
+                </p>
+                <ul>
+                  <li>
+                    Levine (1997, 2010) — Somatic Experiencing: титрование,
+                    маятник, окно толерантности (термин — Siegel, 1999). Ogden
+                    (2006) — Sensorimotor Psychotherapy.
+                  </li>
+                  <li>
+                    Gendlin (1978) — Focusing, «felt sense»: словарь качеств
+                    (тяжесть, ком, сжатие…) взят из этой традиции.
+                  </li>
+                  <li>
+                    Экспериментальная база слабая; РКИ по SE единичны и малы.
+                    Используется как источник
+                    <strong>процедуры безопасности</strong> (не затапливать) и
+                    словаря, а не как научное обоснование.
+                  </li>
+                </ul>
+              </section>
+
+              <section class="topic" id="ru-s2-13">
+                <h3>
+                  <span class="n">2.13</span>Схема-терапия: «отстранённый
+                  защитник»
+                </h3>
+                <p class="tags">
+                  <span class="ev ev-b"><span class="vh">Уровень
+                      доказательности </span>B</span>
+                </p>
+                <ul>
+                  <li>
+                    Young, Klosko &amp; Weishaar (2003). Режим
+                    <i class="term">Detached Protector</i> — хроническое
+                    отключение от внутреннего опыта как защита; схема
+                    <i class="term">Emotional Deprivation</i> — типичный
+                    корень.
+                  </li>
+                  <li>
+                    Опросники: YSQ-S3, SMI. Для анализа дневника не нужны;
+                    релевантны для терапевта.
+                  </li>
+                </ul>
+              </section>
+
+              <section class="topic" id="ru-s2-14">
+                <h3>
+                  <span class="n">2.14</span>Мотивационный дизайн: без стриков
+                  и достижений
+                </h3>
+                <p class="tags">
+                  <span class="ev ev-a"><span class="vh">Уровень
+                      доказательности </span>A</span>
+                </p>
+                <ul>
+                  <li>
+                    Deci &amp; Ryan — Self-Determination Theory: внешние
+                    подкрепления подрывают внутреннюю мотивацию (Deci, Koestner
+                    &amp; Ryan, 1999, мета-анализ).
+                  </li>
+                  <li>
+                    Для тех, кто опирается на перфекционистский, «головной»
+                    режим, стрики превращают практику в ещё одну задачу на
+                    выполнение, что воспроизводит избегание.
+                  </li>
+                </ul>
+              </section>
+              <a class="back" href="#ru-toc">К содержанию ↑</a>
+            </section>
+
+            <section class="part" id="ru-s3">
+              <h2><span class="n">3</span>Что сознательно не взято</h2>
+              <dl class="cards">
+                <div>
+                  <dt>PANAS и аналогичные списки из 20 прилагательных</dt>
+                  <dd>
+                    Длинно; требует различения, которого ещё нет; провоцирует
+                    случайный выбор.
+                  </dd>
+                </div>
+                <div>
+                  <dt>Смайлики и <i class="term">mood tracker</i></dt>
+                  <dd>Ярлык вместо тела; низкая гранулярность закрепляется.</dd>
+                </div>
+                <div>
+                  <dt>Поливагальная теория (Porges) как основание</dt>
+                  <dd>
+                    Популярна в соматической среде, но ключевые
+                    нейрофизиологические утверждения не подтверждены (Grossman
+                    &amp; Taylor, 2007; Grossman, 2023). Словарь «вентральный /
+                    дорсальный» не используется.
+                  </dd>
+                </div>
+                <div>
+                  <dt>HRV и носимые датчики</dt>
+                  <dd>
+                    Подмена интероцепции экстероцепцией. По Garfinkel,
+                    sensibility ≠ accuracy, и обучать нужно именно sensibility.
+                  </dd>
+                </div>
+                <div>
+                  <dt>Когнитивные колонки (ABC-схема КПТ)</dt>
+                  <dd>Добавляют слой мышления о мышлении.</dd>
+                </div>
+              </dl>
+              <a class="back" href="#ru-toc">К содержанию ↑</a>
+            </section>
+
+            <section class="part" id="ru-s4">
+              <h2><span class="n">4</span>Поле, основание, метрика</h2>
+              <p>На что опирается каждое поле экспорта и что по нему считать.</p>
+              <dl class="fields">
+                <div>
+                  <dt><code>trigger</code></dt>
+                  <dd><span class="k">Основание</span>ESM / EMA (§1.1)</dd>
+                  <dd>
+                    <span class="k">Что считать</span>долю
+                    <code>manual</code> по неделям
+                  </dd>
+                </div>
+                <div>
+                  <dt><code>skipped</code></dt>
+                  <dd>
+                    <span class="k">Основание</span>комплаенс EMA (§1.1, §5.3),
+                    вместе с пропусками
+                  </dd>
+                  <dd>
+                    <span class="k">Что считать</span>% ответов; паттерн
+                    пропусков по времени суток, дню недели, контексту
+                  </dd>
+                </div>
+                <div>
+                  <dt><code>latency_sec</code></dt>
+                  <dd>
+                    <span class="k">Основание</span>косвенный индикатор
+                    стоимости доступа; аналог времени реакции в имплицитных
+                    задачах
+                  </dd>
+                  <dd>
+                    <span class="k">Что считать</span>медиану по неделям;
+                    разброс; латентность по валентности (к негативу дольше?)
+                  </dd>
+                </div>
+                <div>
+                  <dt><code>body.locations</code></dt>
+                  <dd><span class="k">Основание</span>Nummenmaa (§2.4)</dd>
+                  <dd>
+                    <span class="k">Что считать</span>частоты зон; зоны ×
+                    слово; зоны × валентность
+                  </dd>
+                </div>
+                <div>
+                  <dt><code>body.qualities</code></dt>
+                  <dd>
+                    <span class="k">Основание</span>словарь Focusing и SE
+                    (§2.12); LEAS, уровень 1 (§2.8)
+                  </dd>
+                  <dd>
+                    <span class="k">Что считать</span>число уникальных; долю
+                    «ничего» и «не могу определить»
+                  </dd>
+                </div>
+                <div>
+                  <dt><code>body.intensity</code></dt>
+                  <dd><span class="k">Основание</span>собственного нет</dd>
+                  <dd>
+                    <span class="k">Что считать</span>корреляцию с arousal:
+                    ожидается положительная, её отсутствие — маркер диссоциации
+                    тела и аффекта
+                  </dd>
+                </div>
+                <div>
+                  <dt>
+                    <code>affect.valence</code> <code>affect.arousal</code>
+                  </dt>
+                  <dd><span class="k">Основание</span>Russell (§2.1)</dd>
+                  <dd>
+                    <span class="k">Что считать</span>распределение;
+                    динамические метрики (§5.2)
+                  </dd>
+                </div>
+                <div>
+                  <dt><code>affect.word</code></dt>
+                  <dd>
+                    <span class="k">Основание</span>гранулярность (§2.2); LEAS,
+                    уровень 3
+                  </dd>
+                  <dd>
+                    <span class="k">Что считать</span>уникальные слова;
+                    энтропию; долю гранулярных слов против базовых; долю пустых
+                    и «не знаю»
+                  </dd>
+                </div>
+                <div>
+                  <dt><code>affect.word_confidence</code></dt>
+                  <dd>
+                    <span class="k">Основание</span>interoceptive awareness
+                    (§2.3)
+                  </dd>
+                  <dd>
+                    <span class="k">Что считать</span>долю <code>sure</code>;
+                    её динамику
+                  </dd>
+                </div>
+                <div>
+                  <dt><code>urge</code></dt>
+                  <dd>
+                    <span class="k">Основание</span>Frijda (§2.6); LEAS,
+                    уровень 2
+                  </dd>
+                  <dd>
+                    <span class="k">Что считать</span>распределение; urge ×
+                    валентность
+                  </dd>
+                </div>
+                <div>
+                  <dt><code>head_mode</code></dt>
+                  <dd>
+                    <span class="k">Основание</span>избегание, mind-wandering
+                    (§2.9)
+                  </dd>
+                  <dd>
+                    <span class="k">Что считать</span>среднее; корреляцию с
+                    латентностью и с «ничего»
+                  </dd>
+                </div>
+                <div>
+                  <dt><code>context_tag</code></dt>
+                  <dd>
+                    <span class="k">Основание</span>контекстная выборка EMA
+                  </dd>
+                  <dd>
+                    <span class="k">Что считать</span>все метрики выше в
+                    разрезе контекста
+                  </dd>
+                </div>
+                <div>
+                  <dt><code>note</code></dt>
+                  <dd>
+                    <span class="k">Основание</span>Watkins, конкретный режим
+                    (§2.10)
+                  </dd>
+                  <dd>
+                    <span class="k">Что считать</span>ничего: количественно не
+                    анализируется, это материал для сессий с терапевтом
+                  </dd>
+                </div>
+              </dl>
+              <a class="back" href="#ru-toc">К содержанию ↑</a>
+            </section>
+
+            <section class="part" id="ru-s5">
+              <h2><span class="n">5</span>Заметки для анализа</h2>
+
+              <section class="topic" id="ru-s5-1">
+                <h3>
+                  <span class="n">5.1</span>Суррогаты гранулярности для схемы
+                  «одно слово за запись»
+                </h3>
+                <p>Классический ICC-метод неприменим. Варианты:</p>
+                <ul>
+                  <li>
+                    <strong>Число уникальных слов</strong> за окно (неделя,
+                    месяц). Грубо, но прозрачно.
+                  </li>
+                  <li>
+                    <strong>Энтропия Шеннона</strong> распределения слов за
+                    окно: H = −Σ pᵢ log pᵢ. Нормировать на log(число записей),
+                    иначе она растёт с объёмом данных.
+                  </li>
+                  <li>
+                    <strong>Доля гранулярных слов</strong> (второго уровня)
+                    среди всех выбранных.
+                  </li>
+                  <li>
+                    <strong>Условная гранулярность</strong>: число разных слов
+                    внутри одной ячейки (valence, arousal). Если при (−2, 7)
+                    всегда «тревога» — низкая; если там же появляются
+                    «досада», «стыд», «настороженность» — растёт.
+                  </li>
+                  <li>
+                    Опционально, не раньше чем через 6 месяцев: расширить форму
+                    до 4–6 шкал по словам внутри кластера и тогда считать
+                    классический ICC.
+                  </li>
+                </ul>
+              </section>
+
+              <section class="topic" id="ru-s5-2">
+                <h3><span class="n">5.2</span>Динамические метрики аффекта</h3>
+                <p class="tags">
+                  <span class="ev ev-a"><span class="vh">Уровень
+                      доказательности </span>A</span>
+                  <code>affect.valence</code>
+                </p>
+                <ul>
+                  <li>
+                    <strong>Инерция</strong> (<i class="term">эмоциональная
+                      инерция</i>) — автокорреляция lag-1 по валентности
+                    (Kuppens, Allen &amp; Sheeber, 2010): высокая инерция
+                    связана с депрессией и ригидностью. При восстановлении
+                    канала инерция должна <strong>снижаться</strong>:
+                    состояние начинает реагировать на контекст.
+                  </li>
+                  <li>
+                    <strong>Нестабильность</strong> — MSSD / RMSSD
+                    последовательных значений (Jahng, Wood &amp; Trull, 2008).
+                    Внимание: интервалы между записями неравные — использовать
+                    варианты с поправкой на интервал или анализировать только
+                    пары записей в пределах одного дня.
+                  </li>
+                  <li>
+                    <strong>Вариабельность</strong> — SD внутри человека. Рост
+                    SD на раннем этапе нормален и ожидаем (появляется сигнал);
+                    не трактовать его как ухудшение.
+                  </li>
+                  <li>
+                    Разделять <strong>внутридневную</strong> и
+                    <strong>междневную</strong> дисперсию (многоуровневая
+                    модель: записи ⊂ дни ⊂ недели). Для одного человека это
+                    обычная двухуровневая модель или просто агрегирование по
+                    дням.
+                  </li>
+                </ul>
+              </section>
+
+              <section class="topic" id="ru-s5-3">
+                <h3><span class="n">5.3</span>Пропуски не случайны</h3>
+                <p class="tags">
+                  <code>skipped</code> <code>stopped_at</code>
+                  <code>reminder_id</code> <code>status</code>
+                  <code>reason</code>
+                </p>
+                <ul>
+                  <li>
+                    В EMA пропуски чаще в моменты сильного аффекта или высокой
+                    занятости (MNAR — missing not at random). Здесь, кроме
+                    того, пропуск — вероятный маркер эпизода избегания.
+                  </li>
+                  <li>
+                    Анализировать сам паттерн пропусков: время суток, день
+                    недели, предыдущая запись (пропуск после негативной
+                    записи?), контекст.
+                  </li>
+                  <li>Не импутировать.</li>
+                  <li>
+                    Причина отмены в журнале напоминаний
+                    (<code>reason</code>) отделяет технические пробелы от
+                    пропусков человека: <code>overdue</code> (сервер не
+                    работал) и <code>settings</code> (сменилось окно) — не
+                    пропуски; <code>tz_change</code> — переезд;
+                    <code>no_device</code> — уведомления выключены на всех
+                    устройствах (тоже данные о нагрузке, но не неответ на
+                    сигнал). Неотвеченное — это <code>sent</code> без записи с
+                    этим <code>reminder_id</code>.
+                  </li>
+                  <li>
+                    Запланированная пауза в напоминаниях (1 день, 3 дня,
+                    неделя) — честный, анализируемый пробел, а не скрытое
+                    отключение уведомлений: моменты, выпавшие на паузу,
+                    остаются в журнале напоминаний со статусом
+                    <code>paused</code>. Их не считают ни ответами, ни
+                    пропусками; анализировать отдельно (сама пауза — тоже
+                    данные о нагрузке и избегании).
+                  </li>
+                  <li>
+                    Частичная запись («Остановиться здесь» или брошенная форма
+                    с ответами, <code>stopped_at</code>) для комплаенса
+                    считается пропуском, а её отвеченные поля — наблюдённые
+                    данные, не импутация: их не дополняют до полной записи.
+                  </li>
+                </ul>
+                <div class="note">
+                  <p>
+                    <time datetime="2026-10-10">С 10.10.2026</time>
+                    Отменённые напоминания несут <code>reason</code>; у более
+                    ранних строк его нет.
+                  </p>
+                </div>
+              </section>
+
+              <section class="topic" id="ru-s5-4">
+                <h3>
+                  <span class="n">5.4</span>Прогресс и то, что на него только
+                  похоже
+                </h3>
+                <p class="tags">
+                  <span class="ev ev-c"><span class="vh">Уровень
+                      доказательности </span>C</span>
+                </p>
+                <p>
+                  Ожидаемая траектория по фазам — качественно, из клинических
+                  описаний:
+                </p>
+                <ol class="phases">
+                  <li>
+                    <span class="when">0–2 месяца</span>
+                    Много «ничего» и «не знаю», высокая латентность, высокий
+                    <code>head_mode</code>.
+                  </li>
+                  <li>
+                    <span class="when">2–6 месяцев</span>
+                    Меньше «ничего», больше негатива и интенсивности —
+                    <strong>не ухудшение</strong>, а появление доступа. Рост
+                    SD. Возможен и рост пропусков: избегание усиливается в
+                    ответ.
+                  </li>
+                  <li>
+                    <span class="when">6–12 месяцев</span>
+                    Появляется положительная валентность; больше уникальных
+                    слов, больше записей по своей инициативе, ниже латентность,
+                    ниже инерция.
+                  </li>
+                  <li>
+                    <span class="when">Далее</span>
+                    Записи с несколькими словами или качествами одновременно
+                    (LEAS, уровень 4).
+                  </li>
+                </ol>
+                <h4>Артефакты, которые нельзя путать с эффектом</h4>
+                <ul>
+                  <li>
+                    <strong>Регрессия к среднему</strong> в первые недели.
+                  </li>
+                  <li>
+                    <strong>Эффект обучения интерфейсу</strong>: латентность
+                    падает и просто от привыкания к форме. Контроль:
+                    латентность по типу ответа («ничего» против конкретного
+                    слова) должна расходиться, если дело в доступе, а не в
+                    интерфейсе.
+                  </li>
+                  <li>
+                    <strong>Сезонность и день недели</strong>: валентность в
+                    понедельник и в субботу. Сравнивать неделю с неделей, а не
+                    день с днём.
+                  </li>
+                  <li>
+                    <strong>Смещение времени суток</strong>: случайные сигналы
+                    должны покрывать всё окно бодрствования равномерно; это
+                    нужно проверять.
+                  </li>
+                  <li>
+                    <strong>Смена формулировок инструмента</strong>: вопросы и
+                    подписи полюсов — часть измерения. Каждая запись хранит
+                    версию формулировок (<code>ui.copy</code>; без поля —
+                    версия 1). Значения слайдеров и слова сравнивать только
+                    внутри одной версии; сдвиг на границе версий не считать
+                    эффектом. Версия 2 сделала полюса arousal нейтральными, что
+                    может ослабить связь valence × arousal.
+                  </li>
+                </ul>
+                <div class="note">
+                  <p>
+                    <time datetime="2026-10-10">С 10.10.2026</time>
+                    Каждый час окна выбирается одинаково часто, если окно
+                    вмещает «число напоминаний × интервал» (6 часов при трёх
+                    через 2 часа). До этой даты первый и последний час
+                    выбирались примерно на треть чаще середины; в более узком
+                    окне так и осталось, и перекос там сильнее (в окне 5 часов
+                    второй и четвёртый час не выбираются никогда). Доли по
+                    времени суток сравнивать внутри одного периода и одного
+                    окна.
+                  </p>
+                </div>
+              </section>
+
+              <section class="topic" id="ru-s5-5">
+                <h3><span class="n">5.5</span>Минимальные объёмы</h3>
+                <ul class="tiles">
+                  <li>
+                    <span class="num">12–15</span>
+                    записей в неделю — не меньше, для недельных агрегатов
+                  </li>
+                  <li>
+                    <span class="num">60–100</span>
+                    записей для автокорреляции и MSSD — и только по парам с
+                    интервалом меньше 8 часов
+                  </li>
+                  <li>
+                    <span class="num">8 недель</span>
+                    в каждой фазе — минимум, чтобы сравнить «до» и «после»
+                  </li>
+                  <li>
+                    <span class="num">n ≥ 100</span>
+                    записей для корреляций между полями (например, intensity ×
+                    arousal); иначе доверительные интервалы бесполезны
+                  </li>
+                </ul>
+              </section>
+
+              <section class="topic" id="ru-s5-6">
+                <h3>
+                  <span class="n">5.6</span>Внешние якоря, не из дневника
+                </h3>
+                <p>
+                  Чтобы проверить, что метрики дневника вообще что-то
+                  отражают, раз в 3–6 месяцев:
+                </p>
+                <ul class="anchors">
+                  <li>
+                    <span class="scale">TAS-20</span>
+                    <span>алекситимия: DIF и DDF должны
+                      <span class="dir">снижаться ↓</span></span>
+                  </li>
+                  <li>
+                    <span class="scale">MAIA-2</span>
+                    <span>интероцептивная чувствительность: Noticing,
+                      <i class="term">Emotional Awareness</i>, Body Listening
+                      должны <span class="dir">расти ↑</span></span>
+                  </li>
+                  <li>
+                    <span class="scale">AAQ-II</span>
+                    <span>избегание: должно
+                      <span class="dir">снижаться ↓</span></span>
+                  </li>
+                  <li>
+                    <span class="scale">PHQ-9, GAD-7</span>
+                    <span>при необходимости — контроль того, что рост негатива
+                      во второй фазе не перешёл в клиническую депрессию или
+                      тревогу</span>
+                  </li>
+                </ul>
+                <p>
+                  Все четыре в открытом доступе и заполняются за 10–15 минут
+                  суммарно.
+                </p>
+              </section>
+              <a class="back" href="#ru-toc">К содержанию ↑</a>
+            </section>
+
+            <section class="part" id="ru-s6">
+              <h2><span class="n">6</span>Ограничения всей конструкции</h2>
+              <ul>
+                <li>
+                  <strong>N = 1.</strong> Каждый дневник — идиографическое
+                  исследование: все выводы — о динамике внутри того, кто его
+                  ведёт; нормативные пороги (сколько слов «должно» быть)
+                  неприменимы.
+                </li>
+                <li>
+                  <strong>Смешение навыка и состояния</strong> (§1.2): рост
+                  зафиксированного негатива — это рост негатива или рост
+                  способности его заметить? По дневнику не различимо.
+                  Разрешается только внешними якорями и клиническим контекстом.
+                </li>
+                <li>
+                  <strong>Если ведущий фактор — нейротип</strong> (аутизм,
+                  выраженная алекситимия как черта), цель смещается с
+                  «восстановить доступ» на «построить явную систему перевода»:
+                  тело → словарь → действие. Метрики те же, ожидания по
+                  скорости и потолку другие; доля
+                  <code>affect.word_confidence = guess</code> может остаться
+                  высокой, и это норма.
+                </li>
+              </ul>
+              <div class="note warn">
+                <p>
+                  <strong>Дневник не заменяет терапевта.</strong> Соматические
+                  и аффект-ориентированные подходы (ISTDP, SE, EFT,
+                  схема-терапия) опираются на ко-регуляцию в контакте, которую
+                  данные не воспроизводят. Дневник — инструмент между сессиями
+                  и источник материала для них.
+                </p>
+              </div>
+              <a class="back" href="#ru-toc">К содержанию ↑</a>
+            </section>
+
+            <section class="part" id="ru-s7">
+              <h2><span class="n">7</span>Ключевая литература</h2>
+              <ol class="refs" lang="en">
+                <li>
+                  Bagby, Parker, Taylor (1994).
+                  <cite>The twenty-item Toronto Alexithymia Scale</cite>.
+                  <i class="term">J Psychosom Res</i>.
+                </li>
+                <li>
+                  Barrett (2006). <cite>Solving the emotion paradox</cite>.
+                  <i class="term">Pers Soc Psychol Rev</i>.
+                </li>
+                <li>Barrett (2017). <cite>How Emotions Are Made</cite>.</li>
+                <li>
+                  Barta, Tennen, Litt (2012).
+                  <cite>Measurement reactivity in diary research</cite>. In
+                  <cite>Handbook of Research Methods for Studying Daily
+                    Life</cite>.
+                </li>
+                <li>
+                  Bond et al. (2011). <cite>AAQ-II</cite>.
+                  <i class="term">Behav Ther</i>.
+                </li>
+                <li>
+                  Craig (2002). <cite>How do you feel?</cite>
+                  <i class="term">Nat Rev Neurosci</i>; (2009)
+                  <i class="term">Nat Rev Neurosci</i>.
+                </li>
+                <li>
+                  Csikszentmihalyi, Larson (1987).
+                  <cite>Validity and reliability of the Experience-Sampling
+                    Method</cite>. <i class="term">J Nerv Ment Dis</i>.
+                </li>
+                <li>Damasio (1994). <cite>Descartes’ Error</cite>.</li>
+                <li>
+                  Deci, Koestner, Ryan (1999).
+                  <cite>A meta-analytic review of experiments examining the
+                    effects of extrinsic rewards on intrinsic motivation</cite>.
+                  <i class="term">Psychol Bull</i>.
+                </li>
+                <li>
+                  Dunn, Dalgleish, Lawrence (2006).
+                  <cite>The somatic marker hypothesis: a critical
+                    evaluation</cite>. <i class="term">Neurosci Biobehav
+                    Rev</i>.
+                </li>
+                <li>Frijda (1986). <cite>The Emotions</cite>.</li>
+                <li>
+                  Garfinkel et al. (2015).
+                  <cite>Knowing your own heart</cite>.
+                  <i class="term">Biol Psychol</i>.
+                </li>
+                <li>Gendlin (1978). <cite>Focusing</cite>.</li>
+                <li>
+                  Grossman, Taylor (2007).
+                  <cite>Toward understanding respiratory sinus
+                    arrhythmia</cite>. <i class="term">Biol Psychol</i>;
+                  Grossman (2023).
+                  <cite>Fundamental challenges and likely refutations of the
+                    five basic premises of the polyvagal theory</cite>.
+                  <i class="term">Biol Psychol</i>.
+                </li>
+                <li>
+                  Hayes et al. (1996). <cite>Experiential avoidance and
+                    behavioral disorders</cite>.
+                  <i class="term">J Consult Clin Psychol</i>; Hayes et al.
+                  (2006). <cite>Acceptance and Commitment Therapy: model,
+                    processes and outcomes</cite>.
+                  <i class="term">Behav Res Ther</i>.
+                </li>
+                <li>
+                  Jahng, Wood, Trull (2008).
+                  <cite>Analysis of affective instability in ecological
+                    momentary assessment</cite>.
+                  <i class="term">Psychol Methods</i>.
+                </li>
+                <li>
+                  Kashdan, Barrett, McKnight (2015).
+                  <cite>Unpacking emotion differentiation</cite>.
+                  <i class="term">Curr Dir Psychol Sci</i>.
+                </li>
+                <li>
+                  Khalsa et al. (2018).
+                  <cite>Interoception and mental health: a roadmap</cite>.
+                  <i class="term">Biol Psychiatry CNNI</i>.
+                </li>
+                <li>
+                  Killingsworth, Gilbert (2010).
+                  <cite>A wandering mind is an unhappy mind</cite>.
+                  <i class="term">Science</i>.
+                </li>
+                <li>
+                  Kinnaird, Stewart, Tsakanikos (2019).
+                  <cite>Investigating alexithymia in autism: a systematic
+                    review and meta-analysis</cite>.
+                  <i class="term">Eur Psychiatry</i>.
+                </li>
+                <li>
+                  Kross, Ayduk (2017). <cite>Self-distancing</cite>.
+                  <i class="term">Adv Exp Soc Psychol</i>.
+                </li>
+                <li>
+                  Kuppens, Allen, Sheeber (2010).
+                  <cite>Emotional inertia and psychological
+                    maladjustment</cite>. <i class="term">Psychol Sci</i>.
+                </li>
+                <li>
+                  Lane, Schwartz (1987).
+                  <cite>Levels of emotional awareness</cite>.
+                  <i class="term">Am J Psychiatry</i>.
+                </li>
+                <li>Levine (2010). <cite>In an Unspoken Voice</cite>.</li>
+                <li>
+                  Lieberman et al. (2007).
+                  <cite>Putting feelings into words</cite>.
+                  <i class="term">Psychol Sci</i>; Torre, Lieberman (2018).
+                  <i class="term">Emotion Review</i>.
+                </li>
+                <li>
+                  Mehling et al. (2018). <cite>MAIA-2</cite>.
+                  <i class="term">PLoS ONE</i>.
+                </li>
+                <li>
+                  Nolen-Hoeksema, Wisco, Lyubomirsky (2008).
+                  <cite>Rethinking rumination</cite>.
+                  <i class="term">Perspect Psychol Sci</i>.
+                </li>
+                <li>
+                  Nummenmaa et al. (2014).
+                  <cite>Bodily maps of emotions</cite>.
+                  <i class="term">PNAS</i>.
+                </li>
+                <li>
+                  Ogden, Minton, Pain (2006). <cite>Trauma and the Body</cite>.
+                </li>
+                <li>
+                  Price, Hooven (2018).
+                  <cite>Interoceptive awareness skills for emotion regulation
+                    (MABT)</cite>. <i class="term">Front Psychol</i>.
+                </li>
+                <li>
+                  Robinson, Clore (2002).
+                  <cite>Belief and feeling: evidence for an accessibility model
+                    of emotional self-report</cite>.
+                  <i class="term">Psychol Bull</i>.
+                </li>
+                <li>
+                  Russell (1980). <cite>A circumplex model of affect</cite>.
+                  <i class="term">J Pers Soc Psychol</i>; Russell, Barrett
+                  (1999). <i class="term">J Pers Soc Psychol</i>.
+                </li>
+                <li>
+                  Shiffman, Stone, Hufford (2008).
+                  <cite>Ecological Momentary Assessment</cite>.
+                  <i class="term">Annu Rev Clin Psychol</i>.
+                </li>
+                <li>
+                  Sifneos (1973).
+                  <cite>The prevalence of “alexithymic” characteristics in
+                    psychosomatic patients</cite>.
+                  <i class="term">Psychother Psychosom</i>.
+                </li>
+                <li>
+                  Tugade, Fredrickson, Barrett (2004).
+                  <cite>Psychological resilience and positive emotional
+                    granularity</cite>. <i class="term">J Pers</i>.
+                </li>
+                <li>
+                  Watkins (2008).
+                  <cite>Constructive and unconstructive repetitive
+                    thought</cite>. <i class="term">Psychol Bull</i>.
+                </li>
+                <li>
+                  Young, Klosko, Weishaar (2003). <cite>Schema Therapy</cite>.
+                </li>
+              </ol>
+              <p class="foot">
+                Emo — дневник самонаблюдения, а не медицинское изделие. Эта
+                страница — часть его исходного кода (AGPL):
+                <a class="project" href="https://github.com/podgorniy/emo">github.com/podgorniy/emo</a>
+              </p>
+              <a class="back" href="#ru-toc">К содержанию ↑</a>
+            </section>
+          </div>
+        </div>
+      </article>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Emo — passphrase</title>
+    <script src="./support.js"></script>
+  </head>
+  <body>
+    <x-dc>
+      <helmet>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600&amp;display=swap"
+          rel="stylesheet">
+        <style>
+        body {
+          margin: 0;
+        }
+        </style>
+      </helmet>
+      <div
+        style="width: 390px; height: 844px; box-sizing: border-box; background: #E4EDF1; color: #1E2A26; font-family: 'Onest', 'Segoe UI', system-ui, sans-serif; padding: 72px 24px 32px; display: flex; flex-direction: column; gap: 28px">
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <span style="font-size: 14px; color: #4E5853">Step 1 of 3</span>
+          <h1
+            style="margin: 0; font-size: 28px; font-weight: 500; letter-spacing: -0.01em">Passphrase</h1>
+          <p
+            style="margin: 0; font-size: 16px; line-height: 1.45; color: #36413C">It encrypts your entries on this device. The server never knows it and cannot reset it.</p>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 16px">
+          <div style="display: flex; flex-direction: column; gap: 8px">
+            <label for="pp-1"
+              style="font-size: 14px; color: #36413C">Passphrase, 8 characters or more</label>
+            <input id="pp-1" type="password" value="quiet river at dawn"
+              autocomplete="new-password" aria-describedby="pp-str"
+              style="height: 56px; box-sizing: border-box; padding: 0 16px; border-radius: 14px; border: 2px solid #4F46E5; background: #F7FAFB; font: inherit; font-size: 18px; color: #1E2A26">
+            <div id="pp-str"
+              style="display: flex; align-items: center; gap: 10px">
+              <div aria-hidden="true"
+                style="flex: 1; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px">
+                <span
+                  style="height: 4px; border-radius: 2px; background: #4F46E5"></span>
+                <span
+                  style="height: 4px; border-radius: 2px; background: #4F46E5"></span>
+                <span
+                  style="height: 4px; border-radius: 2px; background: #4F46E5"></span>
+                <span
+                  style="height: 4px; border-radius: 2px; background: #BCC5C0"></span>
+              </div>
+              <span style="font-size: 14px; color: #36413C">strong</span>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 8px">
+            <label for="pp-2"
+              style="font-size: 14px; color: #36413C">Repeat</label>
+            <input id="pp-2" type="password" value="quiet river at dawn"
+              autocomplete="new-password"
+              style="height: 56px; box-sizing: border-box; padding: 0 16px; border-radius: 14px; border: 1.5px solid #B3BDB7; background: #F7FAFB; font: inherit; font-size: 18px; color: #1E2A26">
+          </div>
+        </div>
+        <div
+          style="padding: 14px 16px; border-radius: 14px; background: #E0E7FF; color: #312E81; font-size: 15px; line-height: 1.45">Without the passphrase and the recovery key, your data cannot be recovered.</div>
+        <button
+          style="margin-top: auto; height: 56px; border-radius: 16px; border: none; background: #1E2A26; color: #FFFFFF; font: inherit; font-size: 17px; font-weight: 500; cursor: pointer">Next</button>
+      </div>
+    </x-dc>
+    <script type="text/x-dc" data-dc-script
+      data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+  </body>
+</html>

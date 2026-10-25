@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Emo — settings</title>
+    <script src="./support.js"></script>
+  </head>
+  <body>
+    <x-dc>
+      <helmet>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600&amp;family=Hanken+Grotesk:wght@400;500;700&amp;family=Plus+Jakarta+Sans:wght@500;700;800&amp;family=Newsreader:ital,wght@0,400;0,500;1,400;1,500&amp;family=Sora:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=Manrope:wght@500;700;800&amp;family=Literata:ital,wght@0,400;0,500;1,400;1,500&amp;family=Golos+Text:wght@400;500;600&amp;family=Unbounded:wght@500;600&amp;family=Rubik:wght@400;500;600&amp;display=swap"
+          rel="stylesheet">
+        <style>
+        body {
+          margin: 0;
+        }
+        </style>
+      </helmet>
+      <div style="{{rootSt}}">
+        <header style="display: flex; flex-direction: column; gap: 4px">
+          <h1
+            style="margin: 0; font-size: 26px; font-weight: 500; letter-spacing: -0.01em">Settings</h1>
+          <p
+            style="margin: 0; font-size: 14px; color: #4E5853">Swipe right or press ← to go back</p>
+        </header>
+
+        <section aria-labelledby="st-lang"
+          style="display: flex; flex-direction: column; gap: 10px">
+          <h2 id="st-lang"
+            style="margin: 0; font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #4E5853">Language</h2>
+          <div role="radiogroup" aria-labelledby="st-lang"
+            style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; padding: 4px; border-radius: 14px; background: #D3E0E6">
+            <sc-for list="{{langs}}" as="l" hint-placeholder-count="3">
+              <button role="radio" aria-checked="{{l.on}}" onClick="{{l.pick}}"
+                style="{{l.st}}">{{ l.label }}</button>
+            </sc-for>
+          </div>
+        </section>
+
+        <section aria-labelledby="st-app"
+          style="display: flex; flex-direction: column; gap: 14px">
+          <div
+            style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px">
+            <h2 id="st-app"
+              style="margin: 0; font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #4E5853">Appearance</h2>
+            <span
+              style="font-size: 14px; color: #36413C">{{ currentName }}</span>
+          </div>
+
+          <div
+            style="display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 14px 12px; border-radius: 16px; background: #F7FAFB">
+            <div role="tablist" aria-label="Preview step"
+              style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; padding: 4px; border-radius: 12px; background: #D3E0E6; width: 100%; box-sizing: border-box">
+              <sc-for list="{{pSteps}}" as="ps" hint-placeholder-count="4">
+                <button role="tab" aria-selected="{{ps.on}}"
+                  onClick="{{ps.pick}}"
+                  style="{{ps.st}}">{{ ps.label }}</button>
+              </sc-for>
+            </div>
+            <div aria-label="Preview of the selected theme"
+              style="width: 195px; height: 422px; border-radius: 18px; overflow: hidden; box-shadow: 0 0 0 1px rgba(0,0,0,.08), 0 14px 28px -18px rgba(0,0,0,.45)">
+              <div
+                style="width: 390px; height: 844px; transform: scale(.5); transform-origin: 0 0">
+                <dc-import name="Screen" theme="{{previewTheme}}"
+                  step="{{pStep}}" uid="{{previewUid}}"
+                  hint-size="390px,844px"></dc-import>
+              </div>
+            </div>
+          </div>
+
+          <div role="radiogroup" aria-label="Theme"
+            style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+            <sc-for list="{{themes}}" as="th" hint-placeholder-count="10">
+              <button role="radio" aria-checked="{{th.on}}"
+                onClick="{{th.pick}}" style="{{th.cardSt}}">
+                <span aria-hidden="true" style="{{th.mockSt}}">
+                  <span style="{{th.barSt}}"></span>
+                  <span
+                    style="display: flex; gap: 4px"><span style="{{ th.chipOnSt }}"></span><span style="{{ th.chipSt }}"></span></span>
+                  <span style="{{th.btnSt}}"></span>
+                  <sc-if value="{{th.on}}"
+                    hint-placeholder-val="{{ false }}"><span style="{{ th.checkSt }}"><svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M3 7.5l2.5 2.5L11 4.5" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></sc-if>
+                </span>
+                <span
+                  style="display: flex; flex-direction: column; gap: 1px; padding: 8px 10px 10px; text-align: left">
+                  <span
+                    style="font-size: 15px; font-weight: 600; color: #1E2A26">{{ th.name }}</span>
+                  <span
+                    style="font-size: 12px; line-height: 1.3; color: #4E5853">{{ th.desc }}</span>
+                </span>
+              </button>
+            </sc-for>
+          </div>
+
+          <sc-if value="{{tintable}}" hint-placeholder-val="{{ true }}">
+            <div
+              style="display: flex; flex-direction: column; gap: 10px; padding: 14px; border-radius: 16px; background: #F7FAFB">
+              <h3 id="st-base"
+                style="margin: 0; font-size: 16px; font-weight: 500">Base colour</h3>
+              <div role="radiogroup" aria-labelledby="st-base"
+                style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center">
+                <sc-for list="{{seeds}}" as="sd" hint-placeholder-count="9">
+                  <button role="radio" aria-checked="{{sd.on}}"
+                    aria-label="{{sd.name}}" title="{{sd.name}}"
+                    onClick="{{sd.pick}}"
+                    style="{{sd.st}}"><sc-if value="{{ sd.isOriginal }}" hint-placeholder-val="{{ false }}"><span style="font-size: 10px; font-weight: 600; color: #1E2A26; background: rgba(255,255,255,.85); border-radius: 6px; padding: 1px 4px">orig</span></sc-if></button>
+                </sc-for>
+                <label
+                  style="display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 12px 0 4px; border-radius: 999px; border: 1.5px dashed #B3BDB7; cursor: pointer; font-size: 14px">
+<input type="color" value="{{ seedValue }}" onChange="{{ setSeed }}" aria-label="Custom base colour" style="width: 34px; height: 34px; padding: 0; border: none; background: none; cursor: pointer">Custom</label>
+              </div>
+
+              <div
+                style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 6px; padding-top: 12px; border-top: 1px solid #E3E9EB">
+                <span id="st-grad"
+                  style="font-size: 16px; font-weight: 500">Gradient background</span>
+                <button role="switch" aria-checked="{{grad}}"
+                  aria-labelledby="st-grad" onClick="{{toggleGrad}}"
+                  style="{{gradSwitchSt}}"><span style="width: 26px; height: 26px; border-radius: 50%; background: #FFFFFF; box-shadow: 0 1px 3px rgba(0,0,0,.25)"></span></button>
+              </div>
+              <sc-if value="{{grad}}" hint-placeholder-val="{{ false }}">
+                <p id="st-seed2"
+                  style="margin: 0; font-size: 13px; color: #4E5853">Second colour — the background fades into it</p>
+                <div role="radiogroup" aria-labelledby="st-seed2"
+                  style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center">
+                  <sc-for list="{{seeds2}}" as="sd" hint-placeholder-count="8">
+                    <button role="radio" aria-checked="{{sd.on}}"
+                      aria-label="{{sd.name}}" title="{{sd.name}}"
+                      onClick="{{sd.pick}}" style="{{sd.st}}"></button>
+                  </sc-for>
+                  <label
+                    style="display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 12px 0 4px; border-radius: 999px; border: 1.5px dashed #B3BDB7; cursor: pointer; font-size: 14px">
+<input type="color" value="{{ seed2Value }}" onChange="{{ setSeed2 }}" aria-label="Custom second colour" style="width: 34px; height: 34px; padding: 0; border: none; background: none; cursor: pointer">Custom</label>
+                </div>
+                <div aria-hidden="true" style="{{gradBarSt}}"></div>
+              </sc-if>
+
+              <p aria-live="polite" style="{{statusSt}}">{{ statusText }}</p>
+            </div>
+          </sc-if>
+          <sc-if value="{{fixedPalette}}" hint-placeholder-val="{{ false }}">
+            <p
+              style="margin: 0; font-size: 13px; color: #4E5853; padding: 0 4px">{{ currentName }} keeps a fixed palette — base colour and gradient are not available for it.</p>
+          </sc-if>
+        </section>
+
+        <section aria-labelledby="st-rem"
+          style="display: flex; flex-direction: column; gap: 10px">
+          <h2 id="st-rem"
+            style="margin: 0; font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #4E5853">Reminders</h2>
+          <div
+            style="background: #F7FAFB; border-radius: 16px; display: flex; flex-direction: column">
+            <div
+              style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; border-bottom: 1px solid #E3E9EB">
+              <span style="font-size: 16px">Awake window</span>
+              <div style="display: flex; align-items: center; gap: 6px">
+                <label for="st-ws"
+                  style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Window start</label>
+                <input id="st-ws" type="time" value="09:00"
+                  style="min-height: 44px; padding: 0 8px; border: 1.5px solid #B3BDB7; border-radius: 10px; background: #FFFFFF; font: inherit; font-size: 15px; color: #1E2A26">
+                <span aria-hidden="true" style="color: #4E5853">–</span>
+                <label for="st-we"
+                  style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Window end</label>
+                <input id="st-we" type="time" value="22:00"
+                  style="min-height: 44px; padding: 0 8px; border: 1.5px solid #B3BDB7; border-radius: 10px; background: #FFFFFF; font: inherit; font-size: 15px; color: #1E2A26">
+              </div>
+            </div>
+            <div
+              style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; border-bottom: 1px solid #E3E9EB">
+              <span id="st-per" style="font-size: 16px">Per day</span>
+              <div role="group" aria-labelledby="st-per"
+                style="display: flex; align-items: center; gap: 4px">
+                <button onClick="{{dec}}" aria-label="Fewer"
+                  disabled="{{decOff}}"
+                  style="width: 44px; height: 44px; border-radius: 12px; border: 1.5px solid #B3BDB7; background: #FFFFFF; font: inherit; font-size: 20px; cursor: pointer; color: #1E2A26">−</button>
+                <output aria-live="polite"
+                  style="min-width: 32px; text-align: center; font-size: 17px; font-weight: 500">{{ perDay }}</output>
+                <button onClick="{{inc}}" aria-label="More"
+                  disabled="{{incOff}}"
+                  style="width: 44px; height: 44px; border-radius: 12px; border: 1.5px solid #B3BDB7; background: #FFFFFF; font: inherit; font-size: 20px; cursor: pointer; color: #1E2A26">+</button>
+              </div>
+            </div>
+            <div
+              style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px">
+              <span id="st-push"
+                style="font-size: 16px">Notifications on this device</span>
+              <button role="switch" aria-checked="{{pushOn}}"
+                aria-labelledby="st-push" onClick="{{togglePush}}"
+                style="{{pushSwitchSt}}"><span style="width: 26px; height: 26px; border-radius: 50%; background: #FFFFFF; box-shadow: 0 1px 3px rgba(0,0,0,.25)"></span></button>
+            </div>
+          </div>
+          <p
+            style="margin: 0; font-size: 13px; line-height: 1.4; color: #4E5853">At least 2 hours apart. Times are picked at random.</p>
+        </section>
+
+        <section aria-labelledby="st-inv"
+          style="display: flex; flex-direction: column; gap: 10px">
+          <div
+            style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px">
+            <h2 id="st-inv"
+              style="margin: 0; font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #4E5853">Invites</h2>
+            <span
+              style="font-size: 14px; color: #36413C">Joined: {{ joined }}</span>
+          </div>
+          <div
+            style="background: #F7FAFB; border-radius: 16px; display: flex; flex-direction: column">
+            <sc-for list="{{invites}}" as="iv" hint-placeholder-count="3">
+              <div
+                style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 12px 10px 16px; border-bottom: 1px solid #E3E9EB">
+                <div
+                  style="display: flex; flex-direction: column; gap: 2px; min-width: 0">
+                  <span
+                    style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 15px; letter-spacing: .04em">{{ iv.code }}</span>
+                  <span
+                    style="font-size: 13px; color: #4E5853">{{ iv.status }}</span>
+                </div>
+                <sc-if value="{{iv.open}}" hint-placeholder-val="{{ true }}">
+                  <button onClick="{{iv.share}}"
+                    style="min-height: 44px; padding: 0 14px; border-radius: 12px; border: 1.5px solid #B3BDB7; background: #FFFFFF; font: inherit; font-size: 15px; cursor: pointer; color: #1E2A26">{{ iv.shareLabel }}</button>
+                </sc-if>
+              </div>
+            </sc-for>
+            <button onClick="{{createInvite}}"
+              style="min-height: 52px; border: none; background: none; font: inherit; font-size: 16px; font-weight: 500; color: #4338CA; cursor: pointer; text-align: left; padding: 0 16px">+ Create code</button>
+          </div>
+          <p
+            style="margin: 0; font-size: 13px; line-height: 1.4; color: #4E5853">One code, one person. Valid for 30 days.</p>
+        </section>
+
+        <section aria-labelledby="st-dev"
+          style="display: flex; flex-direction: column; gap: 10px">
+          <h2 id="st-dev"
+            style="margin: 0; font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #4E5853">Devices</h2>
+          <div
+            style="background: #F7FAFB; border-radius: 16px; display: flex; flex-direction: column">
+            <div
+              style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; border-bottom: 1px solid #E3E9EB">
+              <div
+                style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 16px">iPhone · Safari</span><span style="font-size: 13px; color: #4E5853">this device</span></div>
+            </div>
+            <div
+              style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 12px 10px 16px">
+              <div
+                style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 16px">Mac · Firefox</span><span style="font-size: 13px; color: #4E5853">2 h ago</span></div>
+              <button
+                style="min-height: 44px; padding: 0 14px; border-radius: 12px; border: 1.5px solid #B3BDB7; background: #FFFFFF; font: inherit; font-size: 15px; cursor: pointer; color: #1E2A26">Revoke</button>
+            </div>
+          </div>
+        </section>
+
+        <section aria-labelledby="st-data"
+          style="display: flex; flex-direction: column; gap: 10px">
+          <h2 id="st-data"
+            style="margin: 0; font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #4E5853">Data and keys</h2>
+          <div
+            style="background: #F7FAFB; border-radius: 16px; display: flex; flex-direction: column">
+            <button
+              style="min-height: 52px; border: none; border-bottom: 1px solid #E3E9EB; background: none; font: inherit; font-size: 16px; text-align: left; padding: 0 16px; cursor: pointer; color: #1E2A26">Export: JSONL, CSV, encrypted copy</button>
+            <button
+              style="min-height: 52px; border: none; border-bottom: 1px solid #E3E9EB; background: none; font: inherit; font-size: 16px; text-align: left; padding: 0 16px; cursor: pointer; color: #1E2A26">Change passphrase</button>
+            <button
+              style="min-height: 52px; border: none; border-bottom: 1px solid #E3E9EB; background: none; font: inherit; font-size: 16px; text-align: left; padding: 0 16px; cursor: pointer; color: #1E2A26">New recovery key</button>
+            <button
+              style="min-height: 52px; border: none; background: none; font: inherit; font-size: 16px; text-align: left; padding: 0 16px; cursor: pointer; color: #1E2A26">Lock on this device</button>
+          </div>
+          <button
+            style="min-height: 52px; border: none; background: none; font: inherit; font-size: 16px; text-align: left; padding: 0 16px; cursor: pointer; color: #312E81; text-decoration: underline; text-underline-offset: 3px">Delete account</button>
+        </section>
+      </div>
+    </x-dc>
+    <script type="text/x-dc" data-dc-script
+      data-props='{"embedded":{"editor":null},"theme":{"editor":"enum","options":["calm","mono","lavender","paper","night","ink","seaglass","archive","dusk","sand"],"default":"calm"},"seed":{"editor":"text","default":""},"gradient":{"editor":"boolean","default":false},"seed2":{"editor":"text","default":""},"$preview":{"width":390,"height":2900}}'>
+const TINT = (() => {
+  const hx = (h) => { const n = parseInt(h.slice(1), 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; };
+  const toHsl = (h) => { const [r, g, b] = hx(h).map((x) => x / 255); const mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (mx + mn) / 2; if (mx === mn) return [0, 0, l * 100];
+    const d = mx - mn; const s = l > 0.5 ? d / (2 - mx - mn) : d / (mx + mn); const H = (mx === r ? (g - b) / d + (g < b ? 6 : 0) : mx === g ? (b - r) / d + 2 : (r - g) / d + 4) * 60; return [H, s * 100, l * 100]; };
+  const hsl = (h, s, l) => { h = ((h % 360) + 360) % 360; s = Math.max(0, Math.min(100, s)) / 100; l = Math.max(0, Math.min(100, l)) / 100; const k = (n) => (n + h / 30) % 12; const a = s * Math.min(l, 1 - l);
+    const f = (n) => Math.round(255 * (l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1))))); return '#' + [f(0), f(8), f(4)].map((x) => x.toString(16).padStart(2, '0')).join('').toUpperCase(); };
+  const lum = (h) => { const a = hx(h).map((x) => { x /= 255; return x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4); }); return 0.2126 * a[0] + 0.7152 * a[1] + 0.0722 * a[2]; };
+  const cr = (a, b) => { const l1 = lum(a), l2 = lum(b); return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05); };
+  const fit = (h, s, l, against, dir) => { let x = hsl(h, s, l), i = 0; while (cr(x, against) < 4.6 && i < 80) { l += dir; x = hsl(h, s, l); i++; } return x; };
+  const warm = (h) => { const [H, S] = toHsl(h); return (H < 55 || H > 340) && S > 35; };
+  const light = (seed, p) => {
+    const [H, S0] = toHsl(seed); const S = Math.max(25, Math.min(75, S0)); const gs = (p && p.gs) || 0.5;
+    const ground = hsl(H, S * gs, 92), surface = hsl(H, S * gs * 1.1, 98), ink = hsl(H, S * 0.6, 13);
+    const accent = fit(H, S, 42, '#FFFFFF', -1);
+    return { ground: ground, surface: surface, ink: ink, muted: fit(H, S * 0.28, 36, ground, -1), line: hsl(H, S * 0.4, 77), track: hsl(H, S * 0.45, 85),
+      accent: accent, choice: p && p.choice === 'accent' ? accent : ink, onChoice: '#FFFFFF', figure: surface, figureLine: hsl(H, S * 0.25, 57),
+      figureSel: accent, bloom: hsl(H + 12, S, 42), primary: p && p.primary === 'accent' ? accent : ink, onPrimary: '#FFFFFF' };
+  };
+  const dark = (seed) => {
+    const [H, S0] = toHsl(seed); const S = Math.max(25, Math.min(80, S0));
+    const ground = hsl(H, S * 0.45, 9), accent = fit(H, S, 66, hsl(H, S * 0.4, 14), 1);
+    return { ground: ground, surface: hsl(H, S * 0.4, 14), ink: hsl(H, S * 0.25, 94), muted: hsl(H, S * 0.15, 68), line: hsl(H, S * 0.3, 25), track: hsl(H, S * 0.3, 19),
+      accent: accent, choice: accent, onChoice: hsl(H, S * 0.5, 9), figure: hsl(H, S * 0.35, 12), figureLine: hsl(H, S * 0.25, 30), figureSel: accent, bloom: accent,
+      primary: hsl(H, S * 0.25, 94), onPrimary: ground };
+  };
+  const apply = (preset, seed, grad, seed2) => {
+    const t = JSON.parse(JSON.stringify(preset));
+    if (preset.tint && seed) t.c = preset.tint === 'dark' ? dark(seed) : light(seed, preset.tp);
+    if (preset.tint && grad && seed2) t.c.ground2 = preset.tint === 'dark' ? dark(seed2).track : light(seed2, preset.tp).ground;
+    t.seed = seed || null; t.grad = !!(preset.tint && grad); t.seed2 = grad ? seed2 : null;
+    return t;
+  };
+  const checks = (c) => {
+    const grounds = [c.ground].concat(c.ground2 ? [c.ground2] : []);
+    const pairs = [['text', c.ink, c.ground], ['buttons', c.onPrimary, c.primary], ['selected', c.onChoice, c.choice], ['cards', c.ink, c.surface]];
+    grounds.forEach((g, i) => pairs.push(['secondary text' + (i ? ' (gradient)' : ''), c.muted, g]));
+    if (c.ground2) pairs.push(['text (gradient)', c.ink, c.ground2]);
+    const bad = pairs.filter((p) => cr(p[1], p[2]) < 4.5).map((p) => p[0]);
+    return { readable: bad.length === 0, bad: bad, warm: warm(c.figureSel) || warm(c.bloom), dark: lum(c.ground) < 0.2 };
+  };
+  return { light: light, dark: dark, apply: apply, checks: checks, cr: cr };
+})();
+const SEEDS = [['#1F7A73', 'Teal'], ['#2563A8', 'Sky'], ['#4F46E5', 'Indigo'], ['#4E7A3F', 'Sage'], ['#6A4FA8', 'Lilac'], ['#4A5A6E', 'Slate'], ['#A8456A', 'Rose'], ['#B7791F', 'Amber']];
+const PRESETS = [{"id": "calm", "name": "Calm", "schema": 1, "c": {"ground": "#E4EDF1", "surface": "#F7FAFB", "ink": "#1E2A26", "muted": "#4E5853", "line": "#B3BDB7", "track": "#D3E0E6", "accent": "#4F46E5", "choice": "#1E2A26", "onChoice": "#FFFFFF", "figure": "#F7FAFB", "figureLine": "#8E9892", "figureSel": "#4F46E5", "bloom": "#4F46E5", "primary": "#1E2A26", "onPrimary": "#FFFFFF"}, "f": {"ui": "Onest", "display": "Onest", "displayWeight": 500, "mono": "JetBrains Mono", "labels": "normal"}, "r": {"control": 16, "chip": 12}, "shadow": false, "v": {"progress": "segments", "heading": "plain", "stepLabel": false, "tabs": "segmented", "options": "grid", "l2": "chips", "intensity": "slider", "figure": "solid", "figureLabels": false, "confidence": "buttons", "summary": "plain"}, "desc": "Default \u00b7 pale blue, slate, indigo", "tint": "light", "tp": {"gs": 0.45, "choice": "ink", "primary": "ink"}}, {"id": "mono", "name": "Mono", "schema": 1, "c": {"ground": "#F7F7F8", "surface": "#FFFFFF", "ink": "#0B0B0C", "muted": "#5E5E66", "line": "#DCDCE0", "track": "#EBEBEE", "accent": "#0B0B0C", "choice": "#0B0B0C", "onChoice": "#FFFFFF", "figure": "#FFFFFF", "figureLine": "#8A8A92", "figureSel": "#3F3F46", "bloom": "#3F3F46", "primary": "#0B0B0C", "onPrimary": "#FFFFFF"}, "f": {"ui": "Hanken Grotesk", "display": "Hanken Grotesk", "displayWeight": 700, "mono": "JetBrains Mono", "labels": "normal"}, "r": {"control": 12, "chip": 10}, "shadow": false, "v": {"progress": "segments", "heading": "plain", "stepLabel": true, "tabs": "segmented", "options": "grouped", "l2": "chips", "intensity": "slider", "figure": "solid", "figureLabels": false, "confidence": "buttons", "summary": "plain"}, "desc": "Neutral greys \u00b7 grouped choices", "tint": null, "tp": null}, {"id": "lavender", "name": "Lavender", "schema": 1, "c": {"ground": "#F1EFFA", "surface": "#FFFFFF", "ink": "#1F1B3D", "muted": "#5D5978", "line": "#E2DEF3", "track": "#E4E0F5", "accent": "#6C5CE7", "choice": "#6C5CE7", "onChoice": "#FFFFFF", "figure": "#E4E0F7", "figureLine": "#E4E0F7", "figureSel": "#EE9A6E", "bloom": "#EE9A6E", "primary": "#6C5CE7", "onPrimary": "#FFFFFF"}, "f": {"ui": "Plus Jakarta Sans", "display": "Plus Jakarta Sans", "displayWeight": 800, "mono": "JetBrains Mono", "labels": "normal"}, "r": {"control": 28, "chip": 999}, "shadow": true, "v": {"progress": "bar", "heading": "plain", "stepLabel": true, "tabs": "segmented", "options": "chips", "l2": "chips", "intensity": "bloom", "figure": "soft", "figureLabels": false, "confidence": "segmented", "summary": "dot"}, "desc": "Soft pills \u00b7 growing circle", "tint": "light", "tp": {"gs": 0.55, "choice": "accent", "primary": "accent"}}, {"id": "paper", "name": "Paper", "schema": 1, "c": {"ground": "#F1ECE3", "surface": "#F8F5EF", "ink": "#1E2B24", "muted": "#5F625A", "line": "#CFC8BB", "track": "#E3DDD2", "accent": "#2E5E45", "choice": "#2E5E45", "onChoice": "#FFFFFF", "figure": "#FAF7F1", "figureLine": "#1E2B24", "figureSel": "#2E5E45", "bloom": "#8C4A2F", "primary": "#1E2B24", "onPrimary": "#FFFFFF"}, "f": {"ui": "Hanken Grotesk", "display": "Newsreader", "displayWeight": 400, "mono": "JetBrains Mono", "labels": "mono"}, "r": {"control": 2, "chip": 2}, "shadow": false, "v": {"progress": "counter", "heading": "editorial", "stepLabel": false, "tabs": "underline", "options": "list", "l2": "inline", "intensity": "ruler", "figure": "hatch", "figureLabels": true, "confidence": "buttons", "summary": "plain"}, "desc": "Editorial serif \u00b7 ruler", "tint": null, "tp": null}, {"id": "night", "name": "Night", "schema": 1, "c": {"ground": "#0E0F12", "surface": "#1A1B1F", "ink": "#F3EFE7", "muted": "#A29F98", "line": "#2E3036", "track": "#24262B", "accent": "#E8B65A", "choice": "#E8B65A", "onChoice": "#1A1408", "figure": "#16171A", "figureLine": "#3A3C42", "figureSel": "#E8B65A", "bloom": "#E8B65A", "primary": "#F3EFE7", "onPrimary": "#0E0F12"}, "f": {"ui": "Sora", "display": "Sora", "displayWeight": 700, "mono": "JetBrains Mono", "labels": "normal"}, "r": {"control": 28, "chip": 999}, "shadow": false, "v": {"progress": "dots", "heading": "eyebrow", "stepLabel": false, "tabs": "segmented", "options": "chips", "l2": "chips", "intensity": "bloom", "figure": "glow", "figureLabels": false, "confidence": "segmented", "summary": "plain"}, "desc": "Dark \u00b7 warm glow", "tint": "dark", "tp": null}, {"id": "ink", "name": "Ink", "schema": 1, "c": {"ground": "#FFFFFF", "surface": "#FFFFFF", "ink": "#0A0A0A", "muted": "#4A4A4A", "line": "#0A0A0A", "track": "#E6E6E6", "accent": "#1F3BFF", "choice": "#0A0A0A", "onChoice": "#FFFFFF", "figure": "#FFFFFF", "figureLine": "#0A0A0A", "figureSel": "#1F3BFF", "bloom": "#1F3BFF", "primary": "#0A0A0A", "onPrimary": "#FFFFFF"}, "f": {"ui": "IBM Plex Sans", "display": "IBM Plex Sans", "displayWeight": 600, "mono": "JetBrains Mono", "labels": "mono"}, "r": {"control": 0, "chip": 2}, "shadow": false, "v": {"progress": "counter", "heading": "plain", "stepLabel": false, "tabs": "underline", "options": "list", "l2": "chips", "intensity": "ruler", "figure": "solid", "figureLabels": true, "confidence": "buttons", "summary": "plain"}, "desc": "Stark black and white", "tint": null, "tp": null}, {"id": "seaglass", "name": "Sea glass", "schema": 1, "c": {"ground": "#E3F1EE", "surface": "#F7FCFB", "ink": "#12312E", "muted": "#3F5E5A", "line": "#B5D3CE", "track": "#CFE6E2", "accent": "#1F7A73", "choice": "#1F7A73", "onChoice": "#FFFFFF", "figure": "#F7FCFB", "figureLine": "#7FA9A3", "figureSel": "#1F7A73", "bloom": "#2B8C99", "primary": "#12312E", "onPrimary": "#FFFFFF"}, "f": {"ui": "Manrope", "display": "Manrope", "displayWeight": 800, "mono": "JetBrains Mono", "labels": "normal"}, "r": {"control": 20, "chip": 999}, "shadow": true, "v": {"progress": "bar", "heading": "eyebrow", "stepLabel": false, "tabs": "segmented", "options": "chips", "l2": "chips", "intensity": "bloom", "figure": "soft", "figureLabels": false, "confidence": "segmented", "summary": "dot"}, "desc": "Mint and teal \u00b7 rounded", "tint": "light", "tp": {"gs": 0.5, "choice": "accent", "primary": "ink"}}, {"id": "archive", "name": "Archive", "schema": 1, "c": {"ground": "#E9ECF2", "surface": "#F5F7FA", "ink": "#1D2433", "muted": "#4F5668", "line": "#C3C9D6", "track": "#D8DEE8", "accent": "#3B4F8F", "choice": "#1D2433", "onChoice": "#FFFFFF", "figure": "#F5F7FA", "figureLine": "#1D2433", "figureSel": "#3B4F8F", "bloom": "#3B4F8F", "primary": "#1D2433", "onPrimary": "#FFFFFF"}, "f": {"ui": "Golos Text", "display": "Literata", "displayWeight": 500, "mono": "JetBrains Mono", "labels": "mono"}, "r": {"control": 6, "chip": 2}, "shadow": false, "v": {"progress": "segments", "heading": "editorial", "stepLabel": false, "tabs": "underline", "options": "grouped", "l2": "inline", "intensity": "slider", "figure": "hatch", "figureLabels": false, "confidence": "buttons", "summary": "plain"}, "desc": "Serif \u00b7 dusty blue", "tint": "light", "tp": {"gs": 0.4, "choice": "ink", "primary": "ink"}}, {"id": "dusk", "name": "Dusk", "schema": 1, "c": {"ground": "#14172B", "surface": "#1E2238", "ink": "#ECEEF8", "muted": "#A3A8C3", "line": "#31365A", "track": "#282C48", "accent": "#8EA2FF", "choice": "#8EA2FF", "onChoice": "#10132A", "figure": "#1A1E33", "figureLine": "#3A4066", "figureSel": "#8EA2FF", "bloom": "#8EA2FF", "primary": "#ECEEF8", "onPrimary": "#14172B"}, "f": {"ui": "Onest", "display": "Unbounded", "displayWeight": 500, "mono": "JetBrains Mono", "labels": "normal"}, "r": {"control": 18, "chip": 10}, "shadow": false, "v": {"progress": "dots", "heading": "eyebrow", "stepLabel": false, "tabs": "segmented", "options": "grid", "l2": "chips", "intensity": "bloom", "figure": "glow", "figureLabels": false, "confidence": "segmented", "summary": "plain"}, "desc": "Dark and cool \u00b7 glow", "tint": "dark", "tp": null}, {"id": "sand", "name": "Sand", "schema": 1, "c": {"ground": "#EFEAE0", "surface": "#F8F5EE", "ink": "#2B2A24", "muted": "#5E5B50", "line": "#D2CBBD", "track": "#E2DCCF", "accent": "#5F6E2E", "choice": "#2B2A24", "onChoice": "#FFFFFF", "figure": "#F8F5EE", "figureLine": "#8C8574", "figureSel": "#6B7A3A", "bloom": "#5F6E2E", "primary": "#2B2A24", "onPrimary": "#FFFFFF"}, "f": {"ui": "Rubik", "display": "Rubik", "displayWeight": 600, "mono": "JetBrains Mono", "labels": "normal"}, "r": {"control": 14, "chip": 999}, "shadow": false, "v": {"progress": "segments", "heading": "plain", "stepLabel": true, "tabs": "segmented", "options": "grid", "l2": "chips", "intensity": "ruler", "figure": "soft", "figureLabels": false, "confidence": "segmented", "summary": "dot"}, "desc": "Muted sand \u00b7 olive", "tint": "light", "tp": {"gs": 0.3, "choice": "ink", "primary": "ink"}}];
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    const hexOk = (x) => /^#[0-9a-fA-F]{6}$/.test(x || '');
+    this.state = {
+      lang: 'en', perDay: 3, push: true, copied: null,
+      themeId: props.theme || 'calm', seed: hexOk(props.seed) ? props.seed.toUpperCase() : null,
+      grad: !!props.gradient, seed2: hexOk(props.seed2) ? props.seed2.toUpperCase() : '#2563A8', pStep: 'body',
+      invites: [
+        { code: 'K7QM-3XPA-9TNE', joined: 'joined Oct 3' },
+        { code: 'H2WD-8RFY-4CBV', joined: 'joined Sep 28' },
+        { code: 'P9ZK-6MJN-2QXS', joined: null }
+      ]
+    };
+  }
+  renderVals() {
+    const s = this.state, me = this;
+    const A = '0123456789ABCDEFGHJKMNPQRSTVWXYZ';
+    const gen = () => { let c = ''; for (let i = 0; i < 12; i++) { c += A[Math.floor(Math.random() * 32)]; if (i === 3 || i === 7) c += '-'; } return c; };
+    const sw = (on, bg) => 'min-height: 44px; border: none; border-radius: 10px; font: inherit; font-size: 15px; cursor: pointer; color: #1E2A26; background: ' + (on ? '#FFFFFF' : 'transparent') + '; box-shadow: ' + (on ? '0 1px 3px rgba(0,0,0,.12)' : 'none') + '; font-weight: ' + (on ? 600 : 400);
+    const switchSt = (on) => 'flex: none; width: 52px; height: 32px; border-radius: 16px; border: none; padding: 3px; cursor: pointer; display: flex; transition: background .2s; background: ' + (on ? '#4F46E5' : '#A3ADA6') + '; justify-content: ' + (on ? 'flex-end' : 'flex-start');
+    const base = PRESETS.find((p) => p.id === s.themeId) || PRESETS[0];
+    const tintable = !!base.tint;
+    const cur = TINT.apply(base, tintable ? s.seed : null, s.grad, s.seed2);
+    const k = TINT.checks(cur.c);
+    const bgOf = (c) => c.ground2 ? 'linear-gradient(165deg, ' + c.ground + ', ' + c.ground2 + ')' : c.ground;
+    const chipR = (t) => Math.min(t.r.chip, 8);
+    const themes = PRESETS.map((p) => {
+      const on = p.id === s.themeId; const t = on ? cur : p; const c = t.c;
+      return { name: p.name, desc: p.desc, on: on,
+        pick: () => me.setState({ themeId: p.id, seed: null, grad: false }),
+        cardSt: 'display: flex; flex-direction: column; padding: 0; overflow: hidden; cursor: pointer; text-align: left; font: inherit; border-radius: 16px; background: #F7FAFB; border: ' + (on ? '2px solid #1E2A26' : '1.5px solid #D3E0E6') + '; box-shadow: ' + (on ? '0 6px 16px -10px rgba(30,42,38,.5)' : 'none'),
+        mockSt: 'position: relative; height: 76px; display: flex; flex-direction: column; justify-content: center; gap: 8px; padding: 0 12px; background: ' + bgOf(c),
+        barSt: 'width: 62%; height: 7px; border-radius: 4px; background: ' + c.ink,
+        chipOnSt: 'width: 30px; height: 14px; border-radius: ' + chipR(t) + 'px; background: ' + c.choice,
+        chipSt: 'width: 24px; height: 14px; border-radius: ' + chipR(t) + 'px; background: ' + c.surface + '; box-shadow: inset 0 0 0 1px ' + c.line,
+        btnSt: 'width: 100%; height: 12px; border-radius: ' + Math.min(t.r.control, 6) + 'px; background: ' + c.primary,
+        checkSt: 'position: absolute; top: 8px; right: 8px; width: 22px; height: 22px; border-radius: 50%; background: #1E2A26; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 2px #FFFFFF' };
+    });
+    const swatch = (hex, on, ring) => 'width: 44px; height: 44px; border-radius: 50%; cursor: pointer; padding: 0; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle, ' + hex + ' 0 46%, ' + ring + ' 48% 100%); border: 1.5px solid ' + (on ? '#FFFFFF' : '#B3BDB7') + '; box-shadow: ' + (on ? '0 0 0 2.5px #4F46E5' : 'none') + '; margin: 2px';
+    const ringOf = (hex) => (base.tint === 'dark' ? TINT.dark(hex) : TINT.light(hex, base.tp)).ground;
+    const seeds = [{ name: 'Original colours', isOriginal: true, on: !s.seed, st: swatch(base.c.accent, !s.seed, base.c.ground), pick: () => me.setState({ seed: null }) }]
+      .concat(SEEDS.map((sd) => ({ name: sd[1], isOriginal: false, on: s.seed === sd[0], st: tintable ? swatch(sd[0], s.seed === sd[0], ringOf(sd[0])) : '', pick: () => me.setState({ seed: sd[0] }) })));
+    const seeds2 = SEEDS.map((sd) => ({ name: sd[1], on: s.seed2 === sd[0], st: tintable ? swatch(sd[0], s.seed2 === sd[0], ringOf(sd[0])) : '', pick: () => me.setState({ seed2: sd[0] }) }));
+    const parts = [];
+    parts.push(k.readable ? 'Readable' : 'Low contrast: ' + k.bad.join(', ') + ' — pick another colour');
+    parts.push(k.warm ? 'warm highlight (may nudge answers toward “activated”)' : 'neutral highlight');
+    if (k.dark) parts.push('dark');
+    const STEPS = [['body', 'Body'], ['quality', 'Choices'], ['intensity', 'Strength'], ['word', 'Word']];
+    return {
+      rootSt: 'width: 390px; box-sizing: border-box; background: #E4EDF1; color: #1E2A26; font-family: \'Onest\', \'Segoe UI\', system-ui, sans-serif; padding: 28px 20px 96px; display: flex; flex-direction: column; gap: 28px; ' + (this.props.embedded ? 'height: 844px; overflow-y: auto' : 'min-height: 844px'),
+      langs: [['en', 'English'], ['uk', 'Українська'], ['ru', 'Русский']].map((l) => ({ label: l[1], on: s.lang === l[0], st: sw(s.lang === l[0]), pick: () => me.setState({ lang: l[0] }) })),
+      currentName: base.name + (s.seed && tintable ? ' · ' + ((SEEDS.find((x) => x[0] === s.seed) || [0, 'custom'])[1]) : '') + (cur.grad ? ' · gradient' : ''),
+      pSteps: STEPS.map((x) => ({ label: x[1], on: s.pStep === x[0], st: sw(s.pStep === x[0]).replace('font-size: 15px', 'font-size: 13px'), pick: () => me.setState({ pStep: x[0] }) })),
+      pStep: s.pStep, previewTheme: cur, previewUid: 'set' + s.themeId,
+      themes: themes, tintable: tintable, fixedPalette: !tintable,
+      seeds: seeds, seeds2: seeds2, seedValue: (s.seed || base.c.accent).toLowerCase(), seed2Value: (s.seed2 || '#2563A8').toLowerCase(),
+      setSeed: (e) => me.setState({ seed: e.target.value.toUpperCase() }), setSeed2: (e) => me.setState({ seed2: e.target.value.toUpperCase() }),
+      grad: s.grad, toggleGrad: () => me.setState({ grad: !s.grad }), gradSwitchSt: switchSt(s.grad),
+      gradBarSt: 'height: 28px; border-radius: 10px; box-shadow: inset 0 0 0 1px rgba(0,0,0,.08); background: ' + bgOf(cur.c).replace('165deg', '90deg'),
+      statusSt: 'margin: 4px 0 0; font-size: 13px; line-height: 1.4; color: ' + (k.readable ? '#36413C' : '#312E81') + '; font-weight: ' + (k.readable ? 400 : 600),
+      statusText: parts.join(' · '),
+      perDay: s.perDay, decOff: s.perDay <= 1, incOff: s.perDay >= 6,
+      dec: () => me.setState({ perDay: Math.max(1, s.perDay - 1) }), inc: () => me.setState({ perDay: Math.min(6, s.perDay + 1) }),
+      pushOn: s.push, pushSwitchSt: switchSt(s.push), togglePush: () => me.setState({ push: !s.push }),
+      joined: s.invites.filter((i) => i.joined).length,
+      invites: s.invites.map((iv) => ({ code: iv.code, open: !iv.joined, status: iv.joined || 'not used yet',
+        shareLabel: s.copied === iv.code ? 'Copied' : 'Share', share: () => me.setState({ copied: iv.code }) })),
+      createInvite: () => me.setState({ invites: s.invites.concat([{ code: gen(), joined: null }]) })
+    };
+  }
+}
+</script>
+  </body>
+</html>

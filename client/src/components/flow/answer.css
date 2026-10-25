@@ -1,0 +1,86 @@
+/* SPDX-License-Identifier: AGPL-3.0-or-later */
+/* Every answer control of the check-in wears `.answer` (ui.md §1.4, §14.4): the
+   options, the null pairs, the certainty buttons,
+   the finer words, the situations. One rule set, so a null answer cannot
+   look, move or light up differently from any other; a component sets only
+   size and shape (`.answer--pill`). Selected = the choice fill, weight 600
+   and a soft halo in the fixed highlight (never a warm one, never a crisp
+   ring: that is focus). With every `fx` at 0 it is a flat outlined button
+   whose selection still reads from fill and weight. Global, imported once
+   (main.ts); e2e/fx.e2e.ts compares a null and a regular option */
+.answer {
+  /* The font from the page; a component sets only the size */
+  font: inherit;
+  border: 1.5px solid var(--c-line, #b3bdb7);
+  border-radius: var(--r-control, 12px);
+  background-color: var(--c-surface, #ffffff);
+  background-image: none;
+  color: var(--c-ink, #1e2a26);
+  box-shadow: var(--fx-rim), var(--fx-lift-1);
+  cursor: pointer;
+  transition:
+    background-color var(--dur-2) var(--ease-standard),
+    border-color var(--dur-2) var(--ease-standard),
+    color var(--dur-2) var(--ease-standard),
+    box-shadow var(--dur-3) var(--ease-out),
+    scale var(--dur-spring) var(--ease-spring);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .answer:not(:disabled):hover {
+    border-color: var(--c-line-strong, var(--c-line));
+    background-color: var(--c-surface-hi, var(--c-surface));
+  }
+
+  /* Selected keeps its fill under the pointer */
+  .answer.on:not(:disabled):hover {
+    border-color: var(--c-choice, #1e2a26);
+    background-color: var(--c-choice, #1e2a26);
+  }
+}
+
+/* The finger goes down: at once, the same .98 for every answer */
+.answer:not(:disabled):active {
+  scale: 0.98;
+  background-color: var(--c-surface-press, var(--c-surface));
+  box-shadow: var(--fx-press);
+  transition-duration: var(--dur-1);
+  transition-timing-function: var(--ease-out);
+}
+
+.answer.on {
+  border-color: var(--c-choice, #1e2a26);
+  background-color: var(--c-choice, #1e2a26);
+  background-image: var(--fx-sheen, none);
+  color: var(--c-on-choice, #ffffff);
+  font-weight: 600;
+  box-shadow: var(--fx-rim-fill), var(--fx-sel-aura);
+}
+
+.answer.on:not(:disabled):active {
+  background-color: var(--c-choice, #1e2a26);
+  box-shadow: var(--fx-rim-fill), var(--fx-press);
+}
+
+.answer:focus-visible {
+  outline: 3px solid var(--c-focus, #4f46e5);
+  outline-offset: 2px;
+  box-shadow: var(--fx-rim), var(--fx-lift-1), var(--fx-focus-halo);
+}
+
+.answer.on:focus-visible {
+  box-shadow: var(--fx-rim-fill), var(--fx-sel-aura), var(--fx-focus-halo);
+}
+
+.answer:disabled {
+  opacity: 0.45;
+  background-image: none;
+  box-shadow: 0 0 #0000;
+  cursor: default;
+}
+
+/* The pinned null pairs' shape (ui.md §6.5, §7.1): only radius and height differ */
+.answer--pill {
+  min-height: 44px;
+  border-radius: 22px;
+}

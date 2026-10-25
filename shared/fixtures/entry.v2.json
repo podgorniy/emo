@@ -1,0 +1,37 @@
+{
+  "schema_v": 2,
+  "id": "6f1c2a3e-9b4d-4e7f-8a21-5c3d9e0b1f47",
+  "ts": "2026-10-07T10:00:00Z",
+  "tz_offset_min": 180,
+  "trigger": "random",
+  "reminder_id": "0192f1c4-7b43-7000-8000-0000000000aa",
+  "latency_sec": 14,
+  "hidden_sec": 0,
+  "skipped": false,
+  "abandoned": false,
+  "body": {
+    "locations": ["chest", "throat"],
+    "qualities": ["squeeze", "lump"],
+    "intensity": 6
+  },
+  "affect": {
+    "valence": -2,
+    "arousal": 7,
+    "word": "fear.anxiety",
+    "word_confidence": "guess"
+  },
+  "urge": "shrink",
+  "head_mode": 8,
+  "context_tag": "work",
+  "context_other": null,
+  "note": "созвон с руководителем",
+  "untouched": ["head_mode"],
+  "ui": {
+    "theme": "3f9a1c0be27d4a65",
+    "intensity": "slider",
+    "options": "grid",
+    "figure": "solid",
+    "copy": 6,
+    "layout": "phone"
+  }
+}

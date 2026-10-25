@@ -1,0 +1,620 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Emo — themed screen</title>
+    <script src="./support.js"></script>
+  </head>
+  <body>
+    <x-dc>
+      <helmet>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600&amp;family=Hanken+Grotesk:wght@400;500;700&amp;family=Plus+Jakarta+Sans:wght@500;700;800&amp;family=Newsreader:ital,wght@0,400;0,500;1,400;1,500&amp;family=Sora:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=Manrope:wght@500;700;800&amp;family=Literata:ital,wght@0,400;0,500;1,400;1,500&amp;family=Golos+Text:wght@400;500;600&amp;family=Unbounded:wght@500;600&amp;family=Rubik:wght@400;500;600&amp;display=swap"
+          rel="stylesheet">
+        <style>
+        body {
+          margin: 0;
+        }
+        </style>
+      </helmet>
+      <div style="{{rootSt}}">
+        <header style="{{hdrSt}}">
+          <sc-if value="{{pSeg}}" hint-placeholder-val="{{ true }}">
+            <div aria-hidden="true" style="display: flex; gap: 4px; flex: 1">
+              <sc-for list="{{segs}}" as="sg"
+                hint-placeholder-count="10"><span style="{{ sg.st }}"></span></sc-for>
+            </div>
+          </sc-if>
+          <sc-if value="{{pBar}}" hint-placeholder-val="{{ false }}">
+            <div aria-hidden="true" style="{{barTrackSt}}">
+              <div style="{{barFillSt}}"></div>
+            </div>
+          </sc-if>
+          <sc-if value="{{pDots}}" hint-placeholder-val="{{ false }}">
+            <div aria-hidden="true"
+              style="display: flex; gap: 6px; flex: 1; align-items: center">
+              <sc-for list="{{dots}}" as="dt"
+                hint-placeholder-count="10"><span style="{{ dt.st }}"></span></sc-for>
+            </div>
+          </sc-if>
+          <sc-if value="{{pCounter}}" hint-placeholder-val="{{ false }}">
+            <div
+              style="flex: 1; display: flex; flex-direction: column; gap: 10px">
+              <div
+                style="display: flex; justify-content: space-between; align-items: center; gap: 12px">
+                <span style="{{counterSt}}">{{ counterText }}</span>
+                <button style="{{skipSt}}">Skip check-in</button>
+              </div>
+              <div aria-hidden="true" style="{{counterLineSt}}">
+                <div style="{{counterFillSt}}"></div>
+              </div>
+            </div>
+          </sc-if>
+          <sc-if value="{{notCounter}}" hint-placeholder-val="{{ true }}">
+            <button style="{{skipSt}}">{{ skipText }}</button>
+          </sc-if>
+        </header>
+
+        <main style="{{mainSt}}">
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <sc-if value="{{showStepLabel}}" hint-placeholder-val="{{ false }}">
+              <p style="{{stepLabelSt}}">Step {{ stepNo }} of 10</p>
+            </sc-if>
+            <sc-if value="{{showEyebrow}}" hint-placeholder-val="{{ false }}">
+              <p style="{{eyebrowSt}}">{{ eyebrow }}</p>
+            </sc-if>
+            <h1
+              style="{{titleSt}}">{{ tPre }}<sc-if value="{{ editorial }}" hint-placeholder-val="{{ false }}"><em style="{{ emSt }}">{{ tEm }}</em></sc-if><sc-if value="{{ plainTitle }}" hint-placeholder-val="{{ true }}"><span>{{ tEm }}</span></sc-if>{{ tPost }}</h1>
+            <sc-if value="{{hasHint}}" hint-placeholder-val="{{ true }}">
+              <p style="{{hintSt}}">{{ hint }}</p>
+            </sc-if>
+          </div>
+
+          <sc-if value="{{isBody}}" hint-placeholder-val="{{ true }}">
+            <div role="tablist" aria-label="Body view" style="{{tabsSt}}">
+              <button role="tab" aria-selected="{{viewFront}}"
+                onClick="{{showFront}}"
+                style="{{tabFrontSt}}">{{ tabFrontText }}</button>
+              <button role="tab" aria-selected="{{viewBack}}"
+                onClick="{{showBack}}"
+                style="{{tabBackSt}}">{{ tabBackText }}</button>
+            </div>
+            <div
+              style="flex: 1; min-height: 0; display: flex; justify-content: center">
+              <svg width="100%" height="100%" viewBox="0 0 376 520"
+                preserveAspectRatio="xMidYMid meet" role="img"
+                aria-label="{{figLabel}}" style="display: block">
+                <defs>
+                  <pattern id="h{{uid}}" width="7" height="7"
+                    patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+                    <rect width="7" height="7" fill="{{figBase}}"></rect>
+                    <line x1="0" y1="0" x2="0" y2="7" stroke="{{figSel}}"
+                      stroke-width="2.4"></line>
+                  </pattern>
+                  <filter id="g{{uid}}" x="-60%" y="-60%" width="220%"
+                    height="220%">
+                    <feGaussianBlur stdDeviation="18"></feGaussianBlur>
+                  </filter>
+                  <clipPath id="c{{uid}}">
+                    <ellipse cx="130" cy="48" rx="40" ry="48"></ellipse>
+                    <rect x="106" y="84" width="48" height="60" rx="14"></rect>
+                    <rect x="22" y="134" width="216" height="58" rx="29"></rect>
+                    <rect x="58" y="150" width="144" height="242"
+                      rx="26"></rect>
+                    <rect x="22" y="160" width="38" height="244" rx="19"></rect>
+                    <rect x="200" y="160" width="38" height="244"
+                      rx="19"></rect>
+                    <rect x="66" y="360" width="60" height="160" rx="26"></rect>
+                    <rect x="134" y="360" width="60" height="160"
+                      rx="26"></rect>
+                  </clipPath>
+                </defs>
+                <g transform="translate({{figX}},0)">
+                  <g filter="url(#g{{uid}})" opacity="{{glowOp}}">
+                    <rect x="80" y="0" width="100" height="46"
+                      fill="{{gz.forehead}}"></rect>
+                    <rect x="80" y="46" width="100" height="44"
+                      fill="{{gz.jaw}}"></rect>
+                    <rect x="96" y="90" width="68" height="44"
+                      fill="{{gz.throatneck}}"></rect>
+                    <rect x="22" y="134" width="216" height="44"
+                      fill="{{gz.shoulders}}"></rect>
+                    <rect x="58" y="178" width="144" height="68"
+                      fill="{{gz.chestup}}"></rect>
+                    <rect x="58" y="246" width="144" height="46"
+                      fill="{{gz.solar_plexus}}"></rect>
+                    <rect x="58" y="292" width="144" height="46"
+                      fill="{{gz.bellylow}}"></rect>
+                    <rect x="58" y="338" width="144" height="46"
+                      fill="{{gz.lower_belly}}"></rect>
+                    <rect x="22" y="178" width="36" height="226"
+                      fill="{{gz.arms_hands}}"></rect>
+                    <rect x="202" y="178" width="36" height="226"
+                      fill="{{gz.arms_hands}}"></rect>
+                    <rect x="66" y="384" width="128" height="136"
+                      fill="{{gz.legs_feet}}"></rect>
+                  </g>
+                  <g fill="none" stroke="{{figLine}}"
+                    stroke-width="{{outlineW}}">
+                    <ellipse cx="130" cy="48" rx="40" ry="48"></ellipse>
+                    <rect x="106" y="84" width="48" height="60" rx="14"></rect>
+                    <rect x="22" y="134" width="216" height="58" rx="29"></rect>
+                    <rect x="58" y="150" width="144" height="242"
+                      rx="26"></rect>
+                    <rect x="22" y="160" width="38" height="244" rx="19"></rect>
+                    <rect x="200" y="160" width="38" height="244"
+                      rx="19"></rect>
+                    <rect x="66" y="360" width="60" height="160" rx="26"></rect>
+                    <rect x="134" y="360" width="60" height="160"
+                      rx="26"></rect>
+                  </g>
+                  <g fill="{{figBase}}">
+                    <ellipse cx="130" cy="48" rx="40" ry="48"></ellipse>
+                    <rect x="106" y="84" width="48" height="60" rx="14"></rect>
+                    <rect x="22" y="134" width="216" height="58" rx="29"></rect>
+                    <rect x="58" y="150" width="144" height="242"
+                      rx="26"></rect>
+                    <rect x="22" y="160" width="38" height="244" rx="19"></rect>
+                    <rect x="200" y="160" width="38" height="244"
+                      rx="19"></rect>
+                    <rect x="66" y="360" width="60" height="160" rx="26"></rect>
+                    <rect x="134" y="360" width="60" height="160"
+                      rx="26"></rect>
+                  </g>
+                  <g clip-path="url(#c{{uid}})">
+                    <rect pointer-events="all" onClick="{{tz.forehead}}" x="80"
+                      y="0" width="100" height="46"
+                      fill="{{zf.forehead}}"></rect>
+                    <rect pointer-events="all" onClick="{{tz.jaw}}" x="80"
+                      y="46" width="100" height="44" fill="{{zf.jaw}}"></rect>
+                    <rect pointer-events="all" onClick="{{tz.throatneck}}"
+                      x="96" y="90" width="68" height="44"
+                      fill="{{zf.throatneck}}"></rect>
+                    <rect pointer-events="all" onClick="{{tz.shoulders}}" x="0"
+                      y="134" width="260" height="44"
+                      fill="{{zf.shoulders}}"></rect>
+                    <rect pointer-events="all" onClick="{{tz.chestup}}" x="58"
+                      y="178" width="144" height="68"
+                      fill="{{zf.chestup}}"></rect>
+                    <rect pointer-events="all" onClick="{{tz.solar_plexus}}"
+                      x="58" y="246" width="144" height="46"
+                      fill="{{zf.solar_plexus}}"></rect>
+                    <rect pointer-events="all" onClick="{{tz.bellylow}}" x="58"
+                      y="292" width="144" height="46"
+                      fill="{{zf.bellylow}}"></rect>
+                    <rect pointer-events="all" onClick="{{tz.lower_belly}}"
+                      x="58" y="338" width="144" height="46"
+                      fill="{{zf.lower_belly}}"></rect>
+                    <rect pointer-events="all" onClick="{{tz.arms_hands}}" x="0"
+                      y="178" width="58" height="240"
+                      fill="{{zf.arms_hands}}"></rect>
+                    <rect pointer-events="all" onClick="{{tz.arms_hands}}"
+                      x="202" y="178" width="58" height="240"
+                      fill="{{zf.arms_hands}}"></rect>
+                    <rect pointer-events="all" onClick="{{tz.legs_feet}}" x="0"
+                      y="384" width="260" height="136"
+                      fill="{{zf.legs_feet}}"></rect>
+                  </g>
+                  <g clip-path="url(#c{{uid}})" stroke="{{seam}}"
+                    stroke-width="{{seamW}}" pointer-events="none">
+                    <line x1="80" y1="46" x2="180" y2="46"
+                      opacity="{{frontOnly}}"></line>
+                    <line x1="96" y1="90" x2="164" y2="90"></line>
+                    <line x1="0" y1="134" x2="260" y2="134"></line>
+                    <line x1="0" y1="178" x2="260" y2="178"></line>
+                    <line x1="58" y1="246" x2="202" y2="246"
+                      opacity="{{frontOnly}}"></line>
+                    <line x1="58" y1="292" x2="202" y2="292"></line>
+                    <line x1="58" y1="338" x2="202" y2="338"
+                      opacity="{{frontOnly}}"></line>
+                    <line x1="58" y1="384" x2="202" y2="384"></line>
+                    <line x1="58" y1="178" x2="58" y2="392"></line>
+                    <line x1="202" y1="178" x2="202" y2="392"></line>
+                    <line x1="130" y1="420" x2="130" y2="520"></line>
+                  </g>
+                </g>
+                <g pointer-events="none" stroke="{{leaderC}}" stroke-width="1"
+                  fill="{{leaderC}}" font-family="{{monoFam}}" font-size="12">
+                  <g opacity="{{ld.forehead}}">
+                    <line x1="{{lx.a}}" y1="23" x2="{{lx.b}}" y2="23"></line>
+                    <circle cx="{{lx.a}}" cy="23" r="2"></circle>
+                    <text x="{{lx.t}}" y="27" stroke="none">forehead</text>
+                  </g>
+                  <g opacity="{{ld.jaw}}">
+                    <line x1="{{lx.a}}" y1="68" x2="{{lx.b}}" y2="68"></line>
+                    <circle cx="{{lx.a}}" cy="68" r="2"></circle>
+                    <text x="{{lx.t}}" y="72" stroke="none">jaw</text>
+                  </g>
+                  <g opacity="{{ld.throat}}">
+                    <line x1="{{lx.a}}" y1="112" x2="{{lx.b}}" y2="112"></line>
+                    <circle cx="{{lx.a}}" cy="112" r="2"></circle>
+                    <text x="{{lx.t}}" y="116" stroke="none">throat</text>
+                  </g>
+                  <g opacity="{{ld.neck}}">
+                    <line x1="{{lx.a}}" y1="112" x2="{{lx.b}}" y2="112"></line>
+                    <circle cx="{{lx.a}}" cy="112" r="2"></circle>
+                    <text x="{{lx.t}}" y="116" stroke="none">neck</text>
+                  </g>
+                  <g opacity="{{ld.shoulders}}">
+                    <line x1="{{lx.s}}" y1="156" x2="{{lx.b}}" y2="156"></line>
+                    <circle cx="{{lx.s}}" cy="156" r="2"></circle>
+                    <text x="{{lx.t}}" y="160" stroke="none">shoulders</text>
+                  </g>
+                  <g opacity="{{ld.chest}}">
+                    <line x1="{{lx.a}}" y1="212" x2="{{lx.b}}" y2="212"></line>
+                    <circle cx="{{lx.a}}" cy="212" r="2"></circle>
+                    <text x="{{lx.t}}" y="216" stroke="none">chest</text>
+                  </g>
+                  <g opacity="{{ld.upper_back}}">
+                    <line x1="{{lx.a}}" y1="228" x2="{{lx.b}}" y2="228"></line>
+                    <circle cx="{{lx.a}}" cy="228" r="2"></circle>
+                    <text x="{{lx.t}}" y="232" stroke="none">upper back</text>
+                  </g>
+                  <g opacity="{{ld.solar_plexus}}">
+                    <line x1="{{lx.a}}" y1="269" x2="{{lx.b}}" y2="269"></line>
+                    <circle cx="{{lx.a}}" cy="269" r="2"></circle>
+                    <text x="{{lx.t}}" y="273" stroke="none">plexus</text>
+                  </g>
+                  <g opacity="{{ld.belly}}">
+                    <line x1="{{lx.a}}" y1="315" x2="{{lx.b}}" y2="315"></line>
+                    <circle cx="{{lx.a}}" cy="315" r="2"></circle>
+                    <text x="{{lx.t}}" y="319" stroke="none">belly</text>
+                  </g>
+                  <g opacity="{{ld.lower_back}}">
+                    <line x1="{{lx.a}}" y1="323" x2="{{lx.b}}" y2="323"></line>
+                    <circle cx="{{lx.a}}" cy="323" r="2"></circle>
+                    <text x="{{lx.t}}" y="327" stroke="none">lower back</text>
+                  </g>
+                  <g opacity="{{ld.lower_belly}}">
+                    <line x1="{{lx.a}}" y1="361" x2="{{lx.b}}" y2="361"></line>
+                    <circle cx="{{lx.a}}" cy="361" r="2"></circle>
+                    <text x="{{lx.t}}" y="365" stroke="none">lower belly</text>
+                  </g>
+                  <g opacity="{{ld.arms_hands}}">
+                    <line x1="{{lx.s}}" y1="300" x2="{{lx.b}}" y2="400"></line>
+                    <circle cx="{{lx.s}}" cy="300" r="2"></circle>
+                    <text x="{{lx.t}}" y="404" stroke="none">arms</text>
+                  </g>
+                  <g opacity="{{ld.legs_feet}}">
+                    <line x1="{{lx.l}}" y1="460" x2="{{lx.b}}" y2="460"></line>
+                    <circle cx="{{lx.l}}" cy="460" r="2"></circle>
+                    <text x="{{lx.t}}" y="464" stroke="none">legs</text>
+                  </g>
+                </g>
+              </svg>
+            </div>
+            <p
+              style="{{sumSt}}"><sc-if value="{{ sumDot }}" hint-placeholder-val="{{ false }}"><span style="{{ dotSt }}"></span></sc-if><span>{{ sumPre }}</span><b style="{{ sumBoldSt }}">{{ sumText }}</b></p>
+            <div
+              style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+              <button onClick="{{pickWhole}}" aria-pressed="{{wholeOn}}"
+                style="{{wholeSt}}">Whole body</button>
+              <button onClick="{{pickNowhere}}" aria-pressed="{{nowhereOn}}"
+                style="{{nowhereSt}}">Nowhere</button>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{isQuality}}" hint-placeholder-val="{{ false }}">
+            <div
+              style="flex: 1 1 auto; min-height: 0; overflow-y: auto; margin: 0 -6px; padding: 2px 6px 8px; display: flex; flex-direction: column; gap: {{groupGap}}px">
+              <sc-for list="{{qGroups}}" as="g" hint-placeholder-count="1">
+                <div style="display: flex; flex-direction: column; gap: 10px">
+                  <sc-if value="{{g.hasTitle}}"
+                    hint-placeholder-val="{{ false }}">
+                    <p style="{{groupTitleSt}}">{{ g.title }}</p>
+                  </sc-if>
+                  <div role="group" aria-label="Qualities"
+                    style="{{optWrapSt}}">
+                    <sc-for list="{{g.items}}" as="o"
+                      hint-placeholder-count="8">
+                      <button onClick="{{o.pick}}" aria-pressed="{{o.on}}"
+                        style="{{o.st}}"><sc-if value="{{ o.radio }}" hint-placeholder-val="{{ false }}"><span style="{{ o.radioSt }}"></span></sc-if><span>{{ o.label }}</span></button>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+            <p
+              style="{{sumSt}}"><sc-if value="{{ sumDot }}" hint-placeholder-val="{{ false }}"><span style="{{ dotSt }}"></span></sc-if><span>{{ qSumPre }}</span><b style="{{ sumBoldSt }}">{{ qSumText }}</b></p>
+          </sc-if>
+
+          <sc-if value="{{isIntensity}}" hint-placeholder-val="{{ false }}">
+            <div
+              style="flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 12px">
+              <sc-if value="{{iBloom}}" hint-placeholder-val="{{ false }}">
+                <div style="{{bloomAreaSt}}">
+                  <span style="{{bloomHaloSt}}"></span>
+                  <span style="{{bloomRingSt}}"></span>
+                  <span style="{{bloomCoreSt}}"></span>
+                  <sc-if value="{{untouched}}"
+                    hint-placeholder-val="{{ true }}">
+                    <span
+                      style="{{bloomTextSt}}"><b style="display: block; font-size: 18px">Not set</b><span style="font-size: 13px; opacity: .8">slide to set</span></span>
+                  </sc-if>
+                </div>
+              </sc-if>
+              <sc-if value="{{iRuler}}" hint-placeholder-val="{{ false }}">
+                <div
+                  style="display: flex; flex-direction: column; align-items: center; gap: 22px">
+                  <span style="{{rulerDashSt}}"></span>
+                  <span style="{{rulerNotSetSt}}">{{ rulerCenter }}</span>
+                </div>
+              </sc-if>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 12px">
+              <div style="position: relative; height: {{trackBoxH}}px">
+                <sc-if value="{{iRuler}}" hint-placeholder-val="{{ false }}">
+<sc-for list="{{ ticks }}" as="tk" hint-placeholder-count="41"><span style="{{ tk.st }}"></span></sc-for>
+<span style="{{ needleSt }}"></span><span style="{{ needleDotSt }}"></span>
+                </sc-if>
+                <sc-if value="{{iTrack}}" hint-placeholder-val="{{ true }}">
+                  <span style="{{trackSt}}"></span>
+                  <span style="{{thumbSt}}"></span>
+                </sc-if>
+                <input type="range" min="0" max="10" step="1" value="{{inten}}"
+                  onChange="{{setInten}}" aria-label="How strong is it?"
+                  aria-valuetext="{{intenText}}"
+                  style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; margin: 0; cursor: pointer">
+              </div>
+              <div
+                style="{{polesSt}}"><span>barely there</span><span>very strong</span></div>
+              <sc-if value="{{untouched}}" hint-placeholder-val="{{ true }}">
+                <p style="{{notMovedSt}}">{{ notMovedText }}</p>
+              </sc-if>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{isWord}}" hint-placeholder-val="{{ false }}">
+            <div role="group" aria-label="Word" style="{{optWrapSt}}">
+              <sc-for list="{{l1}}" as="o" hint-placeholder-count="8">
+                <button onClick="{{o.pick}}" aria-pressed="{{o.on}}"
+                  style="{{o.st}}"><sc-if value="{{ o.radio }}" hint-placeholder-val="{{ false }}"><span style="{{ o.radioSt }}"></span></sc-if><span>{{ o.label }}</span></button>
+              </sc-for>
+            </div>
+            <sc-if value="{{hasL2}}" hint-placeholder-val="{{ false }}">
+              <div style="display: flex; flex-direction: column; gap: 10px">
+                <p style="{{groupTitleSt}}">More precisely · optional</p>
+                <div style="{{l2WrapSt}}">
+                  <sc-for list="{{l2}}" as="o" hint-placeholder-count="8">
+                    <button onClick="{{o.pick}}" aria-pressed="{{o.on}}"
+                      style="{{o.st}}">{{ o.label }}</button>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 10px">
+                <p style="{{groupTitleSt}}">How sure are you of the word?</p>
+                <div style="{{confWrapSt}}">
+                  <sc-for list="{{confs}}" as="o" hint-placeholder-count="3">
+                    <button onClick="{{o.pick}}" aria-pressed="{{o.on}}"
+                      style="{{o.st}}">{{ o.label }}</button>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-if>
+          </sc-if>
+        </main>
+
+        <footer style="{{footSt}}">
+          <button aria-label="Back"
+            style="{{backSt}}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button>
+          <button
+            style="{{nextSt}}"><span>{{ nextLabel }}</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+        </footer>
+      </div>
+    </x-dc>
+    <script type="text/x-dc" data-dc-script
+      data-props='{"theme":{"editor":null},"step":{"editor":"enum","options":["body","quality","intensity","word"],"default":"body"},"uid":{"editor":"text","default":"s0"},"intensity":{"editor":"int","default":-1,"min":-1,"max":10},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    const iv = props.intensity == null ? -1 : props.intensity;
+    this.state = { view: 'front', loc: ['throat', 'chest'], whole: false, nowhere: false, q: ['tight', 'lump'],
+      inten: iv < 0 ? 5 : iv, intenT: iv >= 0, w1: 'fear', w2: 'anxiety', conf: 'guess' };
+  }
+  renderVals() {
+    const CALM = { name: 'Calm',
+      c: { ground: '#E4EDF1', surface: '#F7FAFB', ink: '#1E2A26', muted: '#4E5853', line: '#B3BDB7', track: '#D3E0E6', accent: '#4F46E5',
+        choice: '#1E2A26', onChoice: '#FFFFFF', figure: '#F7FAFB', figureLine: '#8E9892', figureSel: '#4F46E5', bloom: '#4F46E5', primary: '#1E2A26', onPrimary: '#FFFFFF' },
+      f: { ui: 'Onest', display: 'Onest', displayWeight: 500, mono: 'JetBrains Mono', labels: 'normal' },
+      r: { control: 16, chip: 12 }, shadow: false,
+      v: { progress: 'segments', heading: 'plain', stepLabel: false, tabs: 'segmented', options: 'grid', l2: 'chips', intensity: 'slider', figure: 'solid', figureLabels: false, confidence: 'buttons', summary: 'plain' } };
+    const T = this.props.theme || CALM;
+    const c = T.c, f = T.f, r = T.r, v = T.v;
+    const s = this.state, me = this;
+    const step = this.props.step || 'body';
+    const uid = (this.props.uid || 's0').replace(/[^a-zA-Z0-9_-]/g, '');
+    const fam = (x, fb) => "'" + x + "', " + fb;
+    const UI = fam(f.ui, 'system-ui, sans-serif'), DISP = fam(f.display, (f.display === 'Newsreader' || f.display === 'Literata') ? 'Georgia, serif' : 'system-ui, sans-serif'), MONO = fam(f.mono, 'ui-monospace, monospace');
+    const monoLabels = f.labels === 'mono';
+    const shadow = T.shadow ? 'box-shadow: 0 6px 18px -10px rgba(40,30,90,.35);' : '';
+    const STEPNO = { body: 1, quality: 2, intensity: 3, word: 6 }[step];
+    const TITLES = { body: ['Where ', 'in the body', '?'], quality: ['What is it ', 'like', '?'], intensity: ['How ', 'strong', ' is it?'], word: ['Is there a ', 'word', ' for it?'] };
+    const EYEBROW = { body: 'Body', quality: 'Quality', intensity: 'Intensity', word: 'Word' };
+    const HINTS = { body: 'Tap the zones', quality: 'Choose any that fit', word: 'Optional. The first level is enough',
+      intensity: v.intensity === 'bloom' ? 'The circle grows as you slide' : (v.intensity === 'ruler' ? 'Move the needle, or leave it' : '') };
+    const labelSt = (size, color) => monoLabels
+      ? 'margin: 0; font-family: ' + MONO + '; font-size: ' + (size - 2) + 'px; letter-spacing: .14em; text-transform: uppercase; color: ' + color
+      : 'margin: 0; font-size: ' + size + 'px; color: ' + color;
+
+    // progress
+    const segs = []; const dots = [];
+    for (let i = 0; i < 10; i++) {
+      segs.push({ st: 'flex: 1; height: 4px; border-radius: 2px; background: ' + (i < STEPNO ? c.accent : c.track) });
+      dots.push({ st: 'height: 6px; border-radius: 3px; width: ' + (i === STEPNO - 1 ? 18 : 6) + 'px; background: ' + (i < STEPNO ? c.accent : c.line) });
+    }
+    const pct = Math.round(STEPNO / 10 * 100);
+    const skipSt = 'background: none; border: none; padding: 10px 0 10px 8px; min-height: 44px; cursor: pointer; color: ' + c.muted + '; ' +
+      (monoLabels ? 'font-family: ' + MONO + '; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; text-decoration: underline; text-underline-offset: 4px'
+        : 'font: inherit; font-size: 14px; ' + (v.progress === 'bar' ? '' : 'text-decoration: underline; text-underline-offset: 3px'));
+
+    // options
+    const ctl = r.control, chipR = r.chip;
+    const optSt = (on, kind) => {
+      if (kind === 'list') return 'display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 0 2px; border: none; border-bottom: 1px solid ' + c.line + '; background: transparent; color: ' + (on ? c.accent : c.ink) + '; font: inherit; font-size: 16px; font-weight: ' + (on ? 600 : 400) + '; text-align: left; cursor: pointer';
+      if (kind === 'chips') return 'min-height: 44px; padding: 0 16px; border-radius: ' + chipR + 'px; border: 1.5px solid ' + (on ? c.choice : c.line) + '; background: ' + (on ? c.choice : c.surface) + '; color: ' + (on ? c.onChoice : c.ink) + '; font: inherit; font-size: 15px; font-weight: ' + (on ? 700 : 500) + '; cursor: pointer; ' + (on ? shadow : '');
+      return 'min-height: 48px; padding: 10px 14px; border-radius: ' + Math.round(ctl * 0.75) + 'px; border: 1.5px solid ' + (on ? c.choice : c.line) + '; background: ' + (on ? c.choice : c.surface) + '; color: ' + (on ? c.onChoice : c.ink) + '; font: inherit; font-size: 16px; text-align: left; cursor: pointer';
+    };
+    const radioSt = (on) => 'flex: none; width: 13px; height: 13px; border-radius: 50%; box-sizing: border-box; border: 1.5px solid ' + (on ? c.accent : c.ink) + '; background: ' + (on ? c.accent : 'transparent');
+    const kind = v.options === 'grouped' ? 'chips' : v.options;
+    const optWrapSt = kind === 'list' ? 'display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 24px; border-top: 1px solid ' + c.line
+      : kind === 'chips' ? 'display: flex; flex-wrap: wrap; gap: 8px' : 'display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px';
+    const makeOpt = (label, on, pick) => ({ label: label, on: on, st: optSt(on, kind), radio: kind === 'list', radioSt: radioSt(on), pick: pick });
+
+    // body
+    const LBL = { forehead: 'forehead / eyes', jaw: 'jaw', throat: 'throat', neck: 'neck', shoulders: 'shoulders', chest: 'chest',
+      solar_plexus: 'solar plexus', belly: 'belly', lower_belly: 'lower belly', upper_back: 'upper back', lower_back: 'lower back', arms_hands: 'arms / hands', legs_feet: 'legs / feet' };
+    const ORDER = Object.keys(LBL);
+    const front = s.view === 'front';
+    const SLOT = front
+      ? { forehead: 'forehead', jaw: 'jaw', throatneck: 'throat', shoulders: 'shoulders', chestup: 'chest', solar_plexus: 'solar_plexus', bellylow: 'belly', lower_belly: 'lower_belly', arms_hands: 'arms_hands', legs_feet: 'legs_feet' }
+      : { forehead: null, jaw: null, throatneck: 'neck', shoulders: 'shoulders', chestup: 'upper_back', solar_plexus: 'upper_back', bellylow: 'lower_back', lower_belly: 'lower_back', arms_hands: 'arms_hands', legs_feet: 'legs_feet' };
+    const sel = s.whole ? [] : s.loc;
+    const fig = v.figure;
+    const selFill = fig === 'hatch' ? 'url(#h' + uid + ')' : c.figureSel;
+    const zf = {}, gz = {}, tz = {}, ld = {};
+    Object.keys(SLOT).forEach((slot) => {
+      const k = SLOT[slot]; const on = !!k && sel.indexOf(k) >= 0;
+      zf[slot] = on ? selFill : 'none';
+      gz[slot] = on && fig === 'glow' ? c.figureSel : 'none';
+      tz[slot] = () => { if (!k) return; const cur = s.loc.filter((x) => x !== k); me.setState({ whole: false, nowhere: false, loc: s.loc.indexOf(k) >= 0 ? cur : cur.concat([k]) }); };
+    });
+    ORDER.forEach((k) => { const vis = Object.keys(SLOT).some((sl) => SLOT[sl] === k); ld[k] = v.figureLabels && vis && sel.indexOf(k) >= 0 ? 1 : 0; });
+    const figX = v.figureLabels ? 14 : 58;
+    const lx = { a: figX + 168, s: figX + 236, l: figX + 196, b: 296, t: 302 };
+    const selNames = s.nowhere ? 'nowhere' : (s.whole ? 'whole body' : ORDER.filter((k) => s.loc.indexOf(k) >= 0).map((k) => LBL[k]).join(', '));
+    const nF = s.loc.filter((k) => ['forehead', 'jaw', 'throat', 'shoulders', 'chest', 'solar_plexus', 'belly', 'lower_belly', 'arms_hands', 'legs_feet'].indexOf(k) >= 0).length;
+    const nB = s.loc.filter((k) => ['neck', 'shoulders', 'upper_back', 'lower_back', 'arms_hands', 'legs_feet'].indexOf(k) >= 0).length;
+    const tabOn = (on) => v.tabs === 'underline'
+      ? 'min-height: 40px; border: none; background: none; padding: 0; margin-bottom: -1px; cursor: pointer; font-family: ' + MONO + '; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: ' + (on ? c.ink : c.muted) + '; border-bottom: 2px solid ' + (on ? c.ink : 'transparent')
+      : 'min-height: 40px; border: none; cursor: pointer; font: inherit; font-size: 15px; border-radius: ' + Math.max(4, ctl - 4) + 'px; background: ' + (on ? c.surface : 'transparent') + '; color: ' + (on ? c.ink : c.muted) + '; font-weight: ' + (on ? 600 : 500) + '; ' + (on ? 'box-shadow: 0 1px 3px rgba(0,0,0,.14)' : '');
+    const secSt = (on) => 'min-height: 48px; border-radius: ' + ctl + 'px; font: inherit; font-size: 16px; font-weight: 500; cursor: pointer; text-align: center; ' +
+      (on ? 'background: ' + c.choice + '; color: ' + c.onChoice + '; border: 1.5px solid ' + c.choice : 'background: ' + (fig === 'glow' ? 'transparent' : c.surface) + '; color: ' + c.ink + '; border: 1.5px solid ' + c.line);
+    const sumSt = (monoLabels ? labelSt(13, c.muted) : 'margin: 0; font-size: 15px; color: ' + c.muted) + '; text-align: ' + (monoLabels ? 'left' : 'center') + '; display: flex; gap: 6px; align-items: center; justify-content: ' + (monoLabels ? 'flex-start' : 'center') + '; min-height: 22px';
+
+    // quality
+    const QUAL = ['heavy', 'light', 'tight', 'pressing outward', 'lump', 'warm', 'hot', 'cold', 'trembling', 'tingling', 'pulsing',
+      'numb', 'hollow', 'queasy', 'tense', 'relaxed', 'aching', 'pulling', 'tickly', 'nothing', 'can’t tell'];
+    const GROUPS = [['Pressure & weight', ['heavy', 'light', 'tight', 'pressing outward', 'lump']], ['Temperature', ['warm', 'hot', 'cold']],
+      ['Movement', ['trembling', 'tingling', 'pulsing', 'pulling', 'aching', 'tickly']], ['Tone', ['tense', 'relaxed', 'numb', 'hollow', 'queasy']], ['Or', ['nothing', 'can’t tell']]];
+    const EXCL = ['nothing', 'can’t tell'];
+    const pickQ = (label) => () => {
+      const on = s.q.indexOf(label) >= 0; let cur = s.q;
+      if (on) cur = cur.filter((x) => x !== label); else if (EXCL.indexOf(label) >= 0) cur = [label]; else cur = cur.filter((x) => EXCL.indexOf(x) < 0).concat([label]);
+      me.setState({ q: cur });
+    };
+    const qItems = (list) => list.map((l) => makeOpt(l, s.q.indexOf(l) >= 0, pickQ(l)));
+    const qGroups = v.options === 'grouped' ? GROUPS.map((g) => ({ title: g[0], hasTitle: true, items: qItems(g[1]) })) : [{ title: '', hasTitle: false, items: qItems(QUAL) }];
+
+    // intensity
+    const iv = s.inten, untouched = !s.intenT, tpos = iv / 10;
+    const ivMode = v.intensity;
+    const coreSize = untouched ? 0 : 56 + iv * 16;
+    const glowy = fig === 'glow';
+    const ticks = [];
+    for (let i = 0; i <= 40; i++) ticks.push({ st: 'position: absolute; bottom: 10px; left: calc(' + (i / 40 * 100) + '% - 0.5px); width: 1px; background: ' + c.ink + '; height: ' + (i % 10 === 0 ? 22 : i % 5 === 0 ? 16 : 10) + 'px' });
+
+    // word
+    const WORDS = { fear: ['anxiety', 'worry', 'wariness', 'tense waiting', 'panic', 'terror', 'self-consciousness', 'insecurity'],
+      anger: ['irritation', 'frustration', 'resentment', 'indignation', 'rage', 'disgust', 'contempt', 'impatience'],
+      sadness: ['longing', 'sorrow', 'loneliness', 'disappointment', 'grief', 'despondency', 'self-pity', 'helplessness'],
+      shame: ['awkwardness', 'guilt', 'humiliation', 'embarrassment', 'worthlessness'],
+      joy: ['interest', 'relief', 'calm', 'tenderness', 'thrill', 'gratitude', 'contentment', 'enthusiasm', 'warmth toward someone'],
+      surprise: ['confusion', 'bewilderment', 'curiosity', 'stunned'], empty: ['numbness', 'boredom', 'detachment', '“wrapped in cotton wool”', 'nothing', 'frozen'], 'don’t know': [] };
+    const l1 = Object.keys(WORDS).map((w) => makeOpt(w, s.w1 === w, () => me.setState(s.w1 === w ? { w1: null, w2: null, conf: null } : { w1: w, w2: null, conf: w === 'don’t know' ? 'unknown' : null })));
+    const inline = v.l2 === 'inline';
+    const l2 = (s.w1 ? WORDS[s.w1] : []).map((w) => {
+      const on = s.w2 === w;
+      const st = inline
+        ? 'border: none; background: none; padding: 2px 0; cursor: pointer; font-family: ' + DISP + '; font-size: 22px; line-height: 1.3; color: ' + (on ? c.accent : c.ink) + '; text-decoration: ' + (on ? 'underline' : 'none') + '; text-underline-offset: 5px; text-decoration-thickness: 1.5px'
+        : 'min-height: 40px; padding: 0 14px; border-radius: ' + chipR + 'px; cursor: pointer; font: inherit; font-size: 14px; font-weight: 500; border: 1.5px solid ' + (on ? c.accent : c.line) + '; background: ' + (on ? (kind === 'list' ? 'transparent' : c.surface) : c.surface) + '; color: ' + (on ? c.accent : c.ink);
+      return { label: w, on: on, st: st, pick: () => me.setState({ w2: on ? null : w }) };
+    });
+    const seg = v.confidence === 'segmented';
+    const confs = [['guess', 'guessing'], ['sure', 'sure'], ['unknown', 'don’t know']].map((x) => {
+      const on = s.conf === x[0];
+      let st;
+      if (seg) st = 'min-height: 40px; border: none; cursor: pointer; font: inherit; font-size: 14px; border-radius: ' + Math.max(4, chipR - 4) + 'px; background: ' + (on ? c.surface : 'transparent') + '; color: ' + (on ? c.ink : c.muted) + '; font-weight: ' + (on ? 700 : 500) + '; ' + (on ? 'box-shadow: 0 1px 3px rgba(0,0,0,.14)' : '');
+      else if (monoLabels) st = 'min-height: 40px; padding: 0 14px; cursor: pointer; font-family: ' + MONO + '; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; border-radius: 2px; border: 1.5px solid ' + (on ? c.choice : c.ink) + '; background: ' + (on ? c.choice : 'transparent') + '; color: ' + (on ? c.onChoice : c.ink);
+      else st = optSt(on, 'grid').replace('text-align: left', 'text-align: center');
+      return { label: x[1], on: on, st: st, pick: () => me.setState({ conf: on ? null : x[0] }) };
+    });
+    const confWrapSt = seg ? 'display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; padding: 4px; border-radius: ' + chipR + 'px; background: ' + c.track
+      : monoLabels ? 'display: flex; gap: 6px' : 'display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px';
+
+    const bodyNext = s.nowhere ? 'Next: nowhere' : s.whole ? 'Next: whole body' : (s.loc.length && s.loc.length <= 2 ? 'Next' + (monoLabels ? ' · ' : ': ') + ORDER.filter((k) => s.loc.indexOf(k) >= 0).map((k) => LBL[k]).join(', ') : (s.loc.length ? 'Next (' + s.loc.length + ')' : 'Next'));
+    const editorial = v.heading === 'editorial';
+    const t = TITLES[step];
+    return {
+      uid: uid, monoFam: MONO,
+      rootSt: 'position: relative; width: 390px; height: 844px; overflow: hidden; box-sizing: border-box; display: flex; flex-direction: column; background-color: ' + c.ground + '; color: ' + c.ink + '; font-family: ' + UI + '; background-image: ' +
+        [glowy ? 'radial-gradient(ellipse at 70% 0%, ' + c.figureSel + '22, transparent 55%)' : null, c.ground2 ? 'linear-gradient(165deg, ' + c.ground + ' 0%, ' + c.ground2 + ' 100%)' : null].filter(Boolean).join(', ').replace(/^$/, 'none'),
+      hdrSt: 'display: flex; align-items: center; gap: 16px; padding: 22px 24px 0; min-height: 64px; box-sizing: border-box',
+      pSeg: v.progress === 'segments', pBar: v.progress === 'bar', pDots: v.progress === 'dots', pCounter: v.progress === 'counter', notCounter: v.progress !== 'counter',
+      segs: segs, dots: dots,
+      barTrackSt: 'flex: 1; height: 6px; border-radius: 3px; background: ' + c.track + '; overflow: hidden',
+      barFillSt: 'height: 100%; width: ' + pct + '%; border-radius: 3px; background: ' + c.accent,
+      counterSt: 'font-family: ' + MONO + '; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: ' + c.ink,
+      counterText: (STEPNO < 10 ? '0' : '') + STEPNO + ' / 10 — ' + EYEBROW[step],
+      counterLineSt: 'height: 2px; background: ' + c.line, counterFillSt: 'height: 2px; width: ' + pct + '%; background: ' + c.ink,
+      skipSt: skipSt, skipText: v.progress === 'bar' ? 'Skip' : 'Skip check-in',
+      mainSt: 'flex: 1; display: flex; flex-direction: column; gap: ' + (step === 'body' ? 14 : 20) + 'px; padding: ' + (v.progress === 'counter' ? 20 : 26) + 'px 24px 12px; min-height: 0; box-sizing: border-box',
+      showStepLabel: !!v.stepLabel, stepNo: STEPNO, stepLabelSt: labelSt(13, c.muted),
+      showEyebrow: v.heading === 'eyebrow', eyebrow: EYEBROW[step],
+      eyebrowSt: 'margin: 0; font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: ' + c.muted,
+      titleSt: 'margin: 0; font-family: ' + DISP + '; font-weight: ' + f.displayWeight + '; font-size: ' + (editorial ? 40 : 30) + 'px; line-height: 1.1; letter-spacing: ' + (editorial ? '-0.02em' : '-0.015em') + '; color: ' + c.ink,
+      editorial: editorial, plainTitle: !editorial, tPre: t[0], tEm: t[1], tPost: t[2],
+      emSt: 'font-style: italic; color: ' + c.accent,
+      hasHint: !!HINTS[step], hint: HINTS[step],
+      hintSt: monoLabels ? labelSt(13, c.muted) + '; padding-bottom: 12px; border-bottom: 1px solid ' + c.ink : 'margin: 0; font-size: 15px; color: ' + c.muted,
+      isBody: step === 'body', isQuality: step === 'quality', isIntensity: step === 'intensity', isWord: step === 'word',
+      tabsSt: v.tabs === 'underline' ? 'display: flex; gap: 24px; border-bottom: 1px solid ' + c.line : 'display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; padding: 4px; border-radius: ' + ctl + 'px; background: ' + c.track,
+      viewFront: front, viewBack: !front, showFront: () => me.setState({ view: 'front' }), showBack: () => me.setState({ view: 'back' }),
+      tabFrontSt: tabOn(front), tabBackSt: tabOn(!front),
+      tabFrontText: 'Front' + (nF && !s.whole ? ' · ' + nF : ''), tabBackText: 'Back' + (nB && !s.whole ? ' · ' + nB : ''),
+      figLabel: 'Body, ' + s.view + ' view', figX: figX,
+      figBase: s.whole ? (fig === 'hatch' ? 'url(#h' + uid + ')' : c.figureSel + '55') : c.figure,
+      figLine: fig === 'soft' ? 'none' : (s.whole ? c.figureSel : c.figureLine), outlineW: fig === 'glow' ? 2 : 3,
+      figSel: c.figureSel, seam: fig === 'soft' ? c.ground : (fig === 'glow' ? c.line : c.figureLine + '66'), seamW: fig === 'soft' ? 7 : 1.2,
+      frontOnly: front ? 1 : 0, glowOp: fig === 'glow' ? 0.9 : 0,
+      zf: zf, gz: gz, tz: tz, ld: ld, lx: lx, leaderC: c.ink,
+      neckWord: front ? 'throat' : 'neck', chestWord: front ? 'chest' : 'upper back', bellyWord: front ? 'belly' : 'lower back',
+      sumSt: sumSt, sumDot: v.summary === 'dot', dotSt: 'width: 7px; height: 7px; border-radius: 50%; background: ' + c.figureSel,
+      sumPre: monoLabels ? 'Selected — ' : 'Selected: ', sumText: selNames || 'none yet', sumBoldSt: 'font-weight: 600; color: ' + (glowy ? c.figureSel : c.ink),
+      wholeOn: s.whole, nowhereOn: s.nowhere, wholeSt: secSt(s.whole), nowhereSt: secSt(s.nowhere),
+      pickWhole: () => me.setState({ whole: !s.whole, nowhere: false, loc: [] }), pickNowhere: () => me.setState({ nowhere: !s.nowhere, whole: false, loc: [] }),
+      groupGap: v.options === 'grouped' ? 18 : 0, qGroups: qGroups, optWrapSt: optWrapSt,
+      groupTitleSt: monoLabels ? labelSt(12, c.muted) : 'margin: 0; font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: ' + c.muted,
+      qSumPre: s.q.length ? s.q.length + ' chosen' + (monoLabels ? ' — ' : ': ') : 'Nothing chosen yet', qSumText: s.q.join(', '),
+      iBloom: ivMode === 'bloom', iRuler: ivMode === 'ruler', iTrack: ivMode !== 'ruler', untouched: untouched,
+      bloomAreaSt: 'position: relative; width: 290px; height: 290px; display: flex; align-items: center; justify-content: center',
+      bloomHaloSt: 'position: absolute; inset: 0; border-radius: 50%; background: ' + (glowy ? 'transparent' : c.track) + '; border: 1px solid ' + (glowy ? c.line : 'transparent') + '; opacity: .9',
+      bloomRingSt: 'position: absolute; inset: 40px; border-radius: 50%; border: 1.5px dashed ' + c.accent + '88',
+      bloomCoreSt: 'position: absolute; left: 50%; top: 50%; width: ' + coreSize + 'px; height: ' + coreSize + 'px; transform: translate(-50%, -50%); border-radius: 50%; transition: width .25s, height .25s; background: radial-gradient(circle at 35% 30%, color-mix(in srgb, ' + c.bloom + ' 35%, white), ' + c.bloom + ')' + (glowy ? '; box-shadow: 0 0 60px 10px ' + c.bloom + '66' : '; box-shadow: 0 18px 40px -16px ' + c.bloom + 'aa'),
+      bloomTextSt: 'position: relative; text-align: center; color: ' + c.ink + '; line-height: 1.3',
+      rulerDashSt: 'width: 70px; height: 3px; background: ' + c.ink,
+      rulerNotSetSt: 'font-family: ' + MONO + '; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: ' + c.muted + '; min-height: 14px',
+      rulerCenter: untouched ? 'Not set' : '',
+      trackBoxH: ivMode === 'ruler' ? 70 : 48, ticks: ticks,
+      needleSt: 'position: absolute; bottom: 4px; width: 2px; height: 50px; background: ' + c.bloom + '; left: calc(' + (tpos * 100) + '% - 1px); opacity: ' + (untouched ? 0.35 : 1),
+      needleDotSt: 'position: absolute; bottom: 50px; width: 10px; height: 10px; border-radius: 50%; background: ' + c.bloom + '; left: calc(' + (tpos * 100) + '% - 5px); opacity: ' + (untouched ? 0.35 : 1),
+      trackSt: 'position: absolute; left: 0; right: 0; top: 50%; height: 6px; margin-top: -3px; border-radius: 3px; background: ' + c.track,
+      thumbSt: 'position: absolute; top: 50%; left: calc(' + (tpos * 100) + '% - 16px); width: 32px; height: 32px; margin-top: -16px; box-sizing: border-box; border-radius: 50%; ' +
+        (untouched ? 'border: 2px dashed ' + c.accent + '; background: ' + (glowy ? 'transparent' : c.surface) : 'border: 4px solid ' + c.surface + '; background: ' + c.accent + '; box-shadow: 0 2px 8px rgba(0,0,0,.25)'),
+      inten: iv, setInten: (e) => me.setState({ inten: Number(e.target.value), intenT: true }),
+      intenText: iv < 4 ? 'closer to barely there' : iv > 6 ? 'closer to very strong' : 'in the middle',
+      polesSt: (monoLabels ? labelSt(12, c.ink) : 'margin: 0; font-size: 14px; color: ' + c.muted) + '; display: flex; justify-content: space-between',
+      notMovedSt: 'margin: 6px 0 0; font-size: 14px; color: ' + c.muted + '; text-align: center',
+      notMovedText: ivMode === 'ruler' ? 'Needle not moved — that is fine too.' : 'Slider not moved — that is fine too.',
+      l1: l1, l2: l2, hasL2: l2.length > 0,
+      l2WrapSt: inline ? 'display: flex; flex-wrap: wrap; column-gap: 10px; row-gap: 2px' : 'display: flex; flex-wrap: wrap; gap: 8px',
+      confs: confs, confWrapSt: confWrapSt,
+      footSt: 'display: flex; gap: 12px; padding: 12px 24px 26px',
+      backSt: 'flex: none; width: 56px; height: 56px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; cursor: pointer; border-radius: ' + ctl + 'px; border: 1.5px solid ' + c.line + '; background: ' + (glowy ? 'transparent' : c.surface) + '; color: ' + c.ink,
+      nextSt: 'flex: 1; height: 56px; min-width: 0; display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; border: none; border-radius: ' + ctl + 'px; background: ' + c.primary + '; color: ' + c.onPrimary + '; font: inherit; font-size: 16px; font-weight: 600; white-space: nowrap; overflow: hidden; ' + (T.shadow ? 'box-shadow: 0 12px 24px -12px ' + c.primary : ''),
+      nextLabel: step === 'body' ? bodyNext : 'Next'
+    };
+  }
+}
+</script>
+  </body>
+</html>

@@ -1,0 +1,505 @@
+/* SPDX-License-Identifier: AGPL-3.0-or-later */
+/* The looks every screen shares (ui.md §14.4) and their motion
+   (ui.md §5.1): the primary and secondary buttons, text fields, the segmented
+   control, text links, the busy light, and the View Transitions of panes and
+   sign-in screens. Global and imported once (main.ts); a component sets only
+   size and place. Every colour, shadow and curve is a token (ui.md §14.3, boot.css):
+   a theme with its effects at 0 draws flat controls, and reduced motion
+   leaves every end state, still. The answer controls' class is
+   components/flow/answer.css */
+
+/* ----- Primary button (Next, Send code, Sign in, Done, Save, Undo) -----
+   Light lives in the edge and under the button, never over the label: the
+   sheen is clear between 30 % and 70 % of the height. Disabled is the same
+   button not lit yet: a recessed track colour. Press: the individual
+   `scale`, so a component's own transform is never fought */
+.btn-primary {
+  --press: 0.985;
+  border: 0;
+  border-radius: var(--r-control, 12px);
+  background-color: var(--c-primary, #1e2a26);
+  background-image: var(--fx-sheen, none);
+  color: var(--c-on-primary, #ffffff);
+  font-weight: 600;
+  box-shadow: var(--fx-rim-fill), var(--fx-primary-aura);
+  cursor: pointer;
+  transition:
+    background-color var(--dur-2) var(--ease-standard),
+    color var(--dur-2) var(--ease-standard),
+    box-shadow var(--dur-3) var(--ease-out),
+    scale var(--dur-spring) var(--ease-spring);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:not(:disabled):not([aria-disabled="true"]):hover {
+    background-color: var(--c-primary-hi, var(--c-primary));
+    box-shadow: var(--fx-rim-fill), var(--fx-primary-aura-hi);
+  }
+}
+
+.btn-primary:not(:disabled):not([aria-disabled="true"]):active {
+  scale: var(--press);
+  box-shadow: var(--fx-rim-fill), var(--fx-primary-aura-press);
+  transition-duration: var(--dur-1);
+  transition-timing-function: var(--ease-out);
+}
+
+.btn-primary:focus-visible {
+  outline: 3px solid var(--c-focus, #4f46e5);
+  outline-offset: 2px;
+  box-shadow: var(--fx-rim-fill), var(--fx-primary-aura), var(--fx-focus-halo);
+}
+
+.btn-primary:disabled,
+.btn-primary[aria-disabled="true"] {
+  background-color: var(--c-track, #d3e0e6);
+  background-image: none;
+  color: var(--c-muted, #4e5853);
+  box-shadow: inset 0 0 0 1.5px var(--c-line, #b3bdb7);
+  cursor: default;
+}
+
+/* ----- Secondary button (Back, Cancel, Undo on Saved, Later) -----
+   A surface with a lit rim; `quiet` ones stand on the page itself */
+.btn-secondary {
+  --press: 0.985;
+  border: 1.5px solid var(--c-line, #b3bdb7);
+  border-radius: var(--r-control, 12px);
+  background-color: var(--c-surface, #ffffff);
+  color: var(--c-ink, #1e2a26);
+  box-shadow: var(--fx-rim), var(--fx-lift-1);
+  cursor: pointer;
+  transition:
+    background-color var(--dur-2) var(--ease-standard),
+    border-color var(--dur-2) var(--ease-standard),
+    box-shadow var(--dur-3) var(--ease-out),
+    scale var(--dur-spring) var(--ease-spring);
+}
+
+.btn-secondary.quiet {
+  background-color: transparent;
+  box-shadow: 0 0 #0000;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn-secondary:not(:disabled):hover {
+    border-color: var(--c-line-strong, var(--c-line));
+    background-color: var(--c-surface-hi, var(--c-surface));
+  }
+}
+
+.btn-secondary:not(:disabled):active {
+  scale: var(--press);
+  background-color: var(--c-surface-press, var(--c-surface));
+  box-shadow: var(--fx-press);
+  transition-duration: var(--dur-1);
+  transition-timing-function: var(--ease-out);
+}
+
+.btn-secondary:focus-visible {
+  outline: 3px solid var(--c-focus, #4f46e5);
+  outline-offset: 2px;
+  box-shadow: var(--fx-rim), var(--fx-lift-1), var(--fx-focus-halo);
+}
+
+.btn-secondary:disabled {
+  opacity: 0.45;
+  box-shadow: 0 0 #0000;
+  cursor: default;
+}
+
+/* ----- Text fields (sign-in, passphrase, code, times, "other", the note) ----
+   One step recessed from what holds it (`--c-field`: the ground on a card or
+   a sheet, the surface on the check-in's ground). Focus is one ring and a
+   soft halo, never a border and a ring; the field rises out of its well.
+   Errors are 2 px ink: no colour, no glow, no shake (ui.md §8) */
+.auth-card,
+.login-card,
+.settings-card,
+[role="dialog"] {
+  --c-field: var(--c-ground, #e4edf1);
+}
+
+.fx-field {
+  border: 1.5px solid var(--c-line, #b3bdb7);
+  border-radius: var(--r-field, 8px);
+  background-color: var(--c-field, var(--c-surface, #ffffff));
+  box-shadow: var(--fx-inset);
+  color: var(--c-ink, #1e2a26);
+  transition:
+    border-color var(--dur-2) var(--ease-standard),
+    background-color var(--dur-2) var(--ease-standard),
+    box-shadow var(--dur-3) var(--ease-out);
+}
+
+.fx-field::placeholder {
+  color: var(--c-muted, #4e5853);
+  opacity: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .fx-field:not(:disabled):hover {
+    border-color: var(--c-line-strong, var(--c-line));
+  }
+}
+
+/* The outline is never delayed; the halo comes up around it */
+.fx-field:focus-visible {
+  border-color: var(--c-line-strong, var(--c-line));
+  background-color: var(--c-surface, #ffffff);
+  outline: 3px solid var(--c-focus, #4f46e5);
+  outline-offset: 2px;
+  box-shadow: var(--fx-focus-halo);
+}
+
+.fx-field[aria-invalid="true"] {
+  border: 2px solid var(--c-ink, #1e2a26);
+}
+
+.fx-field:disabled {
+  opacity: 0.5;
+  box-shadow: 0 0 #0000;
+}
+
+/* ----- Segmented control (Front/Back, the language choices) -----
+   A recessed track; the chosen option is a raised surface (the puck) that
+   slides between places. Chrome, not an answer: no highlight halo */
+.seg {
+  position: relative;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 4px;
+  padding: 4px;
+  border-radius: var(--r-control, 12px);
+  background-color: var(--c-track, #d3e0e6);
+  box-shadow: var(--fx-inset);
+}
+
+.seg > button {
+  position: relative;
+  min-height: 44px;
+  padding: 0 0.5rem;
+  border: none;
+  border-radius: max(0px, calc(var(--r-control, 12px) - 4px));
+  background: none;
+  color: var(--c-ink, #1e2a26);
+  font: inherit;
+  font-size: 0.9375rem;
+  cursor: pointer;
+  transition: scale var(--dur-spring) var(--ease-spring);
+}
+
+.seg > button:not(:disabled):active {
+  scale: 0.97;
+  transition-duration: var(--dur-1);
+  transition-timing-function: var(--ease-out);
+}
+
+.seg > button.on {
+  font-weight: 600;
+}
+
+.seg > button:focus-visible {
+  outline: 3px solid var(--c-focus, #4f46e5);
+  outline-offset: 2px;
+}
+
+/* `--n` options, the chosen one `--i` (CSSOM, `style:`) */
+.seg-puck {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  width: calc((100% - 8px - (var(--n, 2) - 1) * 4px) / var(--n, 2));
+  border-radius: max(0px, calc(var(--r-control, 12px) - 4px));
+  background-color: var(--c-surface, #ffffff);
+  box-shadow: var(--fx-rim), 0 1px 3px rgb(0 0 0 / 0.14), var(--fx-lift-1);
+  transform: translateX(calc(var(--i, 0) * (100% + 4px)));
+  transition: transform var(--dur-4) var(--ease-spring-soft);
+  pointer-events: none;
+}
+
+/* ----- Text links: typographic, no glow. The underline steps away a little
+   under a fine pointer; a press dims the words (ui.md §14.4 "Text links").
+   Dotted and dashed never animate their style ----- */
+:root button:is(.text-action, .after-event, .auth-link, .link-btn, .settings-link) {
+  transition:
+    opacity var(--dur-1) var(--ease-out),
+    text-underline-offset var(--dur-2) var(--ease-standard);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :root button:is(.text-action, .after-event, .auth-link, .link-btn, .settings-link):not(:disabled):hover {
+    text-underline-offset: 4px;
+  }
+}
+
+:root button:is(.text-action, .after-event, .auth-link, .link-btn, .settings-link):not(:disabled):active {
+  opacity: 0.62;
+}
+
+/* ----- The busy light: an arc of light orbits a busy primary button's rim
+   (sign-in, the passphrase's key, a slow save). Needs a registered angle
+   (`html.fx-prop`); without it, and under reduced motion, the spinner stays */
+@property --fx-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes fx-orbit {
+  to {
+    --fx-angle: 360deg;
+  }
+}
+
+/* Busy is not "not yet": it keeps the lit look while it works */
+.btn-primary.busy,
+.btn-primary[aria-busy="true"] {
+  position: relative;
+  background-color: var(--c-primary, #1e2a26);
+  background-image: var(--fx-sheen, none);
+  color: var(--c-on-primary, #ffffff);
+  box-shadow: var(--fx-rim-fill), var(--fx-primary-aura);
+  cursor: progress;
+}
+
+.btn-primary[aria-busy="true"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1.5px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--fx-angle),
+    transparent 0 70%,
+    var(--c-on-primary, #ffffff) 88%,
+    transparent 100%
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0
+    0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0
+    0);
+  opacity: 0.75;
+  pointer-events: none;
+}
+
+.fx-prop .btn-primary[aria-busy="true"]::after {
+  animation: fx-orbit 1.4s linear infinite;
+}
+
+.fx-prop .btn-primary[aria-busy="true"] .spinner {
+  display: none;
+}
+
+/* Still: the whole rim at half strength, and the spinner says the rest */
+@media (prefers-reduced-motion: reduce) {
+  .btn-primary[aria-busy="true"]::after {
+    background: var(--c-on-primary, #ffffff);
+    opacity: 0.5;
+  }
+
+  .fx-prop .btn-primary[aria-busy="true"] .spinner {
+    display: inline-block;
+  }
+}
+
+/* ----- Shared keyframes ----- */
+@keyframes fx-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes fx-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fx-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@keyframes fx-out-l {
+  to {
+    opacity: 0;
+    transform: translateX(-32px);
+  }
+}
+
+@keyframes fx-out-r {
+  to {
+    opacity: 0;
+    transform: translateX(32px);
+  }
+}
+
+@keyframes fx-in-r {
+  from {
+    opacity: 0;
+    transform: translateX(32px);
+  }
+}
+
+@keyframes fx-in-l {
+  from {
+    opacity: 0;
+    transform: translateX(-32px);
+  }
+}
+
+@keyframes fx-in-r-small {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+}
+
+@keyframes fx-in-l-small {
+  from {
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+}
+
+/* ----- View Transitions (lib/motion.ts `swap`), never in the check-in -----
+   The page itself switches at once: the pane bar, the dots and the light
+   behind stay where they are. Only the pane moves, 32 px sideways and
+   crossfading (a shared axis, not a full-width push); a sign-in card keeps
+   its place, its size morphs and its content crossfades. Names exist only
+   while a transition runs */
+html[data-vt]::view-transition-old(root) {
+  animation: none;
+  opacity: 0;
+}
+
+html[data-vt]::view-transition-new(root) {
+  animation: none;
+}
+
+html[data-vt^="pane"] [data-pane] {
+  view-transition-name: pane;
+}
+
+/* The pane bar and the dots stay put, still and whole: as part of the root's
+   picture they would sit under the moving pane, which covers them on its
+   way through (the dots under its rows, the desktop bar under what scrolled
+   up behind it). Pictures of their own go over it; only the new one shows,
+   live, so the dots' pill grows as it always does */
+html[data-vt^="pane"] .panebar {
+  view-transition-name: pane-bar;
+}
+
+html[data-vt^="pane"] nav.dots {
+  view-transition-name: pane-dots;
+}
+
+::view-transition-group(pane-bar),
+::view-transition-group(pane-dots),
+::view-transition-new(pane-bar),
+::view-transition-new(pane-dots) {
+  animation: none;
+}
+
+::view-transition-old(pane-bar),
+::view-transition-old(pane-dots) {
+  animation: none;
+  opacity: 0;
+}
+
+/* The pane's picture is drawn where the new pane is, its top at the top: a
+   head held further down a scrolled pane goes back to its place in it
+   (lib/sticky.ts) rather than float in the middle of the picture */
+html[data-vt^="pane"] :is(.settings-header, .section-header, .entry > .head) {
+  position: static;
+}
+
+html[data-vt^="pane"] [data-stuck]::before {
+  content: none;
+}
+
+html[data-vt^="auth"] :is(.auth-card, .login-card) {
+  view-transition-name: auth-card;
+}
+
+::view-transition-group(pane) {
+  animation: none;
+}
+
+html[data-vt="pane-fwd"]::view-transition-old(pane) {
+  animation: var(--dur-3) var(--ease-in) both fx-out-l;
+}
+
+html[data-vt="pane-fwd"]::view-transition-new(pane) {
+  animation: var(--dur-4) var(--ease-out) 40ms both fx-in-r;
+}
+
+html[data-vt="pane-back"]::view-transition-old(pane) {
+  animation: var(--dur-3) var(--ease-in) both fx-out-r;
+}
+
+html[data-vt="pane-back"]::view-transition-new(pane) {
+  animation: var(--dur-4) var(--ease-out) 40ms both fx-in-l;
+}
+
+::view-transition-group(auth-card) {
+  animation-duration: var(--dur-4);
+  animation-timing-function: var(--ease-in-out);
+}
+
+::view-transition-old(auth-card),
+::view-transition-new(auth-card) {
+  height: 100%;
+  object-fit: none;
+  object-position: 50% 0;
+}
+
+::view-transition-old(auth-card) {
+  animation: var(--dur-2) var(--ease-in) both fx-fade-out;
+}
+
+::view-transition-new(auth-card) {
+  animation: var(--dur-3) var(--ease-out) 60ms both fx-fade-in;
+}
+
+html[data-vt="auth-fwd"]::view-transition-new(auth-card) {
+  animation-name: fx-in-r-small;
+}
+
+html[data-vt="auth-back"]::view-transition-new(auth-card) {
+  animation-name: fx-in-l-small;
+}
+
+/* ----- Rest low (ui.md §4.5, Reach v2; lib/band.ts) -----
+   A phone's screen is a stage over a band: the stage holds what is read
+   (the question, status, previews), the band every control. The stage takes
+   at least --stage-min, which `restLow` measures so the band starts at the
+   thumb band's top edge; its content sits at its bottom, next to the band,
+   and more of it pushes the band down into the scroll. The band keeps clear
+   of the home bar and the dock. Prefixed, so never BodyMap's `.stage`, and
+   phone-only: a desktop lays out as it always has */
+@media (max-width: 899px) {
+  .rl-root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+  }
+
+  .rl-stage {
+    flex: 1 0 auto;
+    min-height: var(--stage-min, 0px);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .rl-band {
+    flex: none;
+    padding-bottom: calc(var(--safe-bottom) + var(--dock-h));
+  }
+}

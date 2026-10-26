@@ -6,7 +6,11 @@ A minute-long check-in on what your body feels: where, what it is like, how
 strong, and a word for it if one comes. Emo reminds you three times a day, at
 random moments. In English, Ukrainian and Russian.
 
-<img src="docs/checkin-body.png" width="300" alt="Step 1 of a check-in: a body map with the throat and chest marked">
+<p>
+<img src="docs/checkin-body.png" width="250" alt="Step 1 of a check-in: a body map with the throat and chest marked">
+<img src="docs/checkin-word.png" width="250" alt="A word for it: fear chosen, with finer words for fear such as anxiety, worry and panic offered below">
+<img src="docs/history.png" width="250" alt="History: today's and yesterday's check-ins, each with places, qualities and a note">
+</p>
 
 **Try it at [emo.podgorniy.net](https://emo.podgorniy.net)**: free, sign up with
 your email. Or [run your own](#running-your-own-instance).

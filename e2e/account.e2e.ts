@@ -101,12 +101,18 @@ Deno.test({
       // The wordmark and the tagline before anything is asked (ui.md §12.2)
       await page.getByText("Emo", { exact: true }).waitFor();
       await page.getByText(/^About a minute, a few times a day/).waitFor();
-      // Anyone may create an account (REGISTRATION=open, the default)
+      // Anyone may create an account (REGISTRATION=open, the default): no invite field
       await page.getByRole("heading", {
         level: 1,
         name: "Sign in or create an account",
         exact: true,
       }).waitFor();
+      assertEquals(
+        await page.getByRole("button", { name: "I have an invite code" })
+          .count(),
+        0,
+      );
+      assertEquals(await page.getByLabel("Invite code").count(), 0);
 
       // No browser bubble: "Enter your email" under the field
       await page.getByRole("button", { name: "Send code", exact: true })
@@ -120,11 +126,6 @@ Deno.test({
       );
       await email.fill("someone");
       assertEquals(await page.getByText("Enter your email").count(), 0);
-
-      // The invite field open: "Create an account"
-      await page.getByRole("button", { name: "I have an invite code" }).click();
-      await page.getByRole("heading", { level: 1, name: "Create an account" })
-        .waitFor();
 
       // Change passphrase names its three fields (ui.md §11)
       await signUp(page, server);
@@ -230,9 +231,7 @@ Deno.test({
       const page = await (await browser.newContext({ locale: "en-GB" }))
         .newPage();
       await page.goto(server.url);
-      await page.getByRole("button", { name: "I have an invite code" }).click();
       await page.getByLabel("Email").fill(" E2E@Example.com ");
-      await page.getByLabel("Invite code").fill(await server.invite());
       await page.getByRole("button", { name: "Send code", exact: true })
         .click();
       await page.getByLabel("Six-digit code").fill(
@@ -418,9 +417,7 @@ Deno.test({
 
       // The recovery key: leaving warns first; "Back" finds the same key
       await page.goto(server.url);
-      await button("I have an invite code").click();
       await page.getByLabel("Email").fill(EMAIL);
-      await page.getByLabel("Invite code").fill(await server.invite());
       await button("Send code").click();
       await page.getByLabel("Six-digit code").fill(
         await server.mailCode(EMAIL),

@@ -267,7 +267,7 @@ export const PASSPHRASE = "correct horse battery staple";
 export const NOW = "Now";
 
 /**
- * A new account from the sign-in screen to Home (English UI): invite, mailed
+ * A new account from the sign-in screen to Home (English UI): email, mailed
  * code, passphrase, recovery key ("I'll write it down"), install and
  * reminders. `onScreen` runs on each screen once it is shown.
  */
@@ -288,9 +288,7 @@ export async function signUp(
   await onScreen("sign-in: about");
   await page.keyboard.press("Escape");
   await page.getByRole("dialog").waitFor({ state: "detached" });
-  await button("I have an invite code").click();
   await page.getByLabel("Email").fill(email);
-  await page.getByLabel("Invite code").fill(await server.invite());
   await button("Send code").click();
   await page.getByLabel("Six-digit code").waitFor();
   await onScreen("sign-in: code");

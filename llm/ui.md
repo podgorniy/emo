@@ -1921,15 +1921,16 @@ reliability.md §1.3.
 - Above the title: the mark (30 px, ui.md §16.2) beside the "Emo" wordmark
   (display font, 22 px / 600) and the tagline `auth.signin.tagline` (16 px
   muted), so the first screen says what Emo is. Not in "Sign in to sync".
-- Email, then an invite field behind "I have an invite code", which focuses the
-  field it opens (ui.md §5.5). Then "Send code".
+- Email, then (on an invite-only server, `REGISTRATION=invite`) an invite field
+  behind "I have an invite code", which focuses the field it opens (ui.md §5.5).
+  Then "Send code".
 - `novalidate`: an empty address or one without "@" shows "Enter your email"
   under the field (`aria-invalid`, focus on the field), never the browser's
   bubble.
 - **Title**: "Sign in or create an account" on an open server
   (`REGISTRATION=open`, the default: the same email and code make a new
-  account); "Sign in" on an invite-only one; "Create an account" on either while
-  the invite field is open; "Sign in" on the code card.
+  account); on an invite-only one, "Sign in", or "Create an account" while the
+  invite field is open; "Sign in" on the code card.
 - **Footer links** on every sign-in card: "Methodology" (a new tab; one short
   word, so the row fits one line on a sideways phone in every language) and
   "About and privacy" (ui.md §11.10 as a sheet), so people can read both before

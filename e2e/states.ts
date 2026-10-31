@@ -599,15 +599,7 @@ async function* auth(ui: Ui): Phase {
   await ui.dialog().waitFor();
   yield await ui.at("auth-about-dialog", "rest", "About and privacy sheet.");
   await ui.closeDialog();
-  await ui.button("auth.signin.inviteToggle").click();
-  await page.locator("#invite-input").waitFor();
-  yield await ui.at(
-    "auth-invite-form",
-    "rest",
-    "Create an account: email and invite code.",
-  );
   await page.locator("#email-input").fill(email);
-  await page.locator("#invite-input").fill(await ui.w.server.invite());
   await ui.button("auth.signin.sendCode").click();
   const code = page.locator("input[autocomplete=one-time-code]");
   await code.waitFor();

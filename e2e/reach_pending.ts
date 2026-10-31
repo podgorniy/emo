@@ -105,8 +105,6 @@ export const PENDING: readonly string[] = [
   "auth-code-entry+kb@390x844+sb34@*",
   "auth-code-entry+kb@390x844@*",
   "auth-code-entry@*@*",
-  "auth-invite-form+kb@*@*",
-  "auth-invite-form@*@*",
   "auth-passphrase+kb@*@*",
   "auth-passphrase-filled@*@*",
   "auth-passphrase@*@*",

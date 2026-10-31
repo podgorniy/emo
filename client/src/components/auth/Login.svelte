@@ -1,8 +1,8 @@
 <script lang="ts">
   // SPDX-License-Identifier: AGPL-3.0-or-later
   /**
-   * Sign in: email (plus an invite code behind a toggle, for new accounts:
-   * optional on an open server, required with REGISTRATION=invite), then,
+   * Sign in: email (and, with REGISTRATION=invite, an invite code behind a
+   * toggle for new accounts), then,
    * on the same card, the 6-digit code from the email: the address
    * stays in sight in full with "Change", the code field is focused and
    * sends itself at 6 digits (UX-13). Every failed verification shows the
@@ -68,7 +68,7 @@
   const inviteOnly = $derived(instance?.registration === "invite");
   let inviteInput: HTMLInputElement | undefined = $state();
   /** Sent with the code request: no "needs an invite" note after it */
-  const inviteSent = $derived(showInvite && inviteCode.trim() !== "");
+  const inviteSent = $derived(inviteOnly && showInvite && inviteCode.trim() !== "");
   /** "Enter your email" under the field, instead of the browser's bubble */
   let emailMissing = $state(false);
   let emailInput: HTMLInputElement | undefined = $state();
@@ -126,7 +126,7 @@
     try {
       await apiRequestCode(
         email.trim(),
-        showInvite && inviteCode.trim() ? inviteCode.trim() : undefined,
+        inviteSent ? inviteCode.trim() : undefined,
         getLocale(),
       );
       await swapCard("fwd", () => {
@@ -136,8 +136,7 @@
       countDown(RESEND_AFTER_SEC);
       if (inviteTimer) clearTimeout(inviteTimer);
       inviteLate = false;
-      // Open: a mistyped invite is left out and the mail still goes
-      if (inviteSent && inviteOnly) {
+      if (inviteSent) {
         inviteTimer = setTimeout(() => (inviteLate = true), INVITE_CHECK_AFTER_MS);
       }
       await tick();
@@ -211,7 +210,7 @@
     <h1 class="login-title">
       {deviceAccount
         ? t("auth.signin.again.title")
-        : showInvite
+        : inviteOnly && showInvite
         ? t("auth.signin.title.create")
         : inviteOnly || step === "code"
         ? t("auth.signin.title")
@@ -249,24 +248,26 @@
           {/if}
         </div>
 
-        {#if showInvite}
-          <div class="form-group">
-            <label for="invite-input">{t("auth.signin.invite")}</label>
-            <input
-              id="invite-input"
-              type="text"
-              autocomplete="off"
-              autocapitalize="characters"
-              spellcheck="false"
-              bind:value={inviteCode}
-              bind:this={inviteInput}
-              class="input-field fx-field mono"
-            />
-          </div>
-        {:else if !deviceAccount}
-          <button type="button" class="link-btn text-action" onclick={openInvite}>
-            {t("auth.signin.inviteToggle")}
-          </button>
+        {#if inviteOnly && !deviceAccount}
+          {#if showInvite}
+            <div class="form-group">
+              <label for="invite-input">{t("auth.signin.invite")}</label>
+              <input
+                id="invite-input"
+                type="text"
+                autocomplete="off"
+                autocapitalize="characters"
+                spellcheck="false"
+                bind:value={inviteCode}
+                bind:this={inviteInput}
+                class="input-field fx-field mono"
+              />
+            </div>
+          {:else}
+            <button type="button" class="link-btn text-action" onclick={openInvite}>
+              {t("auth.signin.inviteToggle")}
+            </button>
+          {/if}
         {/if}
 
         <Button

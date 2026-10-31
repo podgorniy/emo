@@ -372,13 +372,7 @@ Deno.test({
       })).newPage();
       // Sign-up up to the passphrase step (as harness.signUp)
       await page.goto(server.url);
-      await page.getByLabel("Email").waitFor();
-      await page.getByRole("button", {
-        name: "I have an invite code",
-        exact: true,
-      }).click();
       await page.getByLabel("Email").fill(EMAIL);
-      await page.getByLabel("Invite code").fill(await server.invite());
       await page.getByRole("button", { name: "Send code", exact: true })
         .click();
       await page.getByLabel("Six-digit code").fill(

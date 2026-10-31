@@ -288,10 +288,13 @@ Deno.test({
         level: 1,
         name: "Sign in or create an account",
       }).waitFor();
+      assertEquals(
+        await page.getByRole("button", { name: "I have an invite code" })
+          .count(),
+        0,
+      );
+      assertEquals(await page.getByLabel("Invite code").count(), 0);
       await page.getByLabel("Email").fill("anyone@example.com");
-      // A mistyped invite stops nothing: it is left out
-      await page.getByRole("button", { name: "I have an invite code" }).click();
-      await page.getByLabel("Invite code").fill("NOTACODE1234");
       await page.getByRole("button", { name: "Send code", exact: true })
         .click();
       await page.getByLabel("Six-digit code").waitFor();
